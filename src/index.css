@@ -4,6 +4,18 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-*: initial;
+  --color-blackhole: #000000;
+  --color-milky-white: #ffffff;
+  --color-off-white: #faf9f6;
+  --color-raisin-black: #241f20;
+  --color-black-coffee: #3a2f2f;
+  --color-royal-brown: #53322f;
+  --color-golden-brown: #9d581f;
+  --color-light-caramel: #e6d6c8;
+}
+
 :root {
   --background: hsl(0 0% 100%);
   --foreground: hsl(222.2 84% 4.9%);
