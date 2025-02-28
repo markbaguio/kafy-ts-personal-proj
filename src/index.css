@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("src/assets/fonts/Montserrat-VariableFont_wght.ttf");
+}
+
 @import "tailwindcss";
 
 @plugin "tailwindcss-animate";
@@ -14,6 +19,8 @@
   --color-royal-brown: #53322f;
   --color-golden-brown: #9d581f;
   --color-light-caramel: #e6d6c8;
+
+  --default-font-family: "Montserrat", "sans-serif";
 }
 
 :root {
