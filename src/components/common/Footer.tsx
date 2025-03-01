@@ -1,4 +1,10 @@
-import { Facebook, FacebookIcon } from "lucide-react";
+import {
+  Facebook,
+  FacebookIcon,
+  Instagram,
+  Linkedin,
+  Youtube,
+} from "lucide-react";
 import Logo from "./Logo";
 import { Button } from "../ui/button";
 import { Link } from "react-router";
@@ -17,7 +23,7 @@ export default function Footer() {
           </p>
         </div>
         <hr className="border-raisin-black w-full" />
-        <div className="flex">
+        <div className="flex gap-1 py-2 w-full justify-around">
           <Button asChild className="rounded-full" variant="icon" size="icon">
             <a
               href="https://www.facebook.com"
@@ -25,6 +31,33 @@ export default function Footer() {
               rel="noopener noreferrer"
             >
               <Facebook className="size-full" />
+            </a>
+          </Button>
+          <Button asChild className="rounded-full" variant="icon" size="icon">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Youtube className="size-full" />
+            </a>
+          </Button>
+          <Button asChild className="rounded-full" variant="icon" size="icon">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram className="size-full" />
+            </a>
+          </Button>
+          <Button asChild className="rounded-full" variant="icon" size="icon">
+            <a
+              href="https://www.facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Linkedin className="size-full" />
             </a>
           </Button>
         </div>

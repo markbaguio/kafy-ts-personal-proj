@@ -20,7 +20,7 @@ const buttonVariants = cva(
         ghost: "font-semibold hover:text-golden-brown",
         link: "text-primary underline-offset-4 hover:underline",
         main: "text-off-white bg-raisin-black rounded-full hover:opacity-80",
-        icon: "hover:bg-black-coffee/20 rounded-full text-raisin-black w-[100px]",
+        icon: "hover:opacity-70 bg-raisin-black rounded-full text-milky-white w-[100px]",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
