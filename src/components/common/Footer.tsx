@@ -61,7 +61,7 @@ export default function Footer() {
           This project is for personal practice only.
         </p>
       </div>
-      <div className="flex items-center justify-between px-5 py-5 text-base md:text-1xl lg:text-2xl font-bold w-full md:w-[60%]">
+      <div className="flex items-center gap-2 md:gap-0 justify-between px-5 py-5 text-xs text-nowrap md:text-1xl lg:text-2xl font-bold w-full md:w-[60%]">
         <Link to="/menu" className="hover:text-golden-brown custom-transition">
           MENU
         </Link>
