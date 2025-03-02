@@ -117,3 +117,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+@utility custom-transition {
+  @apply transition-[color,box-shadow,background-color,opacity] duration-500;
+}
+
+/* @layer utilities {
+  .custom-transition {
+    @apply transition-[color,box-shadow,background-color,opacity] duration-500;
+  }
+} */
+
+/* .custom-transition {
+  @apply transition-[color,box-shadow,background-color,opacity] duration-500;
+} */
