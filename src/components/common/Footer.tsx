@@ -62,16 +62,25 @@ export default function Footer() {
         </p>
       </div>
       <div className="flex items-center justify-between px-5 py-5 text-base md:text-1xl lg:text-2xl font-bold w-full md:w-[60%]">
-        <Link to="/menu" className="hover:text-golden-brown">
+        <Link to="/menu" className="hover:text-golden-brown custom-transition">
           MENU
         </Link>
-        <Link to="/rewards" className="hover:text-golden-brown">
+        <Link
+          to="/rewards"
+          className="hover:text-golden-brown custom-transition"
+        >
           REWARDS
         </Link>
-        <Link to="/gift-cards" className="hover:text-golden-brown">
+        <Link
+          to="/gift-cards"
+          className="hover:text-golden-brown custom-transition"
+        >
           GIFT CARDS
         </Link>
-        <Link to="/about-us" className="hover:text-golden-brown">
+        <Link
+          to="/about-us"
+          className="hover:text-golden-brown custom-transition"
+        >
           ABOUT US
         </Link>
       </div>
