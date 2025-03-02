@@ -5,12 +5,12 @@ import { Link } from "react-router";
 
 export default function Footer() {
   return (
-    <footer className="bg-milky-white flex flex-col-reverse md:flex-row p-[200px]">
+    <footer className="bg-milky-white flex flex-col-reverse md:flex-row">
       <div className="flex flex-col w-full items-start p-3 gap-2 md:w-[40%]">
         <Link to="/">
           <Logo />
         </Link>
-        <div className="">
+        <div>
           <p className="text-sm font-light">
             &copy; 2025 Mark Godwin C. Baguio. All rights reserved
           </p>
