@@ -79,7 +79,7 @@ export default function PageHeader() {
             </Button>
             <div className="flex gap-2">
               <Button variant="outline">
-                <Link to="/">Sign in</Link>
+                <Link to="/auth/signin">Sign in</Link>
               </Button>
               <Button variant="main">
                 <Link to="/">Join now</Link>

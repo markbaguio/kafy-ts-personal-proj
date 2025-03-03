@@ -9,6 +9,7 @@ import AuthLayout from "./layouts/AuthLayout.tsx";
 import { Menu } from "./pages/Menu.tsx";
 import Rewards from "./pages/Rewards.tsx";
 import GiftCards from "./pages/GiftCards.tsx";
+import { SignIn } from "./pages/SignIn.tsx";
 
 const router = createBrowserRouter([
   {
@@ -26,9 +27,9 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/signin",
+    path: "/auth",
     element: <AuthLayout />,
-    children: [],
+    children: [{ path: "signin", element: <SignIn /> }],
   },
 ]);
 
