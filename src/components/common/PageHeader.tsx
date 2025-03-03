@@ -21,7 +21,7 @@ const navItems: navItemType[] = [
   { name: "HOME", path: "/" },
   { name: "MENU", path: "/menu" },
   { name: "REWARDS", path: "/rewards" },
-  { name: "GIFT CARDS", path: "/gift-cards" },
+  { name: "GIFT CARDS", path: "/gift" },
 ];
 
 export default function PageHeader() {

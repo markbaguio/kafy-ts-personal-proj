@@ -1,3 +1,3 @@
 export default function Homepage() {
-  return <></>;
+  return <h1 className="text-2xl">Homepage</h1>;
 }
