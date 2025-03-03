@@ -5,7 +5,7 @@ export default function AuthLayout() {
   return (
     <div className="flex">
       <AuthLayout />
-      <main>
+      <main className="grow p-10">
         <Outlet />
       </main>
       <Footer />
