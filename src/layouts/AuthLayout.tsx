@@ -6,7 +6,7 @@ export default function AuthLayout() {
   return (
     <div className="flex flex-col">
       <AuthPageHeader />
-      <main className="grow p-10">
+      <main className="grow">
         <Outlet />
       </main>
       <Footer />

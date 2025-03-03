@@ -1,3 +1,18 @@
+import Logo from "@/components/common/Logo";
+import { LoginForm } from "@/components/ui/login-form";
+
 export function SignIn() {
-  return <h1 className="text-2xl">SignIn</h1>;
+  return (
+    <div className="flex flex-col-reverse md:flex-row md:justify-cente w-full h-screen">
+      <div className="flex flex-col items-center justify-center p-5 w-full md:w-[50%] bg-light-caramel">
+        <LoginForm />
+      </div>
+      <div className="flex flex-col items-center justify-center w-full md:w-[50%] h-full bg-raisin-black">
+        <Logo darkBg={true} />
+        <p className="font-light text-milky-white text-center text-xl p-5">
+          Sign up now and start earning Kaffy Coins with every purchase!
+        </p>
+      </div>
+    </div>
+  );
 }
