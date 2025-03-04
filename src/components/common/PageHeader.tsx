@@ -82,7 +82,7 @@ export default function PageHeader() {
                 <Link to="/auth/signin">Sign in</Link>
               </Button>
               <Button variant="main">
-                <Link to="/">Join now</Link>
+                <Link to="/auth/signup">Join now</Link>
               </Button>
             </div>
           </div>
