@@ -2,6 +2,7 @@ import KafyLogo from "../../assets/coffee-svgrepo-com.svg";
 
 type LogoProps = {
   darkBg?: boolean;
+  classname?: string;
 };
 
 export default function Logo({ darkBg = false }: LogoProps) {
@@ -11,10 +12,12 @@ export default function Logo({ darkBg = false }: LogoProps) {
         <img
           src={KafyLogo}
           alt="Kafy logo"
-          className={`w-[50px] h-[50px] fill-current ${darkBg ? `invert` : ""}`}
+          className={`w-[35px] h-[35px] md:w-[50px] md:h-[50px] fill-current ${
+            darkBg ? `invert` : ""
+          }`}
         />
         <span
-          className={`text-[40px] font-bold tracking-[0%] ${
+          className={`text-[35px] md:text-[40px] font-bold tracking-[0%] ${
             darkBg ? "text-milky-white" : "text-raisin-black"
           }`}
         >

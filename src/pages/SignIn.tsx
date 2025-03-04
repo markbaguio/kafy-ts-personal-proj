@@ -1,4 +1,3 @@
-import Logo from "@/components/common/Logo";
 import { LoginForm } from "@/components/ui/login-form";
 
 export function SignIn() {
