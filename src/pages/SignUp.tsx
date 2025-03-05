@@ -12,8 +12,11 @@ import { Facebook } from "lucide-react";
 
 export default function SignUp() {
   return (
-    <form className="flex flex-col justify-center items-center py-10 bg-light-caramel">
-      <div className="text-center flex flex-col justify-center items-center">
+    <form className="flex flex-col justify-center items-center py-10">
+      <div
+        className="text-center flex flex-col justify-center items-center
+      "
+      >
         <h1 className="text-3xl font-bold py-10">Create an Account</h1>
         <span className="font-bold">KAFY REWARDS</span>
         <p className="text-raisin-black text-center text-sm p-2 font-light">
