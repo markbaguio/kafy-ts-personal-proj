@@ -19,6 +19,7 @@
   --color-royal-brown: #53322f;
   --color-golden-brown: #9d581f;
   --color-light-caramel: #e6d6c8;
+  --color-destructive: oklch(0.577 0.245 27.325);
 
   --default-font-family: "Montserrat", "sans-serif";
 }

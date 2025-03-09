@@ -9,10 +9,39 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Facebook } from "lucide-react";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const UserSignUpFormSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string().email(),
+  password: z.string().min(8).max(25),
+});
+
+type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
 export default function SignUp() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserSignUpFormType>({
+    resolver: zodResolver(UserSignUpFormSchema),
+  });
+
+  const onSubmit: SubmitHandler<UserSignUpFormType> = (
+    data: UserSignUpFormType
+  ) => {
+    console.log(data);
+  };
+
   return (
-    <form className="flex flex-col justify-center items-center py-10">
+    <form
+      className="flex flex-col justify-center items-center py-10"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div
         className="text-center flex flex-col justify-center items-center
       "
@@ -35,58 +64,90 @@ export default function SignUp() {
                 <span className="text-lg">Personal Information</span>
                 <span className="text-golden-brown ml-0">*</span>
               </Label>
-              <Input
-                id="firstname"
-                placeholder="First name"
-                type="text"
-                pattern="[A-Za-z\s]+"
-                required
-              />
-              <Input
-                id="lastname"
-                placeholder="Last name"
-                type="text"
-                pattern="[A-Za-z\s]+"
-                required
-              />
+              <div>
+                <Input
+                  {...register("firstName")}
+                  id="firstName"
+                  placeholder="First name"
+                  type="text"
+                  // pattern="[A-Za-z\s]+"
+                  // required
+                />
+                {errors.firstName && (
+                  <p className="text-destructive text-[12px] text-start">
+                    {errors.firstName.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Input
+                  {...register("lastName")}
+                  id="lastname"
+                  placeholder="Last name"
+                  type="text"
+                  // pattern="[A-Za-z\s]+"
+                  // required
+                />
+                {errors.lastName && (
+                  <p className="text-destructive text-[12px] text-start">
+                    {errors.lastName.message}
+                  </p>
+                )}
+              </div>
             </div>
             <div className="flex flex-col gap-y-5">
               <Label className="flex items-center justify-start gap-0">
                 <span className="text-lg">Account Security</span>
                 <span className=" text-golden-brown ml-0">*</span>
               </Label>
-              <Input
-                id="email"
-                placeholder="Email"
-                type="text"
-                pattern="[A-Za-z\s]+"
-                required
-              />
+              <div>
+                <Input
+                  {...register("email")}
+                  id="email"
+                  placeholder="Email"
+                  type="text"
+                  // pattern="[A-Za-z\s]+"
+                  // required
+                />
+                {errors.email && (
+                  <p className="text-destructive text-[12px] text-start">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
               <div className="flex flex-col gap-y-2">
                 <Input
+                  {...register("password")}
                   id="password"
                   placeholder="Password"
                   type="password"
-                  pattern="[A-Za-z\s]+"
-                  required
+                  // pattern="[A-Za-z\s]+"
+                  // required
                 />
+                {errors.password && (
+                  <p className="text-destructive text-[12px] text-start">
+                    {errors.password.message}
+                  </p>
+                )}
                 <p className="text-xs text-start font-light">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Obcaecati odio quas praesentium provident quod, architecto
-                  ipsa ipsam nostrum sed eos.
+                  Create a password 8 to 25 characters long that includes at
+                  least 1 uppercase
                 </p>
               </div>
             </div>
+            <Button variant="main" type="submit">
+              Create Account
+            </Button>
           </CardContent>
           <CardFooter className="bg-milky-white w-full flex flex-col gap-6 items-center justify-center">
-            <div className="w-full after:border-raisin-black/50 relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t font-light">
+            <div className="w-full after:border-raisin-black/30 relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t font-light">
               <span className="bg-milky-white relative z-10 px-2">
                 Or sign up with
               </span>
             </div>
-            <Button variant="main" className="w-full">
+            <Button variant="outline" className="w-full">
               <Facebook />
-              Login with Facebook
+              Facebook
             </Button>
           </CardFooter>
         </Card>
