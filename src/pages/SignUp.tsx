@@ -13,12 +13,23 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const UserSignUpFormSchema = z.object({
-  firstName: z.string().min(1, "First name is required"),
-  lastName: z.string().min(1, "Last name is required"),
-  email: z.string().email(),
-  password: z.string().min(8).max(25),
-});
+const UserSignUpFormSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, "Password must contain at least 8 characters")
+      .max(25, "Password must not exceed 25 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
+      .regex(/[a-z]/, "Password must contain at least one lowecase letter."),
+    confirmPassword: z.string().min(1, "Confirm Password is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
 type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
@@ -70,10 +81,11 @@ export default function SignUp() {
                   id="firstName"
                   placeholder="First name"
                   type="text"
-                  className={`${
-                    errors.firstName &&
-                    "focus-visible:border-destructive focus-visible:ring-destructive"
-                  }`}
+                  className={
+                    errors.firstName
+                      ? "focus-visible:border-destructive focus-visible:ring-destructive"
+                      : "focus-visible:border-success-green focus-visible:ring-success-green"
+                  }
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -89,10 +101,11 @@ export default function SignUp() {
                   id="lastname"
                   placeholder="Last name"
                   type="text"
-                  className={`${
-                    errors.lastName &&
-                    "focus-visible:border-destructive focus-visible:ring-destructive"
-                  }`}
+                  className={
+                    errors.lastName
+                      ? "focus-visible:border-destructive focus-visible:ring-destructive"
+                      : "focus-visible:border-success-green focus-visible:ring-success-green"
+                  }
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -114,10 +127,11 @@ export default function SignUp() {
                   id="email"
                   placeholder="Email"
                   type="text"
-                  className={`${
-                    errors.email &&
-                    "focus-visible:border-destructive focus-visible:ring-destructive"
-                  }`}
+                  className={
+                    errors.email
+                      ? "focus-visible:border-destructive focus-visible:ring-destructive"
+                      : "focus-visible:border-success-green focus-visible:ring-success-green"
+                  }
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -133,10 +147,11 @@ export default function SignUp() {
                   id="password"
                   placeholder="Password"
                   type="password"
-                  className={`${
-                    errors.password &&
-                    "focus-visible:border-destructive focus-visible:ring-destructive"
-                  }`}
+                  className={
+                    errors.password
+                      ? "focus-visible:border-destructive focus-visible:ring-destructive"
+                      : "focus-visible:border-success-green focus-visible:ring-success-green"
+                  }
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -147,8 +162,28 @@ export default function SignUp() {
                 )}
                 <p className="text-xs text-start font-light">
                   Create a password 8 to 25 characters long that includes at
-                  least 1 uppercase
+                  least 1 uppercase and 1 lowecase letter
                 </p>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <Input
+                  {...register("confirmPassword")}
+                  id="confirmPassword"
+                  placeholder="Confirm Password"
+                  type="password"
+                  className={
+                    errors.confirmPassword
+                      ? "focus-visible:border-destructive focus-visible:ring-destructive"
+                      : "focus-visible:border-success-green focus-visible:ring-success-green"
+                  }
+                  // pattern="[A-Za-z\s]+"
+                  // required
+                />
+                {errors.confirmPassword && (
+                  <p className="text-destructive text-[12px] text-start">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
             </div>
             <Button variant="main" type="submit">
