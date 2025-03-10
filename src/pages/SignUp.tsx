@@ -86,8 +86,6 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
-                  // pattern="[A-Za-z\s]+"
-                  // required
                 />
                 {errors.firstName && (
                   <p className="text-destructive text-[12px] text-start">
@@ -106,8 +104,6 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
-                  // pattern="[A-Za-z\s]+"
-                  // required
                 />
                 {errors.lastName && (
                   <p className="text-destructive text-[12px] text-start">
@@ -132,8 +128,6 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
-                  // pattern="[A-Za-z\s]+"
-                  // required
                 />
                 {errors.email && (
                   <p className="text-destructive text-[12px] text-start">
@@ -152,8 +146,6 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
-                  // pattern="[A-Za-z\s]+"
-                  // required
                 />
                 {errors.password && (
                   <p className="text-destructive text-[12px] text-start">
@@ -176,8 +168,6 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
-                  // pattern="[A-Za-z\s]+"
-                  // required
                 />
                 {errors.confirmPassword && (
                   <p className="text-destructive text-[12px] text-start">
