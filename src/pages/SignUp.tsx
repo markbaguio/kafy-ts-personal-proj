@@ -14,8 +14,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const UserSignUpFormSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
   email: z.string().email(),
   password: z.string().min(8).max(25),
 });
@@ -64,12 +64,16 @@ export default function SignUp() {
                 <span className="text-lg">Personal Information</span>
                 <span className="text-golden-brown ml-0">*</span>
               </Label>
-              <div>
+              <div className="flex flex-col gap-y-1">
                 <Input
                   {...register("firstName")}
                   id="firstName"
                   placeholder="First name"
                   type="text"
+                  className={`${
+                    errors.firstName &&
+                    "focus-visible:border-destructive focus-visible:ring-destructive"
+                  }`}
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -79,12 +83,16 @@ export default function SignUp() {
                   </p>
                 )}
               </div>
-              <div>
+              <div className="flex flex-col gap-y-1">
                 <Input
                   {...register("lastName")}
                   id="lastname"
                   placeholder="Last name"
                   type="text"
+                  className={`${
+                    errors.lastName &&
+                    "focus-visible:border-destructive focus-visible:ring-destructive"
+                  }`}
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -100,12 +108,16 @@ export default function SignUp() {
                 <span className="text-lg">Account Security</span>
                 <span className=" text-golden-brown ml-0">*</span>
               </Label>
-              <div>
+              <div className="flex flex-col gap-y-1">
                 <Input
                   {...register("email")}
                   id="email"
                   placeholder="Email"
                   type="text"
+                  className={`${
+                    errors.email &&
+                    "focus-visible:border-destructive focus-visible:ring-destructive"
+                  }`}
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
@@ -115,12 +127,16 @@ export default function SignUp() {
                   </p>
                 )}
               </div>
-              <div className="flex flex-col gap-y-2">
+              <div className="flex flex-col gap-y-1">
                 <Input
                   {...register("password")}
                   id="password"
                   placeholder="Password"
                   type="password"
+                  className={`${
+                    errors.password &&
+                    "focus-visible:border-destructive focus-visible:ring-destructive"
+                  }`}
                   // pattern="[A-Za-z\s]+"
                   // required
                 />
