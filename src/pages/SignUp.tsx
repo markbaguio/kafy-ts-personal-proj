@@ -40,6 +40,7 @@ export default function SignUp() {
     formState: { errors },
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<UserSignUpFormType> = (
@@ -86,6 +87,10 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
+                  // className={
+                  //   errors.firstName &&
+                  //   "focus-visible:border-destructive focus-visible:ring-destructive"
+                  // }
                 />
                 {errors.firstName && (
                   <p className="text-destructive text-[12px] text-start">
@@ -104,6 +109,10 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
+                  // className={
+                  //   errors.lastName &&
+                  //   "focus-visible:border-destructive focus-visible:ring-destructive"
+                  // }
                 />
                 {errors.lastName && (
                   <p className="text-destructive text-[12px] text-start">
@@ -128,6 +137,10 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
+                  // className={
+                  //   errors.email?.message &&
+                  //   "focus-visible:border-destructive focus-visible:ring-destructive"
+                  // }
                 />
                 {errors.email && (
                   <p className="text-destructive text-[12px] text-start">
@@ -146,6 +159,10 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
+                  // className={
+                  //   errors.password &&
+                  //   "focus-visible:border-destructive focus-visible:ring-destructive"
+                  // }
                 />
                 {errors.password && (
                   <p className="text-destructive text-[12px] text-start">
@@ -168,6 +185,10 @@ export default function SignUp() {
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   }
+                  // className={
+                  //   errors.confirmPassword &&
+                  //   "focus-visible:border-destructive focus-visible:ring-destructive"
+                  // }
                 />
                 {errors.confirmPassword && (
                   <p className="text-destructive text-[12px] text-start">
