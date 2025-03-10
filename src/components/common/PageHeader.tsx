@@ -70,9 +70,9 @@ export default function PageHeader() {
               ))}
             </nav>
           </div>
-          <div className="hidden md:flex flex-row gap-5">
+          <div className="hidden md:flex flex-row gap-3">
             <Button asChild variant="ghost" className="flex items-center gap-0">
-              <Link to="/">
+              <Link to="/storelocator">
                 <Locate className="w-5 h-5 mr-2" />
                 Store Locator
               </Link>
@@ -82,7 +82,7 @@ export default function PageHeader() {
                 <Link to="/auth/signin">Sign in</Link>
               </Button>
               <Button variant="main">
-                <Link to="/">Join now</Link>
+                <Link to="/auth/signup">Join now</Link>
               </Button>
             </div>
           </div>
@@ -114,16 +114,16 @@ export default function PageHeader() {
                     variant="ghost"
                     className="flex justify-start gap-0"
                   >
-                    <Link to="/">
+                    <Link to="/storelocator">
                       <Locate className="w-5 h-5 mr-2" />
                       Store Locator
                     </Link>
                   </Button>
                   <Button variant="outline">
-                    <Link to="/">Sign in</Link>
+                    <Link to="/auth/signin">Sign in</Link>
                   </Button>
                   <Button variant="main">
-                    <Link to="/">Join now</Link>
+                    <Link to="/auth/signup">Join now</Link>
                   </Button>
                 </div>
               </div>
