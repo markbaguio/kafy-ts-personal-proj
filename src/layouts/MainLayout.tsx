@@ -6,7 +6,7 @@ export default function MainLayout() {
   return (
     <div className="flex flex-col">
       <PageHeader />
-      <main className="grow p-10">
+      <main className="grow">
         <Outlet />
       </main>
       <Footer />
