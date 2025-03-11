@@ -3,13 +3,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Facebook } from "lucide-react";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const UserSignInSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(1, "Password is required"),
+});
+
+type UserSignInFormType = z.infer<typeof UserSignInSchema>;
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<UserSignInFormType>({
+    resolver: zodResolver(UserSignInSchema),
+  });
+
+  const onSubmit: SubmitHandler<UserSignInFormType> = async (
+    data: UserSignInFormType
+  ) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log(data);
+  };
+
   return (
-    <form className={cn("flex flex-col gap-6", className)} {...props}>
+    <form
+      className={cn("flex flex-col gap-6", className)}
+      {...props}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold text-raisin-black">
           Login to your account
@@ -23,32 +52,52 @@ export function LoginForm({
           <Label htmlFor="email" className="text-raisin-black">
             Email
           </Label>
-          <Input
-            id="email"
-            type="email"
-            className="border-raisin-black placeholder:text-raisin-black"
-            placeholder="m@example.com"
-            required
-          />
+          <div className="flex flex-col gap-y-1">
+            <Input
+              {...register("email")}
+              id="email"
+              type="email"
+              className="border-raisin-black placeholder:text-raisin-black"
+              placeholder="Email"
+            />
+            {errors.email && (
+              <p className="text-destructive text-[12px] text-start">
+                {errors.email.message}
+              </p>
+            )}
+          </div>
         </div>
         <div className="grid gap-3">
           <div className="flex items-center">
             <Label htmlFor="password">Password</Label>
             <a
-              href="#"
+              href="/forgotpassword"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
             </a>
           </div>
-          <Input
-            id="password"
-            type="password"
-            className="border-raisin-black"
-            required
-          />
+          <div className="flex flex-col gap-y-1">
+            <Input
+              {...register("password")}
+              id="password"
+              type="password"
+              placeholder="Password"
+              className="border-raisin-black placeholder:text-raisin-black"
+            />
+            {errors.password && (
+              <p className="text-destructive text-[12px] text-start">
+                {errors.password.message}
+              </p>
+            )}
+          </div>
         </div>
-        <Button type="submit" variant="main" className="w-full">
+        <Button
+          disabled={isSubmitting}
+          type="submit"
+          variant="main"
+          className="w-full"
+        >
           Login
         </Button>
         <div className="after:border-raisin-black relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
