@@ -21,22 +21,15 @@ export function LoginForm({
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
 
-  const onSubmit: SubmitHandler<UserSignInFormType> = (
+  const onSubmit: SubmitHandler<UserSignInFormType> = async (
     data: UserSignInFormType
   ) => {
-    // const result = UserSignInSchema.safeParse(data);
-
-    // if (result.error) {
-    //   console.log(errors.password?.message);
-    //   return;
-    // }
-
-    // return console.log(data);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
   };
 
@@ -89,7 +82,8 @@ export function LoginForm({
               {...register("password")}
               id="password"
               type="password"
-              className="border-raisin-black"
+              placeholder="Password"
+              className="border-raisin-black placeholder:text-raisin-black"
             />
             {errors.password && (
               <p className="text-destructive text-[12px] text-start">
@@ -98,7 +92,12 @@ export function LoginForm({
             )}
           </div>
         </div>
-        <Button type="submit" variant="main" className="w-full">
+        <Button
+          disabled={isSubmitting}
+          type="submit"
+          variant="main"
+          className="w-full"
+        >
           Login
         </Button>
         <div className="after:border-raisin-black relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">

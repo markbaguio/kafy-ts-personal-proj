@@ -37,15 +37,16 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<UserSignUpFormType> = (
+  const onSubmit: SubmitHandler<UserSignUpFormType> = async (
     data: UserSignUpFormType
   ) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log(data);
   };
 
@@ -177,7 +178,7 @@ export default function SignUp() {
                 )}
               </div>
             </div>
-            <Button variant="main" type="submit">
+            <Button disabled={isSubmitting} variant="main" type="submit">
               Create Account
             </Button>
           </CardContent>
