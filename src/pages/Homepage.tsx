@@ -1,4 +1,7 @@
+import TestimonialCarousel from "@/components/common/TestimonialCarousel";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
 import { Link } from "react-router";
 
 type SectionType = {
@@ -110,6 +113,9 @@ export default function Homepage() {
           </div>
         </section>
       ))}
+      <Separator className="bg-raisin-black/50" />
+      <TestimonialCarousel />
+      <Separator className="bg-raisin-black/50" />
     </div>
   );
 }
