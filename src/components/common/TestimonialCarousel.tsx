@@ -51,7 +51,16 @@ const TESTIMONIALS: TestimonyCardProps[] = [
 export default function TestimonialCarousel() {
   return (
     <>
-      <section className="py-10">
+      <section className="py-20 flex flex-col justify-center items-center gap-y-10">
+        <div className="text-center flex flex-col items-center gap-y-2 w-full">
+          <h2 className="text-4xl font-extrabold">
+            Don’t take our word for it
+          </h2>
+          <p className="text-lg font-light w-xl">
+            Our customers say it best—experience why we're the ultimate
+            destination for exceptional coffee.
+          </p>
+        </div>
         <Carousel className="">
           <CarouselContent className="bg-transparent">
             {TESTIMONIALS.map((testimonial) => (
