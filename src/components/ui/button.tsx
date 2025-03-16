@@ -21,6 +21,8 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         main: "text-off-white bg-raisin-black rounded-full hover:opacity-80",
         icon: "hover:opacity-70 bg-raisin-black rounded-full text-milky-white w-[100px]",
+        outline2:
+          "border border-raisin-black hover:bg-blackhole/30 rounded-full text-raisin-black",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
