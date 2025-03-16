@@ -61,7 +61,7 @@ function TestimonialCard({
 }: TestimonyCardProps) {
   return (
     // <Card className="h-[350px] w-full border-3 flex flex-col p-5 py-7 gap-2">
-    <Card className="h-full w-full border-3 flex flex-col p-5 py-7 gap-2 md:gap-5">
+    <Card className="h-full w-full border-3 flex flex-col p-5 py-7 gap-2 md:gap-5 bg-off-white/30">
       <CardContent className="items-center grow p-0">
         <p className="text-xs md:text-sm lg:text-xl font-semibold tracking-tight">
           {testimony}
