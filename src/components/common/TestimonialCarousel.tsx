@@ -6,83 +6,47 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { TESTIMONIALS } from "@/constants";
 
-const TESTIMONIALS: TestimonyCardProps[] = [
-  {
-    iconUrl:
-      "src/assets/profile/images/stefan-stefancik-QXevDflbl8A-unsplash.jpg",
-    name: "Andrea Meredith Vance",
-    role: "CTO, Nexora Technologies",
-    // testimony:
-    //   'Best coffee in town! The rich, bold flavors keep me coming back, and the pastries? Absolutely irresistible."',
-    testimony: `"I can’t imagine starting my day without this coffee! It’s smooth, bold, and gives me the perfect kick to stay sharp during long coding sessions. Whether I’m deep in problem-solving or brainstorming the next big innovation at Nexora, this is the fuel that keeps me going!"`,
-  },
-  {
-    iconUrl: "src/assets/profile/images/arya-dubey-8eYI8qcEFxI-unsplash.jpg",
-    name: "Mark Patton",
-    role: "Software Developer, Nexora Technologies",
-    testimony:
-      '"I’ve tasted coffee from all over, but nothing compares to this! The rich aroma and perfectly balanced flavors make every cup an experience. Whether I’m on the go or unwinding after a long day, this is my go-to brew."',
-  },
-  {
-    iconUrl: "src/assets/profile/images/fatane-rahimi-Agv-xPQBO60-unsplash.jpg",
-    name: "Hayley Seraphine Crowell",
-    role: "Novelist, Indie Musician",
-    testimony:
-      '"Every sip feels like a warm hug! The deep, chocolatey notes and smooth finish make this my go-to for songwriting sessions. It’s like creativity in a cup!"',
-  },
-  {
-    iconUrl:
-      "src/assets/profile/images/christopher-campbell-rDEOVtE7vOs-unsplash.jpg",
-    name: "Alexandra Smith",
-    role: "Marketing Director",
-    testimony:
-      '"The perfect balance of strength and smoothness! Whether I’m leading a meeting or catching up on emails, this coffee keeps me focused and ready to tackle the day."',
-  },
-  {
-    iconUrl:
-      "src/assets/profile/images/charlesdeluvio-Mv9hjnEUHR4-unsplash.jpg",
-    name: "Alex Vexley",
-    role: "Cybersecurity Specialist and Underground DJ",
-    testimony: `"Cybersecurity is all about precision, and so is great coffee. This blend is rich, bold, and exactly what I need to stay sharp. I wouldn’t trust anything else to get me through those late-night coding sessions!"`,
-  },
-];
+/**
+ *
+ * TODO: implement overall responsiveness. Check for resposive text size
+ */
 
 export default function TestimonialCarousel() {
   return (
     <>
-      <section className="py-20 flex flex-col justify-center items-center gap-y-10">
-        <div className="text-center flex flex-col items-center gap-y-2 w-full">
-          <h2 className="text-4xl font-extrabold">
+      <section className="py-20 flex flex-col justify-center items-center gap-y-20">
+        <div className="text-center flex flex-col items-center gap-y-2">
+          <h2 className="text-2xl md:text-4xl font-extrabold">
             Don’t take our word for it
           </h2>
-          <p className="text-lg font-light w-xl">
+          <p className="text-xs md:text-lg font-light w-xs md:w-xl">
             Our customers say it best—experience why we're the ultimate
             destination for exceptional coffee.
           </p>
         </div>
         <Carousel className="">
-          <CarouselContent className="bg-transparent">
+          <CarouselContent className="h-full min-w-[250px] w-svw sm:w-[500px] lg:w-full md:w-lg">
             {TESTIMONIALS.map((testimonial) => (
-              <CarouselItem className="basis-1/3">
-                <TestimonialCard
-                  iconUrl={testimonial.iconUrl}
-                  name={testimonial.name}
-                  role={testimonial.role}
-                  testimony={testimonial.testimony}
-                />
+              <CarouselItem
+                key={testimonial.id}
+                className="md:basis-1/1 lg:basis-1/3"
+              >
+                <TestimonialCard {...testimonial} />
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
+          <CarouselPrevious className="hidden sm:flex" />
+          <CarouselNext className="hidden sm:flex" />
         </Carousel>
       </section>
     </>
   );
 }
 
-type TestimonyCardProps = {
+export type TestimonyCardProps = {
+  id: number;
   iconUrl: string;
   testimony: string;
   name: string;
@@ -96,23 +60,24 @@ function TestimonialCard({
   testimony,
 }: TestimonyCardProps) {
   return (
-    <Card className="h-[330px] min-w-[200px] border-3 flex flex-col py-0 gap-1">
-      {/* <CardHeader className="">
-        <CardTitle className="w-full h-[20px]"></CardTitle>
-        <CardDescription>Card Description</CardDescription>
-      </CardHeader> */}
-      <CardContent className="items-center py-2 grow">
-        <p className="text-xl font-semibold">{testimony}</p>
+    // <Card className="h-[350px] w-full border-3 flex flex-col p-5 py-7 gap-2">
+    <Card className="h-full w-full border-3 flex flex-col p-5 py-7 gap-2 md:gap-5">
+      <CardContent className="items-center grow p-0">
+        <p className="text-xs md:text-sm lg:text-xl font-semibold tracking-tight">
+          {testimony}
+        </p>
       </CardContent>
-      <CardFooter className="h-fit flex gap-3 py-3 justify-start">
-        <img
-          className="w-20 h-20 rounded-full object-cover"
-          src={iconUrl}
-          alt="Profile Picture"
-        />
-        <div className="">
-          <div className="font-medium">{name}</div>
-          <div className="font-light">{role}</div>
+      <CardFooter className="h-fit flex-col sm:flex-row sm:justify-center gap-2 grow-0 p-0">
+        <div className="flex items-center justify-center h-fit w-fit p-0">
+          <img
+            className="w-12 h-12 md:w-18 md:h-18 rounded-full object-cover"
+            src={iconUrl}
+            alt="Profile Picture"
+          />
+        </div>
+        <div className="grow h-full flex flex-col justify-center items-center sm:items-start">
+          <div className="font-medium text-xs xl:text-lg">{name}</div>
+          <div className="font-light text-xs xl:text-sm">{role}</div>
         </div>
       </CardFooter>
     </Card>

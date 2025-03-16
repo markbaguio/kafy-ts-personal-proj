@@ -91,7 +91,7 @@ export default function Homepage() {
             <img
               src={section.imgUrl}
               alt={section.alt}
-              className="h-full max-h-[900px] w-full"
+              className="h-full max-h-[900px] w-full object-cover"
             />
           </div>
           <div
