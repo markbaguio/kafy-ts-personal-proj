@@ -1,4 +1,5 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
+import { SectionType } from "./pages/Homepage";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
