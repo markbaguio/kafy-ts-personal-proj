@@ -7,13 +7,17 @@ import {
 } from "@/components/ui/carousel";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { TESTIMONIALS } from "@/constants";
-
-/**
- *
- * TODO: implement overall responsiveness. Check for resposive text size
- */
+import Autoplay, { AutoplayType } from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 export default function TestimonialCarousel() {
+  const carouselAutoPlayPlugin = useRef<AutoplayType>(
+    Autoplay({
+      delay: 2500,
+      stopOnMouseEnter: true,
+    })
+  );
+
   return (
     <>
       <section className="py-20 flex flex-col justify-center items-center gap-y-20">
@@ -26,7 +30,13 @@ export default function TestimonialCarousel() {
             destination for exceptional coffee.
           </p>
         </div>
-        <Carousel className="">
+        <Carousel
+          opts={{ loop: true, startIndex: 1 }}
+          plugins={[carouselAutoPlayPlugin.current]}
+          onMouseLeave={() => {
+            carouselAutoPlayPlugin.current.play();
+          }}
+        >
           <CarouselContent className="h-full min-w-[250px] w-svw sm:w-[500px] lg:w-full md:w-lg">
             {TESTIMONIALS.map((testimonial) => (
               <CarouselItem
