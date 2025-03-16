@@ -42,3 +42,52 @@ export const TESTIMONIALS: TestimonyCardProps[] = [
     testimony: `"Cybersecurity is all about precision, and so is great coffee. This blend is rich, bold, and exactly what I need to stay sharp. I wouldn’t trust anything else to get me through those late-night coding sessions!"`,
   },
 ];
+
+export const sections: SectionType[] = [
+  {
+    id: 1,
+    imgUrl: "src/assets/nathan-dumlao-zEdCT0qrodE-unsplash.jpg",
+    alt: "Black Coffee and Latte",
+    buttonLink: "/",
+    buttonText: "Learn more",
+    title: "More to sip and savor",
+    content: `Enjoy a rich selection of coffee, plus freshly baked pastries made to pair perfectly with your favorite brew. Whether you're in the mood for a bold espresso or a sweet treat, there’s always something delicious waiting for you.`,
+    textColor: "text-milky-white",
+    contentBGColor: "bg-black-coffee",
+  },
+  {
+    id: 2,
+    imgUrl: "src/assets/tabitha-turner-F0Wd4djYvSA-unsplash.jpg",
+    alt: "Creamy Latte",
+    buttonLink: "/",
+    buttonText: "Learn more",
+    title: "Crafted for every cup",
+    content: `We take pride in every pour. From carefully sourced beans to expertly brewed espresso, each cup is made with precision and passion. Whether you prefer a bold, rich roast or a smooth, creamy latte, our coffee is crafted to bring out the best in every sip.`,
+    textColor: "text-black-coffee",
+    contentBGColor: "bg-light-caramel",
+  },
+  {
+    id: 3,
+    imgUrl: "src/assets/mike-kenneally-TD4DBagg2wE-unsplash.jpg",
+    alt: "Coffee Beans",
+    buttonLink: "/",
+    buttonText: "Learn more",
+    title: "Freshly brewed, just for you",
+    content:
+      "Great coffee starts with great beans. We carefully select and roast each batch to highlight the unique flavors of every origin. Whether it’s a hand-poured single origin or a classic espresso, every drink is made to order, just the way you like it.",
+    contentBGColor: "bg-royal-brown",
+    textColor: "text-milky-white",
+  },
+  {
+    id: 4,
+    imgUrl: "src/assets/conor-brown-sqkXyyj4WdE-unsplash.jpg",
+    alt: "Croissant",
+    buttonLink: "/",
+    buttonText: "Learn more",
+    title: "Beyond the basics",
+    content:
+      "We’re more than just coffee. From flaky croissants to decadent desserts, our pastries are baked fresh to complement every cup. Looking for something savory? Our selection of bites makes the perfect pairing for any moment of the day.",
+    contentBGColor: "bg-golden-brown",
+    textColor: "text-milky-white",
+  },
+];
