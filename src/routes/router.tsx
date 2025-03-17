@@ -1,5 +1,6 @@
 import AuthLayout from "@/layouts/AuthLayout";
 import MainLayout from "@/layouts/MainLayout";
+import AboutUs from "@/pages/AboutUs";
 import GiftCards from "@/pages/GiftCards";
 import Homepage from "@/pages/Homepage";
 import { Menu } from "@/pages/Menu";
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
         path: "/gift",
         element: <GiftCards />,
       },
+      { path: "/about-us", element: <AboutUs /> },
     ],
   },
   {

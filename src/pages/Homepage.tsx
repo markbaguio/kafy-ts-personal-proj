@@ -5,7 +5,7 @@ import { sections } from "@/constants";
 
 import { Link } from "react-router";
 
-export type SectionType = {
+export type SplitScreenSectionType = {
   imgUrl: string;
   alt: string;
   title: string;

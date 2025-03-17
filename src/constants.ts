@@ -1,5 +1,5 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
-import { SectionType } from "./pages/Homepage";
+import { SplitScreenSectionType } from "./pages/Homepage";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -44,7 +44,7 @@ export const TESTIMONIALS: TestimonyCardProps[] = [
   },
 ];
 
-export const sections: SectionType[] = [
+export const sections: SplitScreenSectionType[] = [
   {
     id: 1,
     imgUrl: "src/assets/nathan-dumlao-zEdCT0qrodE-unsplash.jpg",
