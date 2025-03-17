@@ -84,7 +84,7 @@ function TestimonialCard({
             alt="Profile Picture"
           />
         </div>
-        <div className="grow h-full flex flex-col justify-center items-center sm:items-start">
+        <div className="grow h-full flex flex-col justify-center items-center text-center sm:text-start sm:items-start">
           <div className="font-medium text-xs xl:text-lg">{name}</div>
           <div className="font-light text-xs xl:text-sm">{role}</div>
         </div>
