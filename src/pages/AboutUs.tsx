@@ -96,8 +96,6 @@ export default function AboutUs() {
   );
 }
 
-//TODO: Implement contact form.
-
 const ContactUsFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email(),
