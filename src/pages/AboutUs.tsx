@@ -114,7 +114,6 @@ function ContactUsForm() {
     formState: { errors },
   } = useForm<ContactUsFormType>({
     resolver: zodResolver(ContactUsFormSchema),
-    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<ContactUsFormType> = async (
@@ -201,7 +200,11 @@ function ContactUsForm() {
           </p>
         </div>
       </div>
-      <Button className="text-sm md:text-lg" variant="main">
+      <Button
+        className="text-sm md:text-lg w-full"
+        variant="main"
+        type="submit"
+      >
         Send message
       </Button>
     </form>
