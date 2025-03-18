@@ -23,7 +23,7 @@ export default function Rewards() {
         <div className="absolute inset-0 bg-black-coffee/30"></div>
         {/* <div className="absolute inset-0 bg-gradient-to-b from-black-coffee/60 via-black-coffee/30"></div> */}
         <div className="relative flex flex-col justify-center items-center md:items-start h-full w-full text-milky-white px-10 md:px-0">
-          <div className="flex flex-col gap-5 md:gap-10 h-fit w-full md:max-w-[50%] bg-raisin-black/30 backdrop-blur-sm p-3 md:p-10 md:ml-10 rounded-4xl">
+          <div className="flex flex-col gap-5 md:gap-10 h-fit w-full md:max-w-[50%] bg-raisin-black/30 backdrop-blur-md p-3 md:p-10 md:ml-10 rounded-4xl">
             <div className="flex flex-col gap-1 text-start w-full py-3">
               <h1 className="font-bold text-lg md:text-4xl lg:text-6xl text-center md:text-start">
                 Free coffee is just around the corner
