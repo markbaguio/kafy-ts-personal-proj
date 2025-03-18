@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import clsx from "clsx";
+import { useEffect } from "react";
 
 type SingleColumnSectionType = {
   id: number;
@@ -45,6 +46,18 @@ const SingleColumnSection: SingleColumnSectionType[] = [
 ];
 
 export default function AboutUs() {
+  const { pathname } = useLocation();
+  /**
+   * ?Since About us page is fully front end.
+   * ?The react router Link component won't re-render the about us page since nothing literally
+   * ?changed on the about us page. This useEffect will only scroll to the top once the
+   * ?Link to about page is clicked.
+   * ?Eliminating the problem of about us page not showing/scrolling to the top of the page.
+   */
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
+
   return (
     <div className="flex flex-col justify-center gap-10 md:gap-20 p-10">
       {SingleColumnSection.map((aboutUs) => (
