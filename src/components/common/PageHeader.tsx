@@ -53,7 +53,7 @@ export default function PageHeader() {
               <Logo />
             </Link>
             {/** DESKTOP NAVBAR */}
-            <nav className="hidden md:flex gap-6">
+            <nav className="hidden lg:flex gap-6">
               {navItems.map((navItem) => (
                 <NavLink
                   key={navItem.path}
@@ -70,7 +70,7 @@ export default function PageHeader() {
               ))}
             </nav>
           </div>
-          <div className="hidden md:flex flex-row gap-3">
+          <div className="hidden lg:flex flex-row gap-3">
             <Button asChild variant="ghost" className="flex items-center gap-0">
               <Link to="/storelocator">
                 <Locate className="w-5 h-5 mr-2" />
@@ -89,7 +89,7 @@ export default function PageHeader() {
 
           {/** Mobile view */}
           <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
-            <SheetTrigger asChild className="md:hidden">
+            <SheetTrigger asChild className="lg:hidden">
               <Button variant="ghost" size="icon">
                 <Menu className="size-full" />
               </Button>
