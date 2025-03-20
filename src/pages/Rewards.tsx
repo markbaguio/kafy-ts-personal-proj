@@ -1,6 +1,7 @@
 import Banner from "@/components/common/Banner";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { data, Link } from "react-router";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Rewards() {
   return (
@@ -9,7 +10,7 @@ export default function Rewards() {
       {/* Hero section */}
       <HeroSection />
       {/* Rewards section */}
-      <section className="flex flex-col py-30 h-fit ">
+      <section className="flex flex-col py-30 h-fit">
         <div className="flex flex-col items-center gap-1 md:gap-5">
           <h2 className="text-xl sm:text-2xl md:text-4xl font-bold">
             Getting free coffee is easy!
@@ -88,6 +89,72 @@ export default function Rewards() {
             </div>
           </div>
         </div>
+      </section>
+      <section className="h-full w-full flex flex-col items-center justify-center">
+        <div className="w-full text-center py-5 text-5xl font-semibold bg-light-caramel">
+          <h2>Get your KAFY favorites for free</h2>
+        </div>
+        <div className="w-full flex flex-col items-center bg-off-white">
+          <Tabs defaultValue="20" className="w-full max-w-[800px] p-5">
+            <TabsList className="h-full w-full p-0 rounded-none bg-off-white">
+              <TabsTrigger
+                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
+              text-raisin-black relative border-none shadow-none 
+                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
+                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
+                value="20"
+              >
+                20
+              </TabsTrigger>
+
+              <TabsTrigger
+                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
+              text-raisin-black relative border-none shadow-none 
+                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
+                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
+                value="40"
+              >
+                40
+              </TabsTrigger>
+              <TabsTrigger
+                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
+              text-raisin-black relative border-none shadow-none 
+                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
+                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
+                value="60"
+              >
+                60
+              </TabsTrigger>
+              <TabsTrigger
+                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
+              text-raisin-black relative border-none shadow-none 
+                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
+                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
+                value="95"
+              >
+                95
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="20">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem,
+              aliquid!
+            </TabsContent>
+            <TabsContent value="40">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequuntur, praesentium.
+            </TabsContent>
+            <TabsContent value="60">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequuntur, praesentium.
+            </TabsContent>
+            <TabsContent value="95">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Consequuntur, praesentium.
+            </TabsContent>
+          </Tabs>
+        </div>
+        {/* <div className="h-1/4 bg-golden-brown/50"></div>
+        <div className="h-full bg-raisin-black "></div> */}
       </section>
     </div>
   );
