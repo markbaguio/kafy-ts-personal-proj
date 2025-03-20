@@ -2,6 +2,7 @@ import Banner from "@/components/common/Banner";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { rewardsInfo } from "@/constants";
 
 export default function Rewards() {
   return (
@@ -83,80 +84,89 @@ export default function Rewards() {
               <p className="text-start text-xs sm:text-sm md:text-lg lg:text-center">
                 Every order brings you closer to something special! Collect
                 points with every purchase and redeem them for free drinks,
-                discounts, and exclusive rewards. The more you sip, the more you
-                save!
+                discounts, and exclusive rewards. The more you sip, the more you{" "}
+                save! {""}
+                <a
+                  href="#rewards-info"
+                  className="text-golden-brown underline hover:no-underline"
+                >
+                  Learn more
+                </a>
               </p>
             </div>
           </div>
         </div>
       </section>
-      <section className="h-full w-full flex flex-col items-center justify-center">
-        <div className="w-full text-center py-5 text-5xl font-semibold bg-light-caramel">
-          <h2>Get your KAFY favorites for free</h2>
-        </div>
-        <div className="w-full flex flex-col items-center bg-off-white">
-          <Tabs defaultValue="20" className="w-full max-w-[800px] p-5">
-            <TabsList className="h-full w-full p-0 rounded-none bg-off-white">
-              <TabsTrigger
-                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
-              text-raisin-black relative border-none shadow-none 
-                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
-                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
-                value="20"
-              >
-                20
-              </TabsTrigger>
-
-              <TabsTrigger
-                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
-              text-raisin-black relative border-none shadow-none 
-                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
-                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
-                value="40"
-              >
-                40
-              </TabsTrigger>
-              <TabsTrigger
-                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
-              text-raisin-black relative border-none shadow-none 
-                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
-                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
-                value="60"
-              >
-                60
-              </TabsTrigger>
-              <TabsTrigger
-                className="h-[100px] text-4xl bg-off-white data-[state=active]:bg-off-white data-[state=active]:shadow-none 
-              text-raisin-black relative border-none shadow-none 
-                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0 
-                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
-                value="95"
-              >
-                95
-              </TabsTrigger>
-            </TabsList>
-            <TabsContent value="20">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem,
-              aliquid!
-            </TabsContent>
-            <TabsContent value="40">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur, praesentium.
-            </TabsContent>
-            <TabsContent value="60">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur, praesentium.
-            </TabsContent>
-            <TabsContent value="95">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Consequuntur, praesentium.
-            </TabsContent>
-          </Tabs>
-        </div>
-        {/* <div className="h-1/4 bg-golden-brown/50"></div>
-        <div className="h-full bg-raisin-black "></div> */}
-      </section>
+      <RewardInfoSection rewardInfo={rewardsInfo} />
     </div>
+  );
+}
+
+export type RewardsInfoType = {
+  imgUrl: string;
+  value: string;
+  header: string;
+  description: string;
+};
+
+type RewardInfoSectionProps = {
+  rewardInfo: RewardsInfoType[];
+};
+
+function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
+  return (
+    <section
+      id="rewards-info"
+      className="h-lvh w-full flex flex-col items-center justify-center"
+    >
+      <div className="w-full text-center py-5 text-lg sm:text-xl md:text-4xl lg:text-5xl font-semibold bg-light-caramel">
+        <h2>Get your KAFY favorites for free</h2>
+      </div>
+      <div className="w-full flex flex-col items-center py-15 bg-off-white">
+        <Tabs
+          defaultValue={rewardInfo[0].value}
+          className="w-full max-w-[1000px] p-5 flex gap-0"
+        >
+          {/* Generate Tab Triggers */}
+          <TabsList className="h-full w-full p-0 rounded-none bg-off-white">
+            {rewardInfo.map((reward) => (
+              <TabsTrigger
+                className="h-[50px] md:h-[100px] text-lg sm:text-xl md:text-4xl bg-off-white hover:cursor-pointer data-[state=active]:bg-off-white data-[state=active]:shadow-none focus-visible:ring
+              text-raisin-black relative border-none shadow-none
+                data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0
+                after:h-[5px] after:bg-golden-brown after:transition-all after:duration-300 after:w-0"
+                value={reward.value}
+              >
+                {reward.value}
+                <img
+                  src="src/assets/reward/ticket-svgrepo-com.svg"
+                  alt="kafy points"
+                  className="w-[30px] h-[30px]"
+                />
+              </TabsTrigger>
+            ))}
+          </TabsList>
+          {/* Generate Tab Contents */}
+          {rewardInfo.map((reward) => (
+            <TabsContent value={reward.value}>
+              <div className="h-full w-full flex flex-col md:flex-row gap-10">
+                <div
+                  className={`w-full h-[500px] bg-[url(${reward.imgUrl})] bg-center bg-cover bg-no-repeat rounded-2xl`}
+                ></div>
+                <div className="w-full flex flex-col items-center justify-center gap-5">
+                  <h2 className="text-3xl md:text-5xl font-bold w-full">
+                    {reward.header}
+                  </h2>
+                  <p className="text-xl md:text-2xl w-full">
+                    {reward.description}
+                  </p>
+                </div>
+              </div>
+            </TabsContent>
+          ))}
+        </Tabs>
+      </div>
+    </section>
   );
 }
 
@@ -164,7 +174,7 @@ function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative w-full h-fit md:h-[500px] p-5 bg-[url(src/assets/reward/math-6GDW9BVdmkw-unsplash.jpg)] bg-center bg-no-repeat bg-cover"
+      className="relative w-full h-fit md:h-lvh p-5 bg-[url(src/assets/reward/math-6GDW9BVdmkw-unsplash.jpg)] bg-center bg-no-repeat bg-cover"
     >
       {/** Overlay */}
       <div className="absolute inset-0 bg-black-coffee/30"></div>

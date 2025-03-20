@@ -1,5 +1,6 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { SplitScreenSectionType } from "./pages/Homepage";
+import { RewardsInfoType } from "./pages/Rewards";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -90,5 +91,36 @@ export const sections: SplitScreenSectionType[] = [
       "We’re more than just coffee. From flaky croissants to decadent desserts, our pastries are baked fresh to complement every cup. Looking for something savory? Our selection of bites makes the perfect pairing for any moment of the day.",
     contentBGColor: "bg-golden-brown",
     textColor: "text-milky-white",
+  },
+];
+
+export const rewardsInfo: RewardsInfoType[] = [
+  {
+    imgUrl: "src/assets/reward/nathan-dumlao-pnmRtTHWqDM-unsplash.jpg",
+    value: "20",
+    header: "A sip on us",
+    description:
+      "Enjoy a free hot or iced coffee of your choice, on the house!",
+  },
+  {
+    imgUrl: "src/assets/reward/alex-duong-Ko7oE49VF6Q-unsplash.jpg",
+    value: "40",
+    header: "A Sweet Pair",
+    description: `Enjoy a freshly brewed café latte or classic brewed coffee,
+                  paired with a delicious pastry of your choice!`,
+  },
+  {
+    imgUrl: "src/assets/reward/demi-deherrera-L-sm1B4L1Ns-unsplash.jpg",
+    value: "60",
+    header: "The Perfect Brew",
+    description: `Upgrade your coffee experience with a handcrafted specialty
+                  drink—any size, any flavor!`,
+  },
+  {
+    imgUrl: "src/assets/reward/jojo-yuen-sharemyfoodd-xG-jonH_fx0-unsplash.jpg",
+    value: "95",
+    header: "Coffee Lover’s Delight",
+    description: `Indulge with a full café experience: a premium drink + pastry
+                  + a surprise gift from us!`,
   },
 ];
