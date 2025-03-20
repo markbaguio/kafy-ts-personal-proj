@@ -1,6 +1,6 @@
 import Banner from "@/components/common/Banner";
 import { Button } from "@/components/ui/button";
-import { data, Link } from "react-router";
+import { Link } from "react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Rewards() {
