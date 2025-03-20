@@ -10,7 +10,7 @@ export default function Rewards() {
       <HeroSection />
       {/* Rewards section */}
       <section className="flex flex-col py-30 h-fit ">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center gap-1 md:gap-5">
           <h2 className="text-xl sm:text-2xl md:text-4xl font-bold">
             Getting free coffee is easy!
           </h2>
@@ -24,10 +24,10 @@ export default function Rewards() {
             <img
               src="src\assets\rewards\number-one-svgrepo-com.svg"
               alt="number1"
-              className="w-[50px] h-[50px] md:w-[70px]  md:h-[70px]"
+              className="w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
             />
-            <div className="flex flex-col items-center gap-5">
-              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full">
+            <div className="flex flex-col items-center gap-3 md:gap-5">
+              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full font-bold text-burnt-sienna ">
                 Create an account
               </span>
               <p className="text-start text-xs sm:text-sm md:text-lg lg:text-center">
@@ -50,8 +50,8 @@ export default function Rewards() {
               alt="number1"
               className="w-[50px] h-[50px] md:w-[70px]  md:h-[70px]"
             />
-            <div className="flex flex-col items-center gap-5">
-              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full">
+            <div className="flex flex-col items-center gap-3 md:gap-5">
+              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full font-bold text-burnt-sienna">
                 Buy Kafy products your way
               </span>
               <p className="text-start text-xs sm:text-sm md:text-lg lg:text-center">
@@ -75,8 +75,8 @@ export default function Rewards() {
               alt="number1"
               className="w-[50px] h-[50px] md:w-[70px]  md:h-[70px]"
             />
-            <div className="flex flex-col items-center gap-5">
-              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full">
+            <div className="flex flex-col items-center gap-3 md:gap-5">
+              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full font-bold text-burnt-sienna">
                 Earn points, unlock rewards
               </span>
               <p className="text-start text-xs sm:text-sm md:text-lg lg:text-center">
