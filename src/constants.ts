@@ -1,6 +1,6 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { SplitScreenSectionType } from "./pages/Homepage";
-import { RewardsInfoType } from "./pages/Rewards";
+import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -124,3 +124,42 @@ export const rewardsInfo: RewardsInfoType[] = [
                   + a surprise gift from us!`,
   },
 ];
+
+export const RewardPerks: RewardPerksType[] = [
+  {
+    header: "Exciting Rewards",
+    description: `Unlock free drinks, food, and more—plus, enjoy a special treat on your birthday
+`,
+    imgUrl: "src/assets/reward/birthday-cake-svgrepo-com.svg",
+    imgAlt: "Birthday Cake",
+    dialogHeader: "Happy Birthday!",
+    dialogDescription: "Enjoy a free drink or pastry on your birthday!",
+    dialogImgUrl: "",
+    diaImgAlt: "exclusive rewards",
+  },
+  {
+    header: "Seamless Ordering",
+    description: `Breeze through checkout with saved favorites and effortless pre-ordering.`,
+    imgUrl: "src/assets/reward/credit-card-svgrepo-com.svg",
+    imgAlt: "Card",
+    dialogHeader: "Happy Birthday!",
+    dialogDescription: "Enjoy a free drink or pastry on your birthday!",
+    dialogImgUrl: "",
+    diaImgAlt: "exclusive rewards",
+  },
+  {
+    header: "Unlock Rewards Faster",
+    description: `Rack up points quicker with bonus challenges, double-point days, and exclusive offers.`,
+    imgUrl: "src/assets/reward/iced-coffee-cold-drink-svgrepo-com.svg",
+    imgAlt: "food and drink",
+    dialogHeader: "Happy Birthday!",
+    dialogDescription: "Enjoy a free drink or pastry on your birthday!",
+    dialogImgUrl: "",
+    diaImgAlt: "exclusive rewards",
+  },
+];
+
+export const RewardsPerksHeader = "Limitless Perks";
+export const RewardsPerksDescription = `Join KAFY Rewards for seamless ordering, exclusive treats,
+            and—yes—free coffee and treats, because great taste deserves great
+            rewards.`;

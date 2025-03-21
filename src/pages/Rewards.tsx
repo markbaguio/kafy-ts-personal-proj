@@ -2,7 +2,12 @@ import Banner from "@/components/common/Banner";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { rewardsInfo } from "@/constants";
+import {
+  RewardPerks,
+  rewardsInfo,
+  RewardsPerksDescription,
+  RewardsPerksHeader,
+} from "@/constants";
 
 export default function Rewards() {
   return (
@@ -87,7 +92,7 @@ export default function Rewards() {
                 discounts, and exclusive rewards. The more you sip, the more you{" "}
                 save! {""}
                 <a
-                  href="#rewards-info"
+                  href="#perks"
                   className="text-golden-brown underline hover:no-underline"
                 >
                   Learn more
@@ -98,7 +103,68 @@ export default function Rewards() {
         </div>
       </section>
       <RewardInfoSection rewardInfo={rewardsInfo} />
+      <RewardPerksSection
+        header={RewardsPerksHeader}
+        description={RewardsPerksDescription}
+        rewardPerks={RewardPerks}
+      />
     </div>
+  );
+}
+
+export type RewardPerksType = {
+  imgUrl: string;
+  imgAlt: string;
+  header: string;
+  description: string;
+  dialogHeader: string;
+  dialogDescription: string;
+  dialogImgUrl: string;
+  diaImgAlt: string;
+};
+
+type RewardPerksSectionProps = {
+  header: string;
+  description: string;
+  rewardPerks: RewardPerksType[];
+};
+
+function RewardPerksSection({
+  header,
+  description: desciption,
+  rewardPerks,
+}: RewardPerksSectionProps) {
+  return (
+    <section id="perks" className="flex flex-col py-30 h-fit">
+      <div className="flex flex-col items-center gap-1 md:gap-5">
+        <h2 className="text-xl sm:text-2xl md:text-4xl font-bold">{header}</h2>
+        <p className="w-full md:w-1/2 px-3 text-center text-sm sm:text-lg md:text-xl">
+          {desciption}
+        </p>
+      </div>
+      <div className="flex lg:flex-row flex-col justify-center gap-5 p-5 md:p-10">
+        {rewardPerks.map((perk) => (
+          <div
+            key={perk.imgUrl}
+            className="w-full lg:max-w-[500px] flex flex-row lg:flex-col items-center gap-5 md:gap-10 p-5"
+          >
+            <img
+              src={perk.imgUrl}
+              alt="number1"
+              className="w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
+            />
+            <div className="flex flex-col items-center gap-3 md:gap-5">
+              <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full font-bold text-golden-brown">
+                {perk.header}
+              </span>
+              <p className="text-start text-xs sm:text-sm md:text-lg lg:text-center">
+                {perk.description}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -164,11 +230,11 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
                         className="w-full h-full object-center object-cover rounded-2xl"
                       />
                     </div>
-                    <div className="w-full flex flex-col items-center justify-center gap-5">
-                      <h2 className="text-3xl md:text-5xl font-bold w-full text-center md:text-start">
+                    <div className="w-full flex flex-col items-center justify-center gap-2   md:gap-5">
+                      <h2 className="text-lg md:text-5xl font-semibold w-full text-center md:text-start">
                         {reward.header}
                       </h2>
-                      <p className="text-xl md:text-2xl w-full text-center md:text-start">
+                      <p className="text-sm md:text-2xl w-full text-center md:text-start">
                         {reward.description}
                       </p>
                     </div>
