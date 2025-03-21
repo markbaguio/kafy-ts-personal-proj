@@ -131,6 +131,7 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
           <TabsList className="h-full w-full p-0 rounded-none bg-off-white">
             {rewardInfo.map((reward) => (
               <TabsTrigger
+                key={reward.value}
                 className="h-[50px] md:h-[100px] text-lg sm:text-xl md:text-4xl bg-off-white hover:cursor-pointer data-[state=active]:bg-off-white data-[state=active]:shadow-none focus-visible:ring
               text-raisin-black relative border-none shadow-none
                 data-[state=active]:after:w-full after:absolute after:bottom-0 after:left-0
@@ -147,23 +148,37 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
             ))}
           </TabsList>
           {/* Generate Tab Contents */}
-          {rewardInfo.map((reward) => (
-            <TabsContent value={reward.value}>
-              <div className="h-full w-full flex flex-col md:flex-row gap-10">
-                <div
-                  className={`w-full h-[500px] bg-[url(${reward.imgUrl})] bg-center bg-cover bg-no-repeat rounded-2xl`}
-                ></div>
-                <div className="w-full flex flex-col items-center justify-center gap-5">
-                  <h2 className="text-3xl md:text-5xl font-bold w-full">
-                    {reward.header}
-                  </h2>
-                  <p className="text-xl md:text-2xl w-full">
-                    {reward.description}
-                  </p>
-                </div>
-              </div>
-            </TabsContent>
-          ))}
+          {rewardInfo.map(
+            (reward) => (
+              console.log(reward.imgUrl),
+              (
+                <TabsContent key={reward.value} value={reward.value}>
+                  <div className="h-full flex flex-col md:flex-row gap-10">
+                    {/* <div
+                      className={`w-full h-[500px] bg-[url(${reward.imgUrl})] bg-center bg-cover bg-no-repeat rounded-2xl`}
+                    ></div> */}
+                    <div
+                      className={`w-full h-[500px] bg-[url(${reward.imgUrl})] bg-center bg-cover bg-no-repeat rounded-2xl`}
+                    >
+                      <img
+                        src={reward.imgUrl}
+                        alt=""
+                        className="w-full h-full object-center object-cover rounded-2xl"
+                      />
+                    </div>
+                    <div className="w-full flex flex-col items-center justify-center gap-5">
+                      <h2 className="text-3xl md:text-5xl font-bold w-full">
+                        {reward.header}
+                      </h2>
+                      <p className="text-xl md:text-2xl w-full">
+                        {reward.description}
+                      </p>
+                    </div>
+                  </div>
+                </TabsContent>
+              )
+            )
+          )}
         </Tabs>
       </div>
     </section>
