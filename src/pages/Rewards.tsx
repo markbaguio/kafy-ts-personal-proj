@@ -117,12 +117,12 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
   return (
     <section
       id="rewards-info"
-      className="h-lvh w-full flex flex-col items-center justify-center"
+      className="h-full w-full flex flex-col items-center justify-center"
     >
       <div className="w-full text-center py-5 text-lg sm:text-xl md:text-4xl lg:text-5xl font-semibold bg-light-caramel">
         <h2>Get your KAFY favorites for free</h2>
       </div>
-      <div className="w-full flex flex-col items-center py-15 bg-off-white">
+      <div className="w-full flex flex-col items-center py-5 bg-off-white">
         <Tabs
           defaultValue={rewardInfo[0].value}
           className="w-full max-w-[1000px] p-5 flex gap-0"
@@ -157,9 +157,7 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
                     {/* <div
                       className={`w-full h-[500px] bg-[url(${reward.imgUrl})] bg-center bg-cover bg-no-repeat rounded-2xl`}
                     ></div> */}
-                    <div
-                      className={`w-full h-[500px] bg-[url(${reward.imgUrl})] bg-center bg-cover bg-no-repeat rounded-2xl`}
-                    >
+                    <div className={`w-full h-[300px] md:h-[500px]`}>
                       <img
                         src={reward.imgUrl}
                         alt=""
@@ -167,10 +165,10 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
                       />
                     </div>
                     <div className="w-full flex flex-col items-center justify-center gap-5">
-                      <h2 className="text-3xl md:text-5xl font-bold w-full">
+                      <h2 className="text-3xl md:text-5xl font-bold w-full text-center md:text-start">
                         {reward.header}
                       </h2>
-                      <p className="text-xl md:text-2xl w-full">
+                      <p className="text-xl md:text-2xl w-full text-center md:text-start">
                         {reward.description}
                       </p>
                     </div>
