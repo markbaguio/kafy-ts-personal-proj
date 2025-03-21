@@ -132,9 +132,10 @@ export const RewardPerks: RewardPerksType[] = [
 `,
     imgUrl: "src/assets/reward/birthday-cake-svgrepo-com.svg",
     imgAlt: "Birthday Cake",
-    dialogHeader: "Happy Birthday!",
-    dialogDescription: "Enjoy a free drink or pastry on your birthday!",
-    dialogImgUrl: "",
+    dialogHeader: "Exclusive Rewards & more",
+    dialogDescription:
+      "Every purchase brings you closer to free handcrafted drinks, delicious treats, and exclusive perks. As a KAFY Rewards member, you’ll also receive a special birthday treat, because celebrations should always come with great coffee.",
+    dialogImgUrl: "src/assets/reward/stars-shine-svgrepo-com.svg",
     diaImgAlt: "exclusive rewards",
   },
   {
@@ -142,9 +143,10 @@ export const RewardPerks: RewardPerksType[] = [
     description: `Breeze through checkout with saved favorites and effortless pre-ordering.`,
     imgUrl: "src/assets/reward/credit-card-svgrepo-com.svg",
     imgAlt: "Card",
-    dialogHeader: "Happy Birthday!",
-    dialogDescription: "Enjoy a free drink or pastry on your birthday!",
-    dialogImgUrl: "",
+    dialogHeader: "Fast, Fresh, and Just a Tap/Swipe Away.",
+    dialogDescription:
+      "With Kafy's order-ahead feature, your favorite drinks and snacks are just a tap away. Save your go-to orders, pay effortlessly, and pick up your items without the wait. Your coffee, your way—ready when you are.",
+    dialogImgUrl: "src/assets/reward/credit-card-payment-svgrepo-com.svg",
     diaImgAlt: "exclusive rewards",
   },
   {
@@ -152,9 +154,10 @@ export const RewardPerks: RewardPerksType[] = [
     description: `Rack up points quicker with bonus challenges, double-point days, and exclusive offers.`,
     imgUrl: "src/assets/reward/iced-coffee-cold-drink-svgrepo-com.svg",
     imgAlt: "food and drink",
-    dialogHeader: "Happy Birthday!",
-    dialogDescription: "Enjoy a free drink or pastry on your birthday!",
-    dialogImgUrl: "",
+    dialogHeader: "Exclusive Promos & more",
+    dialogDescription:
+      "Earn Kafy points even faster with special promotions like Double Point Days, personalized challenges, and surprise bonuses. Whether it’s an extra boost for your morning coffee or a game to win more rewards, there’s always a way to get free drinks and treats faster.",
+    dialogImgUrl: "src/assets/reward/calendar-svgrepo-com.svg",
     diaImgAlt: "exclusive rewards",
   },
 ];

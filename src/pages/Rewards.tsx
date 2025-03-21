@@ -8,6 +8,7 @@ import {
   RewardsPerksDescription,
   RewardsPerksHeader,
 } from "@/constants";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function Rewards() {
   return (
@@ -135,7 +136,7 @@ function RewardPerksSection({
   rewardPerks,
 }: RewardPerksSectionProps) {
   return (
-    <section id="perks" className="flex flex-col py-30 h-fit">
+    <section id="perks" className="flex flex-col py-30 min-h-fit">
       <div className="flex flex-col items-center gap-1 md:gap-5">
         <h2 className="text-xl sm:text-2xl md:text-4xl font-bold">{header}</h2>
         <p className="w-full md:w-1/2 px-3 text-center text-sm sm:text-lg md:text-xl">
@@ -153,13 +154,41 @@ function RewardPerksSection({
               alt="number1"
               className="w-[50px] h-[50px] md:w-[70px] md:h-[70px]"
             />
-            <div className="flex flex-col items-center gap-3 md:gap-5">
+            <div className="flex flex-col items-start lg:items-center gap-3 md:gap-5">
               <span className="text-start text-lg sm:text-2xl md:text-3xl lg:text-center w-full font-bold text-golden-brown">
                 {perk.header}
               </span>
               <p className="text-start text-xs sm:text-sm md:text-lg lg:text-center">
                 {perk.description}
               </p>
+              <Dialog>
+                <DialogTrigger
+                  asChild
+                  className="w-full flex flex-col justify-start items-start"
+                >
+                  <Button
+                    className="w-fit p-0 text-burnt-sienna underline hover:no-underline duration-0 text-sm"
+                    variant="ghost"
+                  >
+                    Learn more
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="h-fit py-15">
+                  <div className="flex flex-col items-center gap-5">
+                    <img
+                      src={perk.dialogImgUrl}
+                      alt={perk.diaImgAlt}
+                      className="w-[125px] h-[125px] md:w-[200px] md:h-[200px] object-center object-cover rounded-2xl"
+                    />
+                    <h2 className="text-xl md:text-2xl font-bold text-center">
+                      {perk.dialogHeader}
+                    </h2>
+                    <p className="text-sm md:text-lg text-center">
+                      {perk.dialogDescription}
+                    </p>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
         ))}
@@ -185,7 +214,7 @@ function RewardInfoSection({ rewardInfo }: RewardInfoSectionProps) {
       id="rewards-info"
       className="h-full w-full flex flex-col items-center justify-center"
     >
-      <div className="w-full text-center py-5 text-lg sm:text-xl md:text-4xl lg:text-5xl font-semibold bg-light-caramel">
+      <div className="w-full text-center py-5 text-lg sm:text-xl md:text-4xl font-semibold bg-light-caramel">
         <h2>Get your KAFY favorites for free</h2>
       </div>
       <div className="w-full flex flex-col items-center py-5 bg-off-white">
