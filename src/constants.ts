@@ -1,5 +1,6 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { SplitScreenSectionType } from "./pages/Homepage";
+import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -92,3 +93,74 @@ export const sections: SplitScreenSectionType[] = [
     textColor: "text-milky-white",
   },
 ];
+
+export const rewardsInfo: RewardsInfoType[] = [
+  {
+    imgUrl: "src/assets/reward/nathan-dumlao-pnmRtTHWqDM-unsplash.jpg",
+    value: "20",
+    header: "A sip on us",
+    description:
+      "Enjoy a free hot or iced coffee of your choice, on the house!",
+  },
+  {
+    imgUrl: "src/assets/reward/alex-duong-Ko7oE49VF6Q-unsplash.jpg",
+    value: "40",
+    header: "A Sweet Pair",
+    description: `Enjoy a freshly brewed café latte or classic brewed coffee,
+                  paired with a delicious pastry of your choice!`,
+  },
+  {
+    imgUrl: "src/assets/reward/demi-deherrera-L-sm1B4L1Ns-unsplash.jpg",
+    value: "60",
+    header: "The Perfect Brew",
+    description: `Upgrade your coffee experience with a handcrafted specialty
+                  drink—any size, any flavor!`,
+  },
+  {
+    imgUrl: "src/assets/reward/jojo-yuen-sharemyfoodd-xG-jonH_fx0-unsplash.jpg",
+    value: "95",
+    header: "Coffee Lover’s Delight",
+    description: `Indulge with a full café experience: a premium drink + pastry
+                  + a surprise gift from us!`,
+  },
+];
+
+export const RewardPerks: RewardPerksType[] = [
+  {
+    header: "Exciting Rewards",
+    description: `Unlock free drinks, food, and more—plus, enjoy a special treat on your birthday
+`,
+    imgUrl: "src/assets/reward/birthday-cake-svgrepo-com.svg",
+    imgAlt: "Birthday Cake",
+    dialogHeader: "Exclusive Rewards & more",
+    dialogDescription:
+      "Every purchase brings you closer to free handcrafted drinks, delicious treats, and exclusive perks. As a KAFY Rewards member, you’ll also receive a special birthday treat, because celebrations should always come with great coffee.",
+    dialogImgUrl: "src/assets/reward/stars-shine-svgrepo-com.svg",
+    diaImgAlt: "exclusive rewards",
+  },
+  {
+    header: "Seamless Ordering",
+    description: `Breeze through checkout with saved favorites and effortless pre-ordering.`,
+    imgUrl: "src/assets/reward/credit-card-svgrepo-com.svg",
+    imgAlt: "Card",
+    dialogHeader: "Fast, Fresh, and Just a Tap/Swipe Away.",
+    dialogDescription:
+      "With Kafy's order-ahead feature, your favorite drinks and snacks are just a tap away. Save your go-to orders, pay effortlessly, and pick up your items without the wait. Your coffee, your way—ready when you are.",
+    dialogImgUrl: "src/assets/reward/credit-card-payment-svgrepo-com.svg",
+    diaImgAlt: "exclusive rewards",
+  },
+  {
+    header: "Unlock Rewards Faster",
+    description: `Rack up points quicker with bonus challenges, double-point days, and exclusive offers.`,
+    imgUrl: "src/assets/reward/iced-coffee-cold-drink-svgrepo-com.svg",
+    imgAlt: "food and drink",
+    dialogHeader: "Exclusive Promos & more",
+    dialogDescription:
+      "Earn Kafy points even faster with special promotions like Double Point Days, personalized challenges, and surprise bonuses. Whether it’s an extra boost for your morning coffee or a game to win more rewards, there’s always a way to get free drinks and treats faster.",
+    dialogImgUrl: "src/assets/reward/calendar-svgrepo-com.svg",
+    diaImgAlt: "exclusive rewards",
+  },
+];
+
+export const RewardsPerksHeader = "Limitless Perks";
+export const RewardsPerksDescription = `Sign up for effortless ordering, exclusive perks, and—yes—free coffee. Because every great sip deserves a great reward.`;

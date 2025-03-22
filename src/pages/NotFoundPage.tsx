@@ -12,7 +12,7 @@ export default function NotFoundPage() {
         <h1 className="text-off-white text-2xl md:text-4xl lg:text-6xl text-center md:leading-[57px] tracking-tighter">
           Hold Tight-We're Building Something Cool!
         </h1>
-        <p className="text-off-white text-center font-light text-sm md:text-xl lg:text-2xl md:Lleading-[57px] tracking-tighter">
+        <p className="text-off-white text-center font-light text-sm md:text-xl lg:text-2xl md:leading-[57px] tracking-tighter">
           This page is currently under construction, but we’re working hard to
           make it worth the wait. Stay tuned for updates!
         </p>

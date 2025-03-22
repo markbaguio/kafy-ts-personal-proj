@@ -17,7 +17,8 @@ const buttonVariants = cva(
           "border border-raisin-black hover:bg-royal-brown/20 hover:text-accent-foreground rounded-full text-raisin-black",
         secondary:
           "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
-        ghost: "font-semibold hover:text-golden-brown",
+        ghost:
+          "font-semibold hover:text-golden-brown hover:underline hover:cursor-pointer",
         link: "text-primary underline-offset-4 hover:underline",
         main: "text-off-white bg-raisin-black rounded-full hover:opacity-80",
         icon: "hover:opacity-70 bg-raisin-black rounded-full text-milky-white w-[100px]",
