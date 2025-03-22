@@ -22,6 +22,7 @@
   --color-destructive: oklch(0.577 0.245 27.325);
   --color-success-green: #198754;
   --color-burnt-sienna: #bb4d2b;
+  --color-phthalo: #123524;
 
   --default-font-family: "Montserrat", "sans-serif";
 }

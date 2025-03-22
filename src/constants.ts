@@ -163,6 +163,4 @@ export const RewardPerks: RewardPerksType[] = [
 ];
 
 export const RewardsPerksHeader = "Limitless Perks";
-export const RewardsPerksDescription = `Join KAFY Rewards for seamless ordering, exclusive treats,
-            and—yes—free coffee and treats, because great taste deserves great
-            rewards.`;
+export const RewardsPerksDescription = `Sign up for effortless ordering, exclusive perks, and—yes—free coffee. Because every great sip deserves a great reward.`;

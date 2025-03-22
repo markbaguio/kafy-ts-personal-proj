@@ -3,8 +3,8 @@ import { Button } from "../ui/button";
 
 export default function Banner() {
   return (
-    <section className="flex flex-col md:flex-row justify-center gap-2 md:gap-10 items-center px-5 py-2 md:p-5 w-full h-fit bg-black-coffee">
-      <span className="text-xs md:text-xl text-center font-bold text-milky-white">
+    <section className="sticky top-0 z-10 flex flex-col md:flex-row justify-center gap-2 md:gap-10 items-center px-5 py-2 md:px-5 md:py-3 w-full h-fit bg-black-coffee">
+      <span className="text-xs md:text-lg lg:text-xl text-center font-bold text-milky-white">
         Sip More, Earn More! ☕✨ Collect points with every purchase and enjoy
         exclusive perks!
       </span>

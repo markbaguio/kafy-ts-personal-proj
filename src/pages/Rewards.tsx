@@ -9,6 +9,7 @@ import {
   RewardsPerksHeader,
 } from "@/constants";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 export default function Rewards() {
   return (
@@ -109,7 +110,76 @@ export default function Rewards() {
         description={RewardsPerksDescription}
         rewardPerks={RewardPerks}
       />
+      <RewardPaymentOptionSection />
+      <section className="flex flex-col items-start justify-start p-15 gap-5 h-fit bg-off-white">
+        <h2 className="text-xl md:text-3xl font-bold text-center md:text-startw-full">
+          Got Questions?
+        </h2>
+        <p className="text-sm md:text-xl font-light w-full 2xl:w-1/2 text-center md:text-start">
+          We're here to help! Ask us anytime, or find answers to common
+          questions {""}
+          <Link
+            className="text-golden-brown underline hover:no-underline"
+            to="/faq"
+          >
+            right here.
+          </Link>{" "}
+          Whether it's about rewards, orders, or the perfect brew, we've got you
+          covered.
+        </p>
+      </section>
     </div>
+  );
+}
+
+function RewardPaymentOptionSection() {
+  return (
+    <section
+      id="reward-payment-option"
+      className="h-fit py-20 bg-phthalo/85 flex flex-col items-center justify-center gap-10"
+    >
+      <div className="text-milky-white text-center flex flex-col items-center justify-center gap-3">
+        <h2 className="text-xl sm:text-2xl md:text-4xl font-bold">
+          Earn Kafy points with every payment!
+        </h2>
+        <p className="w-full md:w-1/2 px-3 text-center text-sm sm:text-lg md:text-xl">
+          Every purchase earns you Kafy Coins, no matter how you pay—save them
+          up and redeem for exciting rewards!
+        </p>
+      </div>
+      <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-10 p-5">
+        <Card className="shadow-black-coffee drop-shadow-2xl bg-off-white h-full w-full max-w-[450px] flex flex-col justify-center items-center">
+          <CardHeader>
+            <img
+              src="src/assets/reward/money-cash-svgrepo-com.svg"
+              className="w-[120px] h-[120px] md:w-[175px] md:h-[175px]"
+              alt=""
+            />
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-2 text-center">
+            <h2 className="text-xl md:text-3xl font-medium">Pay with cash</h2>
+            <p className="text-sm md:text-lg">
+              Earn 1 Kaffy Coin for every P150 spent
+            </p>
+          </CardContent>
+        </Card>
+        <Card className="shadow-black-coffee drop-shadow-2xl bg-off-white h-full w-full max-w-[450px] flex flex-col justify-center items-center">
+          <CardHeader>
+            <img
+              src="src\assets\reward\credit-card-new-svgrepo-com.svg"
+              className="w-[120px] h-[120px] md:w-[175px] md:h-[175px]"
+              alt=""
+            />
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-2 text-center">
+            <h2 className="text-xl md:text-3xl font-medium">Cashless </h2>
+            <p className="text-sm md:text-lg">
+              Earn 2 Kaffy Coins for every P170 spent
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </section>
   );
 }
 
@@ -287,7 +357,7 @@ function HeroSection() {
       {/** Overlay */}
       <div className="absolute inset-0 bg-black-coffee/30"></div>
       {/* <div className="absolute inset-0 bg-gradient-to-b from-black-coffee/60 via-black-coffee/30"></div> */}
-      <div className="relative flex flex-col justify-center items-center md:items-start h-full w-full text-milky-white px-10 sm:px-30 md:px-0">
+      <div className="relative flex flex-col justify-center items-center md:items-start h-full w-full text-milky-white sm:px-10 md:px-0">
         <div className="flex flex-col gap-5 md:gap-10 h-fit w-full md:max-w-[50%] bg-raisin-black/30 backdrop-blur-md p-5 md:p-10 md:ml-10 rounded-4xl">
           <div className="flex flex-col gap-1 text-start w-full py-3">
             <h1 className="font-bold text-xl md:text-4xl lg:text-5xl xl:text-[4rem] text-center md:text-start">
