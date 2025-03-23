@@ -45,7 +45,7 @@ export const TESTIMONIALS: TestimonyCardProps[] = [
   },
 ];
 
-export const sections: SplitScreenSectionType[] = [
+export const SECTIONS: SplitScreenSectionType[] = [
   {
     id: 1,
     imgUrl: "src/assets/nathan-dumlao-zEdCT0qrodE-unsplash.jpg",
