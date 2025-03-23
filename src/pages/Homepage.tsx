@@ -48,7 +48,6 @@ function HomepageSections() {
     queryFn: mockFetchSectionsData,
   });
 
-  console.log(sections);
   return sections?.map((section, index) => (
     <section
       key={section.id}
