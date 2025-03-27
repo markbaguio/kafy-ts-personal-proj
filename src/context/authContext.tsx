@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     getSession();
 
     //Listen for auth state changes.
+    //Listens for sign out, sign in, and refresh.
     const { data: authListener } = supabaseClient.auth.onAuthStateChange(
       (_event, session) => {
         setUserData(session?.user || null);
