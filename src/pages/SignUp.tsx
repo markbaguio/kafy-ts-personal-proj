@@ -12,6 +12,8 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router";
 
 const UserSignUpFormSchema = z
   .object({
@@ -23,7 +25,7 @@ const UserSignUpFormSchema = z
       .min(8, "Password must contain at least 8 characters")
       .max(25, "Password must not exceed 25 characters")
       .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
-      .regex(/[a-z]/, "Password must contain at least one lowecase letter."),
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
     confirmPassword: z.string().min(1, "Confirm Password is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -43,11 +45,30 @@ export default function SignUp() {
     mode: "onChange",
   });
 
+  const { signUp } = useAuth();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (
     data: UserSignUpFormType
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log(data);
+    try {
+      const result = await signUp(
+        data.email,
+        data.password,
+        data.firstName,
+        data.lastName
+      );
+
+      if (result) {
+        console.log(result.session); //? for development
+        console.log(result.user); //? for development
+        navigate("/");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -125,6 +146,7 @@ export default function SignUp() {
                   id="email"
                   placeholder="Email"
                   type="text"
+                  autoComplete="username"
                   className={
                     errors.email
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
@@ -143,6 +165,7 @@ export default function SignUp() {
                   id="password"
                   placeholder="Password"
                   type="password"
+                  autoComplete="new-password"
                   className={
                     errors.password
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
@@ -165,6 +188,7 @@ export default function SignUp() {
                   id="confirmPassword"
                   placeholder="Confirm Password"
                   type="password"
+                  autoComplete="new-password"
                   className={
                     errors.confirmPassword
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
