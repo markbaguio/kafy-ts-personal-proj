@@ -30,11 +30,13 @@ export default function PageHeader() {
   const { signOutUser, userData } = useAuth();
   const navigate = useNavigate();
 
+  console.log(userData);
+
   const handleSignOut = async () => {
     try {
       await signOutUser();
-      console.log(userData); //? for development.
       navigate("/auth/signin");
+      console.log(userData); //? for development.
     } catch (error) {
       console.log(error);
     }
@@ -90,17 +92,20 @@ export default function PageHeader() {
                 Store Locator
               </Link>
             </Button>
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <Link to="/auth/signin">Sign in</Link>
-              </Button>
-              <Button variant="main">
-                <Link to="/auth/signup">Join now</Link>
-              </Button>
+            {userData === null ? (
+              <div className="flex gap-2">
+                <Button variant="outline">
+                  <Link to="/auth/signin">Sign in</Link>
+                </Button>
+                <Button variant="main">
+                  <Link to="/auth/signup">Join now</Link>
+                </Button>
+              </div>
+            ) : (
               <Button variant="main" onClick={handleSignOut}>
                 Sign out
               </Button>
-            </div>
+            )}
           </div>
 
           {/** Mobile view */}
