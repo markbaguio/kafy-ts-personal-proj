@@ -51,7 +51,7 @@ export default function SignUp() {
     mode: "onChange",
   });
 
-  const { signUpNewUser: signUp } = useAuth();
+  const { signUpNewUser } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (
@@ -60,7 +60,7 @@ export default function SignUp() {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
     // console.log(data);
     try {
-      const result = await signUp(
+      const result = await signUpNewUser(
         data.email,
         data.password,
         data.firstName,
