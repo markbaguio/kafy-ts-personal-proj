@@ -14,6 +14,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 const UserSignUpFormSchema = z
   .object({
@@ -69,8 +70,8 @@ export default function SignUp() {
       );
 
       if (result) {
-        console.log(result.session); //? for development
-        console.log(result.user); //? for development
+        toast("Sign up succesful!");
+        console.log(result); //? for development
         navigate("/");
       }
     } catch (error) {

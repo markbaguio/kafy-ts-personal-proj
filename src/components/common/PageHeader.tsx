@@ -27,13 +27,13 @@ const navItems: navItemType[] = [
 
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
-  const { signOutUser } = useAuth();
+  const { signOutUser, userData } = useAuth();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
     try {
       await signOutUser();
-
+      console.log(userData); //? for development.
       navigate("/auth/signin");
     } catch (error) {
       console.log(error);
