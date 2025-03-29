@@ -36,7 +36,7 @@ const UserSignUpFormSchema = z
 type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
 /**
- * TODO: implement additional error handling especially on email (when email is already taken/used).
+ * TODO: implement additional error handling especially on email (when email is already taken/used). DONE
  * TODO: implement sonner/toast for succesful log in or when an error occurred when signing up.
  *
  */
@@ -45,6 +45,7 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
@@ -74,6 +75,10 @@ export default function SignUp() {
       }
     } catch (error) {
       console.error(error);
+      setError("email", {
+        type: "required",
+        message: "This email is already registered.",
+      });
     }
   };
 

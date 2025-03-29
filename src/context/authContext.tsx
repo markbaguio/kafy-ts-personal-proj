@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     });
 
     if (error) {
-      console.error(error); //? for development
+      // console.error(error); //? for development
       throw error;
     }
 
