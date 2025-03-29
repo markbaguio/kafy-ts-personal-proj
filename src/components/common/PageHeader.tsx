@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import Logo from "./Logo.tsx";
 import { Button } from "../ui/button.tsx";
 import { Locate, Menu } from "lucide-react";
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
+import { useAuth } from "@/hooks/useAuth.ts";
 
 type navItemType = {
   name: string;
@@ -26,6 +27,18 @@ const navItems: navItemType[] = [
 
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+  const { signOutUser } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSignOut = async () => {
+    try {
+      await signOutUser();
+
+      navigate("/auth/signin");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,6 +96,9 @@ export default function PageHeader() {
               </Button>
               <Button variant="main">
                 <Link to="/auth/signup">Join now</Link>
+              </Button>
+              <Button variant="main" onClick={handleSignOut}>
+                Sign out
               </Button>
             </div>
           </div>
