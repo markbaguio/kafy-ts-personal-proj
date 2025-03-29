@@ -35,6 +35,12 @@ const UserSignUpFormSchema = z
 
 type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
+/**
+ * TODO: implement additional error handling especially on email (when email is already taken/used).
+ * TODO: implement sonner/toast for succesful log in or when an error occurred when signing up.
+ *
+ */
+
 export default function SignUp() {
   const {
     register,
@@ -45,7 +51,7 @@ export default function SignUp() {
     mode: "onChange",
   });
 
-  const { signUp } = useAuth();
+  const { signUpNewUser: signUp } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (

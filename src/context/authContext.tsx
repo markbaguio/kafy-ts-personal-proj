@@ -4,17 +4,17 @@ import supabaseClient from "@/supabaseClient";
 
 interface AuthContextType {
   userData: User | null;
-  signUp: (
+  signUpNewUser: (
     email: string,
     password: string,
     firstName: string,
     lastName: string
   ) => Promise<{ user: User | null; session: Session | null }>;
-  signIn: (
+  signInUser: (
     email: string,
     password: string
   ) => Promise<{ user: User | null; session: Session | null }>;
-  signOut: () => Promise<void>;
+  signOutUser: () => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   //? Sign up function
-  const signUp = async (
+  const signUpNewUser = async (
     email: string,
     password: string,
     firstName: string,
@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   //? Sign in function
-  const signIn = async (
+  const signInUser = async (
     email: string,
     password: string
   ): Promise<{ user: User | null; session: Session | null }> => {
@@ -97,14 +97,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   //? Sign out function
   /// No need to setUserData to null as it is being handled by the useEffect.
-  const signOut = async () => {
+  const signOutUser = async () => {
     const { error } = await supabaseClient.auth.signOut();
 
     if (error) throw error;
   };
 
   return (
-    <AuthContext.Provider value={{ userData, signUp, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{
+        userData,
+        signUpNewUser: signUpNewUser,
+        signInUser: signInUser,
+        signOutUser: signOutUser,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
