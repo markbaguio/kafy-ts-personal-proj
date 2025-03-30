@@ -10,7 +10,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import {
-  AuthApiError,
   isAuthApiError,
   isAuthRetryableFetchError,
 } from "@supabase/supabase-js";
