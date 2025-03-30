@@ -6,6 +6,14 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import {
+  AuthApiError,
+  isAuthApiError,
+  isAuthRetryableFetchError,
+} from "@supabase/supabase-js";
 
 const UserSignInSchema = z.object({
   email: z.string().email(),
@@ -21,16 +29,44 @@ export function LoginForm({
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
 
+  const { signInUser, userData } = useAuth();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<UserSignInFormType> = async (
     data: UserSignInFormType
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log(data);
+    try {
+      const result = await signInUser(data.email, data.password);
+
+      if (result) {
+        toast(
+          `Sign in succesful. Welcome back ${userData?.user_metadata.display_name}`
+        );
+        navigate("/");
+      }
+    } catch (error) {
+      if (isAuthApiError(error)) {
+        setError("root", { type: "manual", message: `${error.message}` });
+        console.log(error);
+      } else if (isAuthRetryableFetchError(error)) {
+        console.log(error);
+        setError("root", {
+          type: "manual",
+          message: `Network Error. Please check your connection.`,
+        });
+      } else if (error instanceof Error) {
+        setError("root", { type: "manual", message: `An error occurred` });
+        console.log(error);
+      }
+    }
   };
 
   return (
@@ -92,6 +128,11 @@ export function LoginForm({
             )}
           </div>
         </div>
+        {errors.root && (
+          <p className="text-destructive text-[12px] text-start">
+            {errors.root.message}
+          </p>
+        )}
         <Button
           disabled={isSubmitting}
           type="submit"

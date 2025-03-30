@@ -77,7 +77,7 @@ export default function SignUp() {
     } catch (error) {
       console.error(error);
       setError("email", {
-        type: "required",
+        type: "manual",
         message: "This email is already registered.",
       });
     }
