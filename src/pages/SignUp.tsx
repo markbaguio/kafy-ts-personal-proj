@@ -41,12 +41,6 @@ const UserSignUpFormSchema = z
 
 type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
-/**
- * TODO: implement additional error handling especially on email (when email is already taken/used). DONE
- * TODO: implement sonner/toast for succesful log in or when an error occurred when signing up.
- *
- */
-
 export default function SignUp() {
   const {
     register,
@@ -80,13 +74,6 @@ export default function SignUp() {
         navigate("/");
       }
     } catch (error) {
-      // if (isAuthApiError(error) && error.code === "user_already_exists") {
-      //   setError("email", {
-      //     type: "manual",
-      //     message: "This email is already registered.",
-      //   });
-      //   console.error(error);
-      // }
       if (isAuthApiError(error)) {
         const processedErrorMessage: string = getAuthApiErrorMessage(error);
         setError("email", {

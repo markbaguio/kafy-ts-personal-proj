@@ -34,7 +34,7 @@ export function LoginForm({
     resolver: zodResolver(UserSignInSchema),
   });
 
-  const { signInUser, userData } = useAuth();
+  const { signInUser } = useAuth();
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserSignInFormType> = async (
@@ -46,9 +46,9 @@ export function LoginForm({
       const result = await signInUser(data.email, data.password);
 
       if (result) {
-        toast(
-          `Sign in succesful. Welcome back ${userData?.user_metadata.display_name}`
-        );
+        const display_name: string =
+          result.user?.user_metadata?.display_name || "User";
+        toast(`Welcome back ${display_name}`);
         navigate("/");
       }
     } catch (error) {
@@ -98,6 +98,7 @@ export function LoginForm({
               type="email"
               className="border-raisin-black placeholder:text-raisin-black"
               placeholder="Email"
+              autoComplete="username"
             />
             {errors.email && (
               <p className="text-destructive text-[12px] text-start">
@@ -122,6 +123,7 @@ export function LoginForm({
               id="password"
               type="password"
               placeholder="Password"
+              autoComplete="current-password"
               className="border-raisin-black placeholder:text-raisin-black"
             />
             {errors.password && (
