@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, getAuthApiErrorMessage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,6 +6,13 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import { useNavigate } from "react-router";
+import {
+  isAuthApiError,
+  isAuthRetryableFetchError,
+} from "@supabase/supabase-js";
 
 const UserSignInSchema = z.object({
   email: z.string().email(),
@@ -21,16 +28,48 @@ export function LoginForm({
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
 
+  const { signInUser } = useAuth();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<UserSignInFormType> = async (
     data: UserSignInFormType
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log(data);
+    try {
+      const result = await signInUser(data.email, data.password);
+
+      if (result) {
+        const display_name: string =
+          result.user?.user_metadata?.display_name || "User";
+        toast(`Welcome back ${display_name}`);
+        navigate("/");
+      }
+    } catch (error) {
+      if (isAuthApiError(error)) {
+        const processedErrorMessage: string = getAuthApiErrorMessage(error);
+        setError("root", {
+          type: "manual",
+          message: `${processedErrorMessage}`,
+        });
+        console.error(error);
+      } else if (isAuthRetryableFetchError(error)) {
+        setError("root", {
+          type: "manual",
+          message: `Network Error. Please check your connection.`,
+        });
+        console.error(error);
+      } else if (error instanceof Error) {
+        setError("root", { type: "manual", message: `An error occurred` });
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -59,6 +98,7 @@ export function LoginForm({
               type="email"
               className="border-raisin-black placeholder:text-raisin-black"
               placeholder="Email"
+              autoComplete="username"
             />
             {errors.email && (
               <p className="text-destructive text-[12px] text-start">
@@ -83,6 +123,7 @@ export function LoginForm({
               id="password"
               type="password"
               placeholder="Password"
+              autoComplete="current-password"
               className="border-raisin-black placeholder:text-raisin-black"
             />
             {errors.password && (
@@ -92,6 +133,11 @@ export function LoginForm({
             )}
           </div>
         </div>
+        {errors.root && (
+          <p className="text-destructive text-[12px] text-start">
+            {errors.root.message}
+          </p>
+        )}
         <Button
           disabled={isSubmitting}
           type="submit"

@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import Logo from "./Logo.tsx";
 import { Button } from "../ui/button.tsx";
 import { Locate, Menu } from "lucide-react";
@@ -11,6 +11,9 @@ import {
 } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
+import { useAuth } from "@/hooks/useAuth.ts";
+import { isAuthApiError } from "@supabase/supabase-js";
+import { getAuthApiErrorMessage } from "@/lib/utils.ts";
 
 type navItemType = {
   name: string;
@@ -26,6 +29,23 @@ const navItems: navItemType[] = [
 
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+  const { signOutUser, userData } = useAuth();
+  const navigate = useNavigate();
+
+  console.log(userData);
+
+  const handleSignOut = async () => {
+    try {
+      await signOutUser();
+      navigate("/auth/signin");
+      console.log(userData); //? for development.
+    } catch (error) {
+      // if (isAuthApiError(error)) {
+      //   console.error(error);
+      // }
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -77,14 +97,20 @@ export default function PageHeader() {
                 Store Locator
               </Link>
             </Button>
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <Link to="/auth/signin">Sign in</Link>
+            {userData === null ? (
+              <div className="flex gap-2">
+                <Button variant="outline">
+                  <Link to="/auth/signin">Sign in</Link>
+                </Button>
+                <Button variant="main">
+                  <Link to="/auth/signup">Join now</Link>
+                </Button>
+              </div>
+            ) : (
+              <Button variant="main" onClick={handleSignOut}>
+                Sign out
               </Button>
-              <Button variant="main">
-                <Link to="/auth/signup">Join now</Link>
-              </Button>
-            </div>
+            )}
           </div>
 
           {/** Mobile view */}

@@ -12,6 +12,14 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/hooks/useAuth";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
+import {
+  isAuthApiError,
+  isAuthRetryableFetchError,
+} from "@supabase/supabase-js";
+import { getAuthApiErrorMessage } from "@/lib/utils";
 
 const UserSignUpFormSchema = z
   .object({
@@ -23,7 +31,7 @@ const UserSignUpFormSchema = z
       .min(8, "Password must contain at least 8 characters")
       .max(25, "Password must not exceed 25 characters")
       .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
-      .regex(/[a-z]/, "Password must contain at least one lowecase letter."),
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
     confirmPassword: z.string().min(1, "Confirm Password is required"),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -37,17 +45,56 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
     mode: "onChange",
   });
 
+  const { signUpNewUser } = useAuth();
+  const navigate = useNavigate();
+
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (
     data: UserSignUpFormType
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log(data);
+    try {
+      const result = await signUpNewUser(
+        data.email,
+        data.password,
+        data.firstName,
+        data.lastName
+      );
+
+      if (result) {
+        toast("Sign up succesful!");
+        console.log(result); //? for development
+        navigate("/");
+      }
+    } catch (error) {
+      if (isAuthApiError(error)) {
+        const processedErrorMessage: string = getAuthApiErrorMessage(error);
+        setError("email", {
+          type: "manual",
+          message: processedErrorMessage,
+        });
+        console.error(error);
+      } else if (isAuthRetryableFetchError(error)) {
+        setError("email", {
+          type: "manual",
+          message: "Network Error. Please check your connection.",
+        });
+        console.error(error);
+      } else if (error instanceof Error) {
+        setError("email", {
+          type: "manual",
+          message: `An error occured`,
+        });
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -125,6 +172,7 @@ export default function SignUp() {
                   id="email"
                   placeholder="Email"
                   type="text"
+                  autoComplete="username"
                   className={
                     errors.email
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
@@ -143,6 +191,7 @@ export default function SignUp() {
                   id="password"
                   placeholder="Password"
                   type="password"
+                  autoComplete="new-password"
                   className={
                     errors.password
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
@@ -165,6 +214,7 @@ export default function SignUp() {
                   id="confirmPassword"
                   placeholder="Confirm Password"
                   type="password"
+                  autoComplete="new-password"
                   className={
                     errors.confirmPassword
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
