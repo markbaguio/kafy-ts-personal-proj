@@ -12,6 +12,8 @@ import {
 import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
 import { useAuth } from "@/hooks/useAuth.ts";
+import { isAuthApiError } from "@supabase/supabase-js";
+import { getAuthApiErrorMessage } from "@/lib/utils.ts";
 
 type navItemType = {
   name: string;
@@ -38,7 +40,10 @@ export default function PageHeader() {
       navigate("/auth/signin");
       console.log(userData); //? for development.
     } catch (error) {
-      console.log(error);
+      // if (isAuthApiError(error)) {
+      //   console.error(error);
+      // }
+      console.error(error);
     }
   };
 
