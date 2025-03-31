@@ -15,6 +15,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import {
+  AuthApiError,
+  AuthRetryableFetchError,
+  isAuthApiError,
+  isAuthRetryableFetchError,
+} from "@supabase/supabase-js";
+import { getAuthApiErrorMessage } from "@/lib/utils";
 
 const UserSignUpFormSchema = z
   .object({
@@ -75,11 +82,33 @@ export default function SignUp() {
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
-      setError("email", {
-        type: "manual",
-        message: "This email is already registered.",
-      });
+      // if (isAuthApiError(error) && error.code === "user_already_exists") {
+      //   setError("email", {
+      //     type: "manual",
+      //     message: "This email is already registered.",
+      //   });
+      //   console.error(error);
+      // }
+      if (isAuthApiError(error)) {
+        const processedErrorMessage: string = getAuthApiErrorMessage(error);
+        setError("email", {
+          type: "manual",
+          message: processedErrorMessage,
+        });
+        console.error(error);
+      } else if (isAuthRetryableFetchError(error)) {
+        setError("email", {
+          type: "manual",
+          message: "Network Error. Please check your connection.",
+        });
+        console.error(error);
+      } else if (error instanceof Error) {
+        setError("email", {
+          type: "manual",
+          message: `An error occured`,
+        });
+        console.error(error);
+      }
     }
   };
 

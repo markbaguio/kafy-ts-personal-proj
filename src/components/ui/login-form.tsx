@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, getAuthApiErrorMessage } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -53,17 +53,21 @@ export function LoginForm({
       }
     } catch (error) {
       if (isAuthApiError(error)) {
-        setError("root", { type: "manual", message: `${error.message}` });
-        console.log(error);
+        const processedErrorMessage: string = getAuthApiErrorMessage(error);
+        setError("root", {
+          type: "manual",
+          message: `${processedErrorMessage}`,
+        });
+        console.error(error);
       } else if (isAuthRetryableFetchError(error)) {
-        console.log(error);
         setError("root", {
           type: "manual",
           message: `Network Error. Please check your connection.`,
         });
+        console.error(error);
       } else if (error instanceof Error) {
         setError("root", { type: "manual", message: `An error occurred` });
-        console.log(error);
+        console.error(error);
       }
     }
   };
