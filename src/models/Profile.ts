@@ -4,4 +4,5 @@ export interface Profile {
   lastName: string;
   email: string;
   avatarUrl: string;
+  createdAt: Date;
 }
