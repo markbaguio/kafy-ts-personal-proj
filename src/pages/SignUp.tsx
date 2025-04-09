@@ -12,14 +12,6 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/hooks/useAuth";
-import { useNavigate } from "react-router";
-import { toast } from "sonner";
-import {
-  isAuthApiError,
-  isAuthRetryableFetchError,
-} from "@supabase/supabase-js";
-import { getAuthApiErrorMessage } from "@/lib/utils";
 
 const UserSignUpFormSchema = z
   .object({
@@ -45,56 +37,54 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
     mode: "onChange",
   });
 
-  const { signUpNewUser } = useAuth();
-  const navigate = useNavigate();
+  // const { signUpNewUser } = useAuth();
+  // const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (
     data: UserSignUpFormType
   ) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // console.log(data);
-    try {
-      const result = await signUpNewUser(
-        data.email,
-        data.password,
-        data.firstName,
-        data.lastName
-      );
-
-      if (result) {
-        toast("Sign up succesful!");
-        console.log(result); //? for development
-        navigate("/");
-      }
-    } catch (error) {
-      if (isAuthApiError(error)) {
-        const processedErrorMessage: string = getAuthApiErrorMessage(error);
-        setError("email", {
-          type: "manual",
-          message: processedErrorMessage,
-        });
-        console.error(error);
-      } else if (isAuthRetryableFetchError(error)) {
-        setError("email", {
-          type: "manual",
-          message: "Network Error. Please check your connection.",
-        });
-        console.error(error);
-      } else if (error instanceof Error) {
-        setError("email", {
-          type: "manual",
-          message: `An error occured`,
-        });
-        console.error(error);
-      }
-    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log(data);
+    // try {
+    //   const result = await signUpNewUser(
+    //     data.email,
+    //     data.password,
+    //     data.firstName,
+    //     data.lastName
+    //   );
+    //   if (result) {
+    //     toast("Sign up succesful!");
+    //     console.log(result); //? for development
+    //     navigate("/");
+    //   }
+    // } catch (error) {
+    //   if (isAuthApiError(error)) {
+    //     const processedErrorMessage: string = getAuthApiErrorMessage(error);
+    //     setError("email", {
+    //       type: "manual",
+    //       message: processedErrorMessage,
+    //     });
+    //     console.error(error);
+    //   } else if (isAuthRetryableFetchError(error)) {
+    //     setError("email", {
+    //       type: "manual",
+    //       message: "Network Error. Please check your connection.",
+    //     });
+    //     console.error(error);
+    //   } else if (error instanceof Error) {
+    //     setError("email", {
+    //       type: "manual",
+    //       message: `An error occured`,
+    //     });
+    //     console.error(error);
+    //   }
+    // }
   };
 
   return (

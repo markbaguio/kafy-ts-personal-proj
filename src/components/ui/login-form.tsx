@@ -28,48 +28,44 @@ export function LoginForm({
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
 
-  const { signInUser } = useAuth();
-  const navigate = useNavigate();
-
   const onSubmit: SubmitHandler<UserSignInFormType> = async (
     data: UserSignInFormType
   ) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // console.log(data);
-    try {
-      const result = await signInUser(data.email, data.password);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log(data);
+    // try {
+    //   const result = await signInUser(data.email, data.password);
 
-      if (result) {
-        const display_name: string =
-          result.user?.user_metadata?.display_name || "User";
-        toast(`Welcome back ${display_name}`);
-        navigate("/");
-      }
-    } catch (error) {
-      if (isAuthApiError(error)) {
-        const processedErrorMessage: string = getAuthApiErrorMessage(error);
-        setError("root", {
-          type: "manual",
-          message: `${processedErrorMessage}`,
-        });
-        console.error(error);
-      } else if (isAuthRetryableFetchError(error)) {
-        setError("root", {
-          type: "manual",
-          message: `Network Error. Please check your connection.`,
-        });
-        console.error(error);
-      } else if (error instanceof Error) {
-        setError("root", { type: "manual", message: `An error occurred` });
-        console.error(error);
-      }
-    }
+    //   if (result) {
+    //     const display_name: string =
+    //       result.user?.user_metadata?.display_name || "User";
+    //     toast(`Welcome back ${display_name}`);
+    //     navigate("/");
+    //   }
+    // } catch (error) {
+    //   if (isAuthApiError(error)) {
+    //     const processedErrorMessage: string = getAuthApiErrorMessage(error);
+    //     setError("root", {
+    //       type: "manual",
+    //       message: `${processedErrorMessage}`,
+    //     });
+    //     console.error(error);
+    //   } else if (isAuthRetryableFetchError(error)) {
+    //     setError("root", {
+    //       type: "manual",
+    //       message: `Network Error. Please check your connection.`,
+    //     });
+    //     console.error(error);
+    //   } else if (error instanceof Error) {
+    //     setError("root", { type: "manual", message: `An error occurred` });
+    //     console.error(error);
+    //   }
+    // }
   };
 
   return (
