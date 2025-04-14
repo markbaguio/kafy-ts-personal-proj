@@ -173,3 +173,10 @@ export const AUTH_SIGN_IN = "/auth/signin";
 export enum AxiosErrorCode {
   NetworkError = "ERR_NETWORK",
 }
+
+// EXPECTED ERROR NAMES FROM THE BACKEND - ERROR NAMES USED FOR IDENTIFYING IF THE ERROR IS A ZodError, AuthApiError(Supabase), Error... etc
+export enum ApiErrorName {
+  ZodError = "ZodError",
+  AuthApiError = "AuthApiError",
+  UnexpectedError = "Error",
+}

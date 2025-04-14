@@ -12,7 +12,7 @@ export type ApiResponse<T> = {
 //   message: string;
 // }
 
-export class ApiError<TErrorDetails = unknown> extends Error {
+export class ApiErrorResponse<TErrorDetails = unknown> extends Error {
   constructor(
     public statusCode: number,
     public errorName: string,
@@ -37,7 +37,7 @@ export type AuthApiErrorDetails = {
   code: string;
 };
 
-export type GenericErrorDetails = {
+export type UnexpectedErrorDetails = {
   name: string;
   message: string;
   stack: string;

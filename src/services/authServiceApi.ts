@@ -1,8 +1,9 @@
-import { ApiResponse } from "@/models/ApiResponse";
+import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/Profile";
 import axios, { isAxiosError } from "axios";
 import { AUTH_SIGN_IN, AxiosErrorCode, BASE_URL } from "../constants";
 import { UserSignInFormType } from "@/components/ui/login-form";
+import { isApiErrorResponse } from "@/lib/utils";
 
 export type SignInPayload = UserSignInFormType;
 
@@ -21,17 +22,24 @@ export async function signInUser(
     console.log(response.data);
     return response.data;
   } catch (error: unknown) {
-    // TODO: handle errors. Type checks etc... to display proper error message.
-    // console.log(error);
     if (isAxiosError(error)) {
-      const responseData = error.response?.data;
+      const responseErrorData = error.response?.data; //? Check if there are specifig error response.
       if (error.code === AxiosErrorCode.NetworkError) {
-        throw error; // throw error for the onError of the useMutation
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          "Unable to reach server. Please check your internet connection."
+        );
       }
-      // if (isApiErrorResponse(responseData)) {
-      //   // throw new Error(responseData.message);
-      //   throw Error(responseData.message);
-      // }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        // throw Error(responseErrorData.message);
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
     }
 
     //? for unknown errors
