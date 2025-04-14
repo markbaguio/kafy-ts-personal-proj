@@ -18,3 +18,14 @@ export function getAuthApiErrorMessage(error: AuthApiError): string {
   }
   return "An unknown error occurred";
 }
+
+// TYPEGUARD
+// export function isApiErrorResponse(data: any): data is ApiErrorResponse {
+//   return (
+//     typeof data === "object" &&
+//     data !== null &&
+//     typeof data.statusCode === "number" &&
+//     typeof data.message === "string" &&
+//     typeof data.errorName === "string"
+//   );
+// }

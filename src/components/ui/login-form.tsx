@@ -1,4 +1,4 @@
-import { cn, getAuthApiErrorMessage } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,20 +6,19 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { SignInPayload, signInUser } from "@/services/authServiceApi";
+import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
-import {
-  isAuthApiError,
-  isAuthRetryableFetchError,
-} from "@supabase/supabase-js";
 
 const UserSignInSchema = z.object({
   email: z.string().email(),
   password: z.string().min(1, "Password is required"),
 });
 
-type UserSignInFormType = z.infer<typeof UserSignInSchema>;
+export type UserSignInFormType = z.infer<typeof UserSignInSchema>;
+
+// TODO: implement error handling.
 
 export function LoginForm({
   className,
@@ -28,16 +27,33 @@ export function LoginForm({
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
 
-  const onSubmit: SubmitHandler<UserSignInFormType> = async (
+  const signInMutation = useMutation({
+    mutationFn: signInUser,
+    onSuccess: (response) => {
+      const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
+      useProfileStore.getState().updateProfile(profile!);
+    },
+    onError: (error) => {
+      if (error.message == "Network Error") {
+        toast.warning("Network Error. Please check your connection");
+        return;
+      }
+    },
+  });
+
+  const onSubmit: SubmitHandler<SignInPayload> = async (
     data: UserSignInFormType
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log(data);
+    const response = signInMutation.mutate(data);
+
     // try {
     //   const result = await signInUser(data.email, data.password);
 

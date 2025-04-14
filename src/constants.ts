@@ -164,3 +164,12 @@ export const RewardPerks: RewardPerksType[] = [
 
 export const RewardsPerksHeader = "Limitless Perks";
 export const RewardsPerksDescription = `Sign up for effortless ordering, exclusive perks, and—yes—free coffee. Because every great sip deserves a great reward.`;
+
+// URLs
+export const BASE_URL = "http://localhost:5000";
+export const AUTH_SIGN_IN = "/auth/signin";
+
+// AXIOS ERROR CODE: for axios errors not
+export enum AxiosErrorCode {
+  NetworkError = "ERR_NETWORK",
+}
