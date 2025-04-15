@@ -23,7 +23,7 @@ export async function signInUser(
     return response.data;
   } catch (error: unknown) {
     if (isAxiosError(error)) {
-      const responseErrorData = error.response?.data; //? Check if there are specifig error response.
+      const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
       if (error.code === AxiosErrorCode.NetworkError) {
         throw new ApiErrorResponse(
           503,
@@ -31,7 +31,7 @@ export async function signInUser(
           "Unable to reach server. Please check your internet connection."
         );
       }
-      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+      if (error.response?.data && isApiErrorResponse(responseErrorData)) {
         // throw Error(responseErrorData.message);
         throw new ApiErrorResponse(
           responseErrorData.statusCode,

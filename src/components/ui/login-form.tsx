@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, isAuthApiErrorResponse, isZodApiErrorResponse } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,6 +10,8 @@ import { useMutation } from "@tanstack/react-query";
 import { SignInPayload, signInUser } from "@/services/authServiceApi";
 import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
+import { ApiErrorResponse } from "@/models/ApiResponse";
+import { ApiErrorName, AxiosErrorCode } from "@/constants";
 
 const UserSignInSchema = z.object({
   email: z.string().email(),
@@ -40,9 +42,29 @@ export function LoginForm({
       useProfileStore.getState().updateProfile(profile!);
     },
     onError: (error) => {
-      if (error.message == "Network Error") {
-        toast.warning("Network Error. Please check your connection");
-        return;
+      if (error instanceof ApiErrorResponse) {
+        if (error.errorName === AxiosErrorCode.NetworkError) {
+          toast.warning(`${error.message}`);
+          return;
+        }
+        if (isAuthApiErrorResponse(error)) {
+          setError("root", { type: "manual", message: error.message });
+          console.error(error);
+          return;
+        } else if (isZodApiErrorResponse(error)) {
+          console.log(error.errorDetails?.fieldErrors);
+          if (error.errorDetails?.formErrors) {
+            setError("root", {
+              type: "manual",
+              message: error.errorDetails.formErrors[0],
+            });
+            return;
+          } else if (error.errorDetails?.fieldErrors) {
+            if ("email" in error.errorDetails.fieldErrors) {
+              console.log("miau");
+            }
+          }
+        }
       }
     },
   });

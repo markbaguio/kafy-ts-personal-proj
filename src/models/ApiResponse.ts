@@ -5,13 +5,6 @@ export type ApiResponse<T> = {
   error?: unknown;
   errorName?: string;
 };
-
-// export interface ApiErrorResponse extends Error {
-//   statusCode: number;
-//   errorName: string;
-//   message: string;
-// }
-
 export class ApiErrorResponse<TErrorDetails = unknown> extends Error {
   constructor(
     public statusCode: number,
