@@ -20,10 +20,10 @@ import { AxiosErrorCode } from "@/constants";
 import { useErrorBoundary } from "react-error-boundary";
 
 const UserSignInSchema = z.object({
-  // email: z.string().email(),
-  // password: z.string().min(1, "Password is required"),
-  email: z.string(),
-  password: z.string(),
+  email: z.string().email(),
+  password: z.string().min(1, "Password is required"),
+  // email: z.string(),
+  // password: z.string(),
 });
 
 export type UserSignInFormType = z.infer<typeof UserSignInSchema>;
