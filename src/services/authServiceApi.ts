@@ -18,8 +18,6 @@ export async function signInUser(
         withCredentials: true,
       }
     );
-
-    console.log(response.data);
     return response.data;
   } catch (error: unknown) {
     if (isAxiosError(error)) {
@@ -41,10 +39,8 @@ export async function signInUser(
         );
       }
     }
-
     //? for unknown errors
     throw new Error("An unexpected error occurred");
-
     // throw error; // Re-throw the error to ensure the function always returns or throws error to onError in UseMutation.
   }
 }

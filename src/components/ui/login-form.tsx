@@ -1,4 +1,9 @@
-import { cn, isAuthApiErrorResponse, isZodApiErrorResponse } from "@/lib/utils";
+import {
+  cn,
+  handleZodApiFieldErrors,
+  isAuthApiErrorResponse,
+  isZodApiErrorResponse,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,11 +16,14 @@ import { SignInPayload, signInUser } from "@/services/authServiceApi";
 import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
 import { ApiErrorResponse } from "@/models/ApiResponse";
-import { ApiErrorName, AxiosErrorCode } from "@/constants";
+import { AxiosErrorCode } from "@/constants";
+import { useErrorBoundary } from "react-error-boundary";
 
 const UserSignInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Password is required"),
+  // email: z.string().email(),
+  // password: z.string().min(1, "Password is required"),
+  email: z.string(),
+  password: z.string(),
 });
 
 export type UserSignInFormType = z.infer<typeof UserSignInSchema>;
@@ -35,6 +43,8 @@ export function LoginForm({
     resolver: zodResolver(UserSignInSchema),
   });
 
+  const { showBoundary } = useErrorBoundary();
+
   const signInMutation = useMutation({
     mutationFn: signInUser,
     onSuccess: (response) => {
@@ -52,19 +62,29 @@ export function LoginForm({
           console.error(error);
           return;
         } else if (isZodApiErrorResponse(error)) {
-          console.log(error.errorDetails?.fieldErrors);
-          if (error.errorDetails?.formErrors) {
+          const fieldErrors = error.errorDetails?.fieldErrors;
+          if (error.errorDetails?.formErrors.length !== 0) {
+            console.error(error.errorDetails?.formErrors);
             setError("root", {
               type: "manual",
-              message: error.errorDetails.formErrors[0],
+              message: `${error.errorDetails?.formErrors[0]}`,
             });
-            return;
-          } else if (error.errorDetails?.fieldErrors) {
-            if ("email" in error.errorDetails.fieldErrors) {
-              console.log("miau");
-            }
+          }
+          if (fieldErrors) {
+            // Object.entries(fieldErrors).forEach(([field, messages]) => {
+            //   if (messages.length > 0) {
+            //     setError(field as keyof SignInPayload, {
+            //       type: "manual",
+            //       message: messages[0],
+            //     });
+            //   }
+            // });
+            handleZodApiFieldErrors(fieldErrors, setError);
           }
         }
+      } else if (error instanceof Error) {
+        console.log("test miau");
+        showBoundary(error);
       }
     },
   });
@@ -72,38 +92,7 @@ export function LoginForm({
   const onSubmit: SubmitHandler<SignInPayload> = async (
     data: UserSignInFormType
   ) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // console.log(data);
     const response = signInMutation.mutate(data);
-
-    // try {
-    //   const result = await signInUser(data.email, data.password);
-
-    //   if (result) {
-    //     const display_name: string =
-    //       result.user?.user_metadata?.display_name || "User";
-    //     toast(`Welcome back ${display_name}`);
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   if (isAuthApiError(error)) {
-    //     const processedErrorMessage: string = getAuthApiErrorMessage(error);
-    //     setError("root", {
-    //       type: "manual",
-    //       message: `${processedErrorMessage}`,
-    //     });
-    //     console.error(error);
-    //   } else if (isAuthRetryableFetchError(error)) {
-    //     setError("root", {
-    //       type: "manual",
-    //       message: `Network Error. Please check your connection.`,
-    //     });
-    //     console.error(error);
-    //   } else if (error instanceof Error) {
-    //     setError("root", { type: "manual", message: `An error occurred` });
-    //     console.error(error);
-    //   }
-    // }
   };
 
   return (

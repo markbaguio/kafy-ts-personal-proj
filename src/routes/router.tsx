@@ -6,8 +6,8 @@ import Homepage from "@/pages/Homepage";
 import { Menu } from "@/pages/Menu";
 import NotFoundPage from "@/pages/NotFoundPage";
 import Rewards from "@/pages/Rewards";
-import { SignIn } from "@/pages/SignIn";
-import SignUp from "@/pages/SignUp";
+import { SignInPagge } from "@/pages/SignInPage";
+import SignUpPage from "@/pages/SignUpPage";
 import { createBrowserRouter } from "react-router";
 
 const router = createBrowserRouter([
@@ -29,9 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/auth",
     element: <AuthLayout />,
+    errorElement: <NotFoundPage />,
     children: [
-      { path: "signin", element: <SignIn /> },
-      { path: "signup", element: <SignUp /> },
+      { path: "signin", element: <SignInPagge /> },
+      { path: "signup", element: <SignUpPage /> },
     ],
   },
 ]);

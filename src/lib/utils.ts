@@ -7,6 +7,7 @@ import {
 } from "@/models/ApiResponse";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
+import { FieldValues, Path, UseFormSetError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -62,4 +63,20 @@ export function isUnexpectedApiErrorResponse(
     error instanceof ApiErrorResponse &&
     error.errorName === ApiErrorName.UnexpectedError
   );
+}
+
+//? -----------------------------------------------------------------------------------
+
+export function handleZodApiFieldErrors<T extends FieldValues>(
+  fieldErrors: Record<string, string[]>,
+  setError: UseFormSetError<T>
+): void {
+  Object.entries(fieldErrors).forEach(([field, messages]) => {
+    if (messages.length > 0) {
+      setError(field as Path<T>, {
+        type: "manual",
+        message: messages[0],
+      });
+    }
+  });
 }
