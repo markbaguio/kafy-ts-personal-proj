@@ -7,23 +7,25 @@ export function SignInErrorFallback({ resetErrorBoundary }: FallbackProps) {
 
   return (
     <div className="flex w-full flex-col justify-center gap-10 items-center h-lvh bg-raisin-black text-milky-white">
-      <h2 className="text-4xl font-medium">Whoops! Something went wrong.</h2>
-      <div className="flex justify-evenly">
-        <Button
-          variant="outline2"
-          className="w-fitoutline-milky-white text-milky-white border-milky-white"
-          onClick={() => resetErrorBoundary()}
-        >
-          Retry
-        </Button>
-        <Button
-          variant="outline2"
-          className="w-fitoutline-milky-white text-milky-white border-milky-white"
-          onClick={() => navigate("/")}
-        >
-          Home
-        </Button>
-      </div>
+      <section className="flex flex-col gap-10 justify-center items-center bg-golden-brown w-1/2 h-1/2">
+        <h2 className="text-4xl font-medium">Whoops! Something went wrong.</h2>
+        <div className="flex justify-evenly w-full">
+          <Button
+            variant="outline2"
+            className="w-fitoutline-milky-white text-milky-white border-milky-white text-2xl"
+            onClick={() => resetErrorBoundary()}
+          >
+            Retry
+          </Button>
+          <Button
+            variant="outline2"
+            className="w-fitoutline-milky-white text-milky-white border-milky-white text-2xl"
+            onClick={() => navigate("/")}
+          >
+            Home
+          </Button>
+        </div>
+      </section>
     </div>
   );
 }
