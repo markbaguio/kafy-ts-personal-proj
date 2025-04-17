@@ -28,7 +28,7 @@ const UserSignInSchema = z.object({
 
 export type UserSignInFormType = z.infer<typeof UserSignInSchema>;
 
-// TODO: implement error handling.
+// TODO: Make the SignInErrorFallback beautiful.
 
 export function LoginForm({
   className,
@@ -42,7 +42,6 @@ export function LoginForm({
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
-
   const { showBoundary } = useErrorBoundary();
 
   const signInMutation = useMutation({
