@@ -168,6 +168,8 @@ export const RewardsPerksDescription = `Sign up for effortless ordering, exclusi
 // URLs
 export const BASE_URL = "http://localhost:5000";
 export const AUTH_SIGN_IN = "/auth/signin";
+export const AUTH_SIGN_UP = "/auth/signup";
+export const AUTH_SIGN_OUT = "/auth/signout";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {

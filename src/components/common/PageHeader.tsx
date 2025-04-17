@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
+import { useProfileStore } from "@/store/useProfileStore.ts";
+import { AUTH_SIGN_IN, AUTH_SIGN_OUT, AUTH_SIGN_UP } from "@/constants.ts";
 
 type navItemType = {
   name: string;
@@ -56,6 +58,10 @@ export default function PageHeader() {
     };
   }, []);
 
+  const { profile } = useProfileStore();
+
+  console.log(profile);
+
   return (
     <>
       <header className="w-full bg-off-white shadow-md px-4 py-0">
@@ -90,14 +96,20 @@ export default function PageHeader() {
                 Store Locator
               </Link>
             </Button>
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <Link to="/auth/signin">Sign in</Link>
-              </Button>
+            {profile === null ? (
+              <div className="flex gap-2">
+                <Button variant="outline">
+                  <Link to={AUTH_SIGN_IN}>Sign in</Link>
+                </Button>
+                <Button variant="main">
+                  <Link to={AUTH_SIGN_UP}>Join now</Link>
+                </Button>
+              </div>
+            ) : (
               <Button variant="main">
-                <Link to="/auth/signup">Join now</Link>
+                <Link to={AUTH_SIGN_OUT}>Sign out</Link>
               </Button>
-            </div>
+            )}
           </div>
 
           {/** Mobile view */}

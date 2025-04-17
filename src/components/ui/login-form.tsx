@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { AxiosErrorCode } from "@/constants";
 import { useErrorBoundary } from "react-error-boundary";
+import { useNavigate } from "react-router";
 
 const UserSignInSchema = z.object({
   email: z.string().email(),
@@ -43,12 +44,15 @@ export function LoginForm({
     resolver: zodResolver(UserSignInSchema),
   });
   const { showBoundary } = useErrorBoundary();
+  const navigate = useNavigate();
 
   const signInMutation = useMutation({
     mutationFn: signInUser,
     onSuccess: (response) => {
       const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
       useProfileStore.getState().updateProfile(profile!);
+      //? on successful login; redirect to homepage.
+      navigate("/");
     },
     onError: (error) => {
       if (error instanceof ApiErrorResponse) {
@@ -82,7 +86,6 @@ export function LoginForm({
           }
         }
       } else if (error instanceof Error) {
-        console.log("test miau");
         showBoundary(error);
       }
     },
