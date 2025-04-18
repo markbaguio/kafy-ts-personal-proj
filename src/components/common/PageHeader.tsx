@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import Logo from "./Logo.tsx";
 import { Button } from "../ui/button.tsx";
 import { Locate, Menu } from "lucide-react";
@@ -13,6 +13,9 @@ import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
 import { useProfileStore } from "@/store/useProfileStore.ts";
 import { AUTH_SIGN_IN, AUTH_SIGN_OUT, AUTH_SIGN_UP } from "@/constants.ts";
+import { useMutation } from "@tanstack/react-query";
+import { signOutUser } from "@/services/authServiceApi.ts";
+import { toast } from "sonner";
 
 type navItemType = {
   name: string;
@@ -29,18 +32,26 @@ const navItems: navItemType[] = [
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
-  // const handleSignOut = async () => {
-  //   try {
-  //     await signOutUser();
-  //     navigate("/auth/signin");
-  //     console.log(userData); //? for development.
-  //   } catch (error) {
-  //     // if (isAuthApiError(error)) {
-  //     //   console.error(error);
-  //     // }
-  //     console.error(error);
-  //   }
-  // };
+  // TODO: Create a sign out service.
+  // TODO: Implement sign out function.
+  // TODO: Implement loading on mutation
+
+  const navigate = useNavigate();
+  const { profile } = useProfileStore();
+  console.log(profile);
+
+  const signOutMutation = useMutation({
+    mutationFn: signOutUser,
+    onSuccess: () => {
+      //? on successful sign out; redirect to homepage.
+      navigate("/auth/signin");
+      useProfileStore.getState().deleteProfile();
+      toast.success("Successfully signed out.");
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -57,10 +68,6 @@ export default function PageHeader() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  const { profile } = useProfileStore();
-
-  console.log(profile);
 
   return (
     <>
@@ -106,8 +113,13 @@ export default function PageHeader() {
                 </Button>
               </div>
             ) : (
-              <Button variant="main">
-                <Link to={AUTH_SIGN_OUT}>Sign out</Link>
+              <Button
+                onClick={() => {
+                  signOutMutation.mutate();
+                }}
+                variant="main"
+              >
+                Sign out
               </Button>
             )}
           </div>

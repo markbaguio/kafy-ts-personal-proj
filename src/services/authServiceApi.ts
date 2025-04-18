@@ -44,3 +44,23 @@ export async function signInUser(
     // throw error; // Re-throw the error to ensure the function always returns or throws error to onError in UseMutation.
   }
 }
+
+export async function signOutUser() {
+  try {
+    const response = await axios.post(`${BASE_URL}/auth/signout`, {
+      withCredentials: true,
+    });
+    console.log(response);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          "Unable to reach server. Please check your internet connection."
+        );
+      }
+    }
+  }
+}
