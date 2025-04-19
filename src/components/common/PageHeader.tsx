@@ -12,7 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
 import { useProfileStore } from "@/store/useProfileStore.ts";
-import { AUTH_SIGN_IN, AUTH_SIGN_OUT, AUTH_SIGN_UP } from "@/constants.ts";
+import { AUTH_SIGN_IN, AUTH_SIGN_UP } from "@/constants.ts";
 import { useMutation } from "@tanstack/react-query";
 import { signOutUser } from "@/services/authServiceApi.ts";
 import { toast } from "sonner";
