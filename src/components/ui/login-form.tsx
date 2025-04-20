@@ -97,6 +97,17 @@ export function LoginForm({
     const response = signInMutation.mutate(data);
   };
 
+  if (signInMutation.isPending) {
+    return (
+      <section>
+        <div className="flex flex-col gap-8 h-screen items-center justify-center text-raisin-black">
+          <div className="animate-ping rounded-full border-4 border-t-4 border-raisin-black h-12 w-12"></div>
+          <span className="text-2xl">Signing in... Please wait.</span>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <form
       className={cn("flex flex-col gap-6", className)}

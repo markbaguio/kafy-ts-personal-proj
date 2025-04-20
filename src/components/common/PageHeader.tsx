@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router";
 import Logo from "./Logo.tsx";
 import { Button } from "../ui/button.tsx";
-import { Locate, Menu } from "lucide-react";
+import { Locate, Menu, User } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -99,7 +99,7 @@ export default function PageHeader() {
                 Store Locator
               </Link>
             </Button>
-            {/* {profile === null ? (
+            {profile === null ? (
               <div className="flex gap-2">
                 <Button variant="outline">
                   <Link to={AUTH_SIGN_IN}>Sign in</Link>
@@ -109,31 +109,25 @@ export default function PageHeader() {
                 </Button>
               </div>
             ) : (
-              <Button
-                onClick={() => {
-                  signOutMutation.mutate();
-                }}
-                variant="main"
-              >
-                Sign out
-              </Button>
-            )} */}
-            <div className="flex gap-2">
-              <Button variant="outline">
-                <Link to={AUTH_SIGN_IN}>Sign in</Link>
-              </Button>
-              <Button variant="main">
-                <Link to={AUTH_SIGN_UP}>Join now</Link>
-              </Button>
-              <Button
-                onClick={() => {
-                  signOutMutation.mutate();
-                }}
-                variant="main"
-              >
-                Sign out
-              </Button>
-            </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => {
+                    console.log("profile");
+                  }}
+                  variant="main"
+                >
+                  <User />
+                </Button>
+                <Button
+                  onClick={() => {
+                    signOutMutation.mutate();
+                  }}
+                  variant="outline2"
+                >
+                  Sign out
+                </Button>
+              </div>
+            )}
           </div>
 
           {/** Mobile view */}
