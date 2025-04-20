@@ -31,7 +31,7 @@ const UserSignUpFormSchema = z
     path: ["confirmPassword"],
   });
 
-type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
+export type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
 export default function SignUpPage() {
   const {

@@ -1,9 +1,15 @@
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 import axios, { isAxiosError } from "axios";
-import { AUTH_SIGN_IN, AxiosErrorCode, BASE_URL } from "../constants";
+import {
+  AUTH_SIGN_IN,
+  AUTH_SIGN_UP,
+  AxiosErrorCode,
+  BASE_URL,
+} from "../constants";
 import { UserSignInFormType } from "@/components/ui/login-form";
 import { isApiErrorResponse } from "@/lib/utils";
+import { UserSignUpFormType } from "@/pages/SignUpPage";
 
 export type SignInPayload = UserSignInFormType;
 
@@ -73,6 +79,41 @@ export async function signOutUser() {
       }
     }
 
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export type signUpPayload = UserSignUpFormType;
+
+export async function signUpUser(
+  payload: signUpPayload
+): Promise<ApiResponse<Profile>> {
+  try {
+    const response = await axios.post<ApiResponse<Profile>>(
+      `${BASE_URL}${AUTH_SIGN_UP}`,
+      { payload },
+      { withCredentials: true }
+    );
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          "Unable to reach server. Please check your internet connection."
+        );
+      }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
+    }
     throw new Error("An unexpected error occurred");
   }
 }
