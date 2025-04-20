@@ -94,7 +94,7 @@ export function LoginForm({
   const onSubmit: SubmitHandler<SignInPayload> = async (
     data: UserSignInFormType
   ) => {
-    const response = signInMutation.mutate(data);
+    signInMutation.mutate(data);
   };
 
   if (signInMutation.isPending) {
