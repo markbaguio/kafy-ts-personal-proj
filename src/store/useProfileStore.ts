@@ -8,12 +8,6 @@ export type ProfileStore = {
   deleteProfile: () => void;
 };
 
-// export const useProfileStore = create<ProfileStore>((set) => ({
-//   profile: null,
-//   updateProfile: (profile) => set({ profile }),
-//   deleteProfile: () => set({ profile: null }),
-// }));
-
 export const useProfileStore = create<ProfileStore>()(
   persist(
     (set) => ({
