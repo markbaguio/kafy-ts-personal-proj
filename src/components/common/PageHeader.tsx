@@ -32,10 +32,6 @@ const navItems: navItemType[] = [
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
-  // TODO: Create a sign out service.
-  // TODO: Implement sign out function.
-  // TODO: Implement loading on mutation
-
   const navigate = useNavigate();
   const { profile } = useProfileStore();
   console.log(profile);

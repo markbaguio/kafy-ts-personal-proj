@@ -30,7 +30,6 @@ export async function signInUser(
         );
       }
       if (error.response?.data && isApiErrorResponse(responseErrorData)) {
-        // throw Error(responseErrorData.message);
         throw new ApiErrorResponse(
           responseErrorData.statusCode,
           responseErrorData.errorName,
@@ -41,11 +40,8 @@ export async function signInUser(
     }
     //? for unknown errors
     throw new Error("An unexpected error occurred");
-    // throw error; // Re-throw the error to ensure the function always returns or throws error to onError in UseMutation.
   }
 }
-
-// TODO: finish implementing the signOutUser service.
 
 export async function signOutUser() {
   try {
