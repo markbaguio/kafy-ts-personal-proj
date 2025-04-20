@@ -103,7 +103,7 @@ export default function PageHeader() {
                 Store Locator
               </Link>
             </Button>
-            {profile === null ? (
+            {/* {profile === null ? (
               <div className="flex gap-2">
                 <Button variant="outline">
                   <Link to={AUTH_SIGN_IN}>Sign in</Link>
@@ -121,7 +121,23 @@ export default function PageHeader() {
               >
                 Sign out
               </Button>
-            )}
+            )} */}
+            <div className="flex gap-2">
+              <Button variant="outline">
+                <Link to={AUTH_SIGN_IN}>Sign in</Link>
+              </Button>
+              <Button variant="main">
+                <Link to={AUTH_SIGN_UP}>Join now</Link>
+              </Button>
+              <Button
+                onClick={() => {
+                  signOutMutation.mutate();
+                }}
+                variant="main"
+              >
+                Sign out
+              </Button>
+            </div>
           </div>
 
           {/** Mobile view */}

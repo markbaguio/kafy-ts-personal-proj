@@ -1,5 +1,5 @@
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
-import { Profile } from "@/models/Profile";
+import { Profile } from "@/models/types";
 import axios, { isAxiosError } from "axios";
 import { AUTH_SIGN_IN, AxiosErrorCode, BASE_URL } from "../constants";
 import { UserSignInFormType } from "@/components/ui/login-form";
@@ -45,6 +45,8 @@ export async function signInUser(
   }
 }
 
+// TODO: finish implementing the signOutUser service.
+
 export async function signOutUser() {
   try {
     const response = await axios.post(`${BASE_URL}/auth/signout`, {
@@ -61,6 +63,16 @@ export async function signOutUser() {
           "Unable to reach server. Please check your internet connection."
         );
       }
+      if (responseErrorData) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
     }
+
+    throw new Error("An unexpected error occurred");
   }
 }
