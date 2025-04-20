@@ -49,9 +49,13 @@ export async function signInUser(
 
 export async function signOutUser() {
   try {
-    const response = await axios.post(`${BASE_URL}/auth/signout`, {
-      withCredentials: true,
-    });
+    const response = await axios.post(
+      `${BASE_URL}/auth/signout`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
     console.log(response);
   } catch (error) {
     if (isAxiosError(error)) {
