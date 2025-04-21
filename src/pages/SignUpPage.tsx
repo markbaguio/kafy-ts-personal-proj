@@ -12,6 +12,14 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { signUpUser } from "@/services/authServiceApi";
+import { ApiErrorName, AxiosErrorCode } from "@/constants";
+import { ApiErrorResponse } from "@/models/ApiResponse";
+import { Profile } from "@/models/types";
+import { useProfileStore } from "@/store/useProfileStore";
+import { toast } from "sonner";
 
 const UserSignUpFormSchema = z
   .object({
@@ -43,14 +51,34 @@ export default function SignUpPage() {
     mode: "onChange",
   });
 
-  // const { signUpNewUser } = useAuth();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
+  const signUpMutation = useMutation({
+    mutationFn: signUpUser,
+    onSuccess: (response) => {
+      if (response.data) {
+        const profile: Profile = response.data;
+        // Use the profile variable here if needed
+        useProfileStore.getState().updateProfile(profile!);
+        //? on successful login; redirect to homepage.
+        navigate("/");
+      }
+    },
+    onError: (error) => {
+      if (error instanceof ApiErrorResponse) {
+        if (error.errorName === AxiosErrorCode.NetworkError) {
+          toast.warning(`${error.message}`);
+          return;
+        }
+      }
+    },
+  });
 
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (
     data: UserSignUpFormType
   ) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(data);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // console.log(data);
+    signUpMutation.mutateAsync(data);
     // try {
     //   const result = await signUpNewUser(
     //     data.email,
@@ -86,6 +114,14 @@ export default function SignUpPage() {
     //   }
     // }
   };
+
+  if (signUpMutation.error) {
+    console.log(signUpMutation.error);
+    // setError("root", {
+    //   type: "manual",
+    //   message: `${signUpMutation.error.message}`,
+    // });
+  }
 
   return (
     <form
