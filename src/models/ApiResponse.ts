@@ -18,6 +18,7 @@ export class ApiErrorResponse<TErrorDetails = unknown> extends Error {
 }
 
 //? EXPECTED ERRORS FROM THE BACKEND.
+
 export type ZodErrorDetails = {
   formErrors: string[];
   fieldErrors: Record<string, string[]>;

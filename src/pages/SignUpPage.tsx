@@ -15,29 +15,44 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { signUpUser } from "@/services/authServiceApi";
-import { ApiErrorName, AxiosErrorCode } from "@/constants";
+import { AxiosErrorCode } from "@/constants";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
+import { isAuthApiError } from "@supabase/supabase-js";
+import {
+  handleZodApiFieldErrors,
+  isAuthApiErrorResponse,
+  isZodApiErrorResponse,
+} from "@/lib/utils";
+import { useErrorBoundary } from "react-error-boundary";
 
-const UserSignUpFormSchema = z
-  .object({
-    firstName: z.string().min(1, "First name is required"),
-    lastName: z.string().min(1, "Last name is required"),
-    email: z.string().email(),
-    password: z
-      .string()
-      .min(8, "Password must contain at least 8 characters")
-      .max(25, "Password must not exceed 25 characters")
-      .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
-      .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
-    confirmPassword: z.string().min(1, "Confirm Password is required"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+// const UserSignUpFormSchema = z
+//   .object({
+//     firstName: z.string().min(1, "First name is required"),
+//     lastName: z.string().min(1, "Last name is required"),
+//     email: z.string().email(),
+//     password: z
+//       .string()
+//       .min(8, "Password must contain at least 8 characters")
+//       .max(25, "Password must not exceed 25 characters")
+//       .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
+//       .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
+//     confirmPassword: z.string().min(1, "Confirm Password is required"),
+//   })
+//   .refine((data) => data.password === data.confirmPassword, {
+//     message: "Passwords do not match",
+//     path: ["confirmPassword"],
+//   });
+
+const UserSignUpFormSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string(),
+  password: z.string(),
+  confirmPassword: z.string(),
+});
 
 export type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
@@ -45,11 +60,14 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
     mode: "onChange",
   });
+
+  // const { showBoundary } = useErrorBoundary();
 
   const navigate = useNavigate();
   const signUpMutation = useMutation({
@@ -58,7 +76,7 @@ export default function SignUpPage() {
       if (response.data) {
         const profile: Profile = response.data;
         // Use the profile variable here if needed
-        useProfileStore.getState().updateProfile(profile!);
+        useProfileStore.getState().updateProfile(profile);
         //? on successful login; redirect to homepage.
         navigate("/");
       }
@@ -68,8 +86,25 @@ export default function SignUpPage() {
         if (error.errorName === AxiosErrorCode.NetworkError) {
           toast.warning(`${error.message}`);
           return;
+        } else if (isAuthApiErrorResponse(error)) {
+          setError("root", { type: "manual", message: error.message });
+          console.error(error);
+          return;
+        } else if (isZodApiErrorResponse(error)) {
+          const formErrors = error.errorDetails?.formErrors;
+          const fieldErrors = error.errorDetails?.fieldErrors;
+          console.error("miau", fieldErrors);
+          error.errorDetails?.fieldErrors;
+          if (formErrors && formErrors.length !== 0) {
+            setError("root", { type: "manual", message: formErrors[0] });
+            // return;
+          } else if (fieldErrors) {
+            handleZodApiFieldErrors(fieldErrors, setError);
+            // return;
+          }
         }
       }
+      // showBoundary(error);
     },
   });
 
