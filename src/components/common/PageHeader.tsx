@@ -33,7 +33,7 @@ export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  const { profile } = useProfileStore();
+  const profile = useProfileStore((state) => state.profile);
   console.log(profile);
 
   const signOutMutation = useMutation({
