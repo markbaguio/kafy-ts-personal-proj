@@ -20,7 +20,6 @@ import { ApiErrorResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
-import { isAuthApiError } from "@supabase/supabase-js";
 import {
   cn,
   handleZodApiFieldErrors,
@@ -82,7 +81,6 @@ export default function SignUpPage() {
         navigate("/");
       }
     },
-    //! TODO: Fix this: backend validation error don't match with the declared shcema
     onError: (error) => {
       if (error instanceof ApiErrorResponse) {
         if (error.errorName === AxiosErrorCode.NetworkError) {
@@ -99,15 +97,14 @@ export default function SignUpPage() {
           // console.error("miau", fieldErrors);
           error.errorDetails?.fieldErrors;
           console.log("miau", fieldErrors);
-          // if (formErrors && formErrors.length !== 0) {
-          //   setError("root", { type: "manual", message: formErrors[0] });
-          //   return;
-          // }
-          // if (fieldErrors) {
-          //   console.log("AAAAAAAAAA");
-          //   handleZodApiFieldErrors(fieldErrors, setError);
-          //   return;
-          // }
+          if (formErrors && formErrors.length !== 0) {
+            setError("root", { type: "manual", message: formErrors[0] });
+            return;
+          }
+          if (fieldErrors) {
+            handleZodApiFieldErrors(fieldErrors, setError);
+            return;
+          }
         }
       }
       // showBoundary(error);
@@ -120,49 +117,7 @@ export default function SignUpPage() {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
     // console.log(data);
     signUpMutation.mutateAsync(data);
-    // try {
-    //   const result = await signUpNewUser(
-    //     data.email,
-    //     data.password,
-    //     data.firstName,
-    //     data.lastName
-    //   );
-    //   if (result) {
-    //     toast("Sign up succesful!");
-    //     console.log(result); //? for development
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   if (isAuthApiError(error)) {
-    //     const processedErrorMessage: string = getAuthApiErrorMessage(error);
-    //     setError("email", {
-    //       type: "manual",
-    //       message: processedErrorMessage,
-    //     });
-    //     console.error(error);
-    //   } else if (isAuthRetryableFetchError(error)) {
-    //     setError("email", {
-    //       type: "manual",
-    //       message: "Network Error. Please check your connection.",
-    //     });
-    //     console.error(error);
-    //   } else if (error instanceof Error) {
-    //     setError("email", {
-    //       type: "manual",
-    //       message: `An error occured`,
-    //     });
-    //     console.error(error);
-    //   }
-    // }
   };
-
-  // if (signUpMutation.error) {
-  //   console.log(signUpMutation.error);
-  //   // setError("root", {
-  //   //   type: "manual",
-  //   //   message: `${signUpMutation.error.message}`,
-  //   // });
-  // }
 
   return (
     <form

@@ -91,7 +91,7 @@ export async function signUpUser(
   try {
     const response = await axios.post<ApiResponse<Profile>>(
       `${BASE_URL}${AUTH_SIGN_UP}`,
-      { payload },
+      payload,
       { withCredentials: true }
     );
     return response.data;
