@@ -2,7 +2,7 @@ import { FallbackProps } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 
-export function SignInErrorFallback({ resetErrorBoundary }: FallbackProps) {
+export function AuthErrorFallback({ resetErrorBoundary }: FallbackProps) {
   const navigate = useNavigate();
 
   return (

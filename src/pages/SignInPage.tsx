@@ -1,10 +1,10 @@
-import { SignInErrorFallback } from "@/components/common/SignInErrorFallback";
+import { AuthErrorFallback } from "@/components/common/AuthErrorFallback";
 import { LoginForm } from "@/components/ui/login-form";
 import { ErrorBoundary } from "react-error-boundary";
 
 export function SignInPagge() {
   return (
-    <ErrorBoundary FallbackComponent={SignInErrorFallback}>
+    <ErrorBoundary FallbackComponent={AuthErrorFallback}>
       <div className="flex flex-col-reverse md:flex-row md:justify-cente w-full h-screen">
         <div className="flex flex-col items-center justify-center p-5 w-full h-full md:w-[50%] bg-light-caramel">
           <LoginForm />
