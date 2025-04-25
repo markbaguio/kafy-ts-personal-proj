@@ -22,37 +22,38 @@ import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
 import { isAuthApiError } from "@supabase/supabase-js";
 import {
+  cn,
   handleZodApiFieldErrors,
   isAuthApiErrorResponse,
   isZodApiErrorResponse,
 } from "@/lib/utils";
 import { useErrorBoundary } from "react-error-boundary";
 
-// const UserSignUpFormSchema = z
-//   .object({
-//     firstName: z.string().min(1, "First name is required"),
-//     lastName: z.string().min(1, "Last name is required"),
-//     email: z.string().email(),
-//     password: z
-//       .string()
-//       .min(8, "Password must contain at least 8 characters")
-//       .max(25, "Password must not exceed 25 characters")
-//       .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
-//       .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
-//     confirmPassword: z.string().min(1, "Confirm Password is required"),
-//   })
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Passwords do not match",
-//     path: ["confirmPassword"],
-//   });
+const UserSignUpFormSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, "Password must contain at least 8 characters")
+      .max(25, "Password must not exceed 25 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
+    confirmPassword: z.string().min(1, "Confirm Password is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-const UserSignUpFormSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string(),
-  password: z.string(),
-  confirmPassword: z.string(),
-});
+// const UserSignUpFormSchema = z.object({
+//   firstName: z.string(),
+//   lastName: z.string(),
+//   email: z.string(),
+//   password: z.string(),
+//   confirmPassword: z.string(),
+// });
 
 export type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
@@ -81,27 +82,32 @@ export default function SignUpPage() {
         navigate("/");
       }
     },
+    //! TODO: Fix this: backend validation error don't match with the declared shcema
     onError: (error) => {
       if (error instanceof ApiErrorResponse) {
         if (error.errorName === AxiosErrorCode.NetworkError) {
           toast.warning(`${error.message}`);
           return;
-        } else if (isAuthApiErrorResponse(error)) {
+        }
+        if (isAuthApiErrorResponse(error)) {
           setError("root", { type: "manual", message: error.message });
           console.error(error);
           return;
         } else if (isZodApiErrorResponse(error)) {
           const formErrors = error.errorDetails?.formErrors;
           const fieldErrors = error.errorDetails?.fieldErrors;
-          console.error("miau", fieldErrors);
+          // console.error("miau", fieldErrors);
           error.errorDetails?.fieldErrors;
-          if (formErrors && formErrors.length !== 0) {
-            setError("root", { type: "manual", message: formErrors[0] });
-            // return;
-          } else if (fieldErrors) {
-            handleZodApiFieldErrors(fieldErrors, setError);
-            // return;
-          }
+          console.log("miau", fieldErrors);
+          // if (formErrors && formErrors.length !== 0) {
+          //   setError("root", { type: "manual", message: formErrors[0] });
+          //   return;
+          // }
+          // if (fieldErrors) {
+          //   console.log("AAAAAAAAAA");
+          //   handleZodApiFieldErrors(fieldErrors, setError);
+          //   return;
+          // }
         }
       }
       // showBoundary(error);
@@ -150,13 +156,13 @@ export default function SignUpPage() {
     // }
   };
 
-  if (signUpMutation.error) {
-    console.log(signUpMutation.error);
-    // setError("root", {
-    //   type: "manual",
-    //   message: `${signUpMutation.error.message}`,
-    // });
-  }
+  // if (signUpMutation.error) {
+  //   console.log(signUpMutation.error);
+  //   // setError("root", {
+  //   //   type: "manual",
+  //   //   message: `${signUpMutation.error.message}`,
+  //   // });
+  // }
 
   return (
     <form
@@ -191,11 +197,11 @@ export default function SignUpPage() {
                   id="firstName"
                   placeholder="First name"
                   type="text"
-                  className={
+                  className={cn(
                     errors.firstName
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
-                  }
+                  )}
                 />
                 {errors.firstName && (
                   <p className="text-destructive text-[12px] text-start">
@@ -209,11 +215,11 @@ export default function SignUpPage() {
                   id="lastname"
                   placeholder="Last name"
                   type="text"
-                  className={
+                  className={cn(
                     errors.lastName
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
-                  }
+                  )}
                 />
                 {errors.lastName && (
                   <p className="text-destructive text-[12px] text-start">
@@ -234,11 +240,11 @@ export default function SignUpPage() {
                   placeholder="Email"
                   type="text"
                   autoComplete="username"
-                  className={
+                  className={cn(
                     errors.email
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
-                  }
+                  )}
                 />
                 {errors.email && (
                   <p className="text-destructive text-[12px] text-start">
@@ -253,11 +259,11 @@ export default function SignUpPage() {
                   placeholder="Password"
                   type="password"
                   autoComplete="new-password"
-                  className={
+                  className={cn(
                     errors.password
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
-                  }
+                  )}
                 />
                 {errors.password && (
                   <p className="text-destructive text-[12px] text-start">
@@ -276,11 +282,11 @@ export default function SignUpPage() {
                   placeholder="Confirm Password"
                   type="password"
                   autoComplete="new-password"
-                  className={
+                  className={cn(
                     errors.confirmPassword
                       ? "focus-visible:border-destructive focus-visible:ring-destructive"
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
-                  }
+                  )}
                 />
                 {errors.confirmPassword && (
                   <p className="text-destructive text-[12px] text-start">
