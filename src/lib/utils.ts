@@ -75,7 +75,7 @@ export function handleZodApiFieldErrors<T extends FieldValues>(
     if (messages.length > 0) {
       setError(field as Path<T>, {
         type: "manual",
-        message: messages[0],
+        message: messages.toString(),
       });
     }
   });
