@@ -28,35 +28,39 @@ import {
 } from "@/lib/utils";
 import { useErrorBoundary } from "react-error-boundary";
 
-// const UserSignUpFormSchema = z
-//   .object({
-//     firstName: z.string().min(1, "First name is required"),
-//     lastName: z.string().min(1, "Last name is required"),
-//     email: z.string().email(),
-//     password: z
-//       .string()
-//       .min(8, "Password must contain at least 8 characters")
-//       .max(25, "Password must not exceed 25 characters")
-//       .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
-//       .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
-//     confirmPassword: z.string().min(1, "Confirm Password is required"),
-//   })
-//   .refine((data) => data.password === data.confirmPassword, {
-//     message: "Passwords do not match",
-//     path: ["confirmPassword"],
-//   });
+const UserSignUpFormSchema = z
+  .object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email(),
+    password: z
+      .string()
+      .min(8, "Password must contain at least 8 characters")
+      .max(25, "Password must not exceed 25 characters")
+      .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
+      .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
+    confirmPassword: z.string().min(1, "Confirm Password is required"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-const UserSignUpFormSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string(),
-  password: z.string(),
-  confirmPassword: z.string(),
-});
+// const UserSignUpFormSchema = z.object({
+//   firstName: z.string(),
+//   lastName: z.string(),
+//   email: z.string(),
+//   password: z.string(),
+//   confirmPassword: z.string(),
+// });
+
+//TODO: Try to use ul and li for the password errors/requirements instead of p tag
+//TODO: Or just use .split to split the string into an array and map through it to create a list of errors
 
 export type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
 export default function SignUpForm() {
+  // const { passwordErrors, setPasswordErrors } = useState<string[]>(undefined);
   const {
     register,
     handleSubmit,
@@ -221,11 +225,22 @@ export default function SignUpForm() {
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   )}
                 />
-                {errors.password && (
+                {/* {errors.password && (
                   <p className="text-destructive text-[12px] text-start">
                     {errors.password.message}
                   </p>
-                )}
+                )} */}
+                {errors.password &&
+                  errors.password.message?.split(",").map((error, index) => (
+                    <ul>
+                      <li
+                        key={index}
+                        className="text-destructive text-[12px] text-start"
+                      >
+                        {error}
+                      </li>
+                    </ul>
+                  ))}
                 <p className="text-xs text-start font-light">
                   Create a password 8 to 25 characters long that includes at
                   least 1 uppercase and 1 lowecase letter
