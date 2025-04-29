@@ -54,8 +54,8 @@ const UserSignUpFormSchema = z
 //   confirmPassword: z.string(),
 // });
 
-//TODO: Try to use ul and li for the password errors/requirements instead of p tag
-//TODO: Or just use .split to split the string into an array and map through it to create a list of errors
+//TODO: Show multiple errors in the password field on frontend validation.
+//? Maybe use React Hook Form getValues method to parse the data in order to return multiple error messages during front end validation.
 
 export type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
@@ -230,7 +230,7 @@ export default function SignUpForm() {
                     {errors.password.message}
                   </p>
                 )} */}
-                {errors.password &&
+                {/* {errors.password &&
                   errors.password.message?.split(",").map((error, index) => (
                     <ul>
                       <li
@@ -240,7 +240,19 @@ export default function SignUpForm() {
                         {error}
                       </li>
                     </ul>
-                  ))}
+                  ))} */}
+                {errors.password && (
+                  <ul>
+                    {errors.password.message?.split(",").map((error, index) => (
+                      <li
+                        key={index}
+                        className="text-destructive text-[12px] text-start"
+                      >
+                        {error}
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <p className="text-xs text-start font-light">
                   Create a password 8 to 25 characters long that includes at
                   least 1 uppercase and 1 lowecase letter
