@@ -39,7 +39,7 @@ const UserSignUpFormSchema = z
       .max(25, "Password must not exceed 25 characters")
       .regex(/[A-Z]/, "Password must contain at least one uppercase letter.")
       .regex(/[a-z]/, "Password must contain at least one lowercase letter."),
-    confirmPassword: z.string().min(1, "Confirm Password is required"),
+    confirmPassword: z.string().min(1, "Please confirm your password"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -60,7 +60,6 @@ const UserSignUpFormSchema = z
 export type UserSignUpFormType = z.infer<typeof UserSignUpFormSchema>;
 
 export default function SignUpForm() {
-  // const { passwordErrors, setPasswordErrors } = useState<string[]>(undefined);
   const {
     register,
     handleSubmit,
@@ -100,13 +99,16 @@ export default function SignUpForm() {
           const fieldErrors = error.errorDetails?.fieldErrors;
           // console.error("miau", fieldErrors);
           error.errorDetails?.fieldErrors;
-          console.log("miau", fieldErrors);
           if (formErrors && formErrors.length !== 0) {
             setError("root", { type: "manual", message: formErrors[0] });
             return;
           }
           if (fieldErrors) {
             handleZodApiFieldErrors(fieldErrors, setError);
+            // setError("password", {
+            //   type: "manual",
+            //   message: "validation error",
+            // });
             return;
           }
         }
@@ -225,33 +227,36 @@ export default function SignUpForm() {
                       : "focus-visible:border-success-green focus-visible:ring-success-green"
                   )}
                 />
-                {/* {errors.password && (
-                  <p className="text-destructive text-[12px] text-start">
-                    {errors.password.message}
-                  </p>
-                )} */}
-                {/* {errors.password &&
-                  errors.password.message?.split(",").map((error, index) => (
-                    <ul>
-                      <li
-                        key={index}
-                        className="text-destructive text-[12px] text-start"
-                      >
-                        {error}
-                      </li>
-                    </ul>
-                  ))} */}
-                {errors.password && (
+                {errors.password?.types ? (
                   <ul>
-                    {errors.password.message?.split(",").map((error, index) => (
-                      <li
-                        key={index}
-                        className="text-destructive text-[12px] text-start"
-                      >
-                        {error}
-                      </li>
-                    ))}
+                    {Object.values(errors.password.types)
+                      .flatMap((value) =>
+                        Array.isArray(value) ? value : [value]
+                      )
+                      .map((message, index) => (
+                        <li
+                          key={index}
+                          className="text-destructive text-[12px] text-start"
+                        >
+                          {message}
+                        </li>
+                      ))}
                   </ul>
+                ) : (
+                  errors.password && (
+                    <ul>
+                      {errors.password.message
+                        ?.split(",")
+                        .map((error, index) => (
+                          <li
+                            key={index}
+                            className="text-destructive text-[12px] text-start"
+                          >
+                            {error}
+                          </li>
+                        ))}
+                    </ul>
+                  )
                 )}
                 <p className="text-xs text-start font-light">
                   Create a password 8 to 25 characters long that includes at
