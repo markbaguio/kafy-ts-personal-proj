@@ -68,6 +68,7 @@ export default function SignUpForm() {
   } = useForm<UserSignUpFormType>({
     resolver: zodResolver(UserSignUpFormSchema),
     mode: "onChange",
+    criteriaMode: "all",
   });
 
   const { showBoundary } = useErrorBoundary();
@@ -117,6 +118,8 @@ export default function SignUpForm() {
       }
     },
   });
+
+  console.log(errors.password?.types);
 
   const onSubmit: SubmitHandler<UserSignUpFormType> = async (
     data: UserSignUpFormType
