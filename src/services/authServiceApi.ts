@@ -9,7 +9,7 @@ import {
 } from "../constants";
 import { UserSignInFormType } from "@/components/ui/login-form";
 import { isApiErrorResponse } from "@/lib/utils";
-import { UserSignUpFormType } from "@/components/common/SignUpForm";
+import { UserSignUpFormType } from "@/components/common/signupform/SignUpForm";
 
 export type SignInPayload = UserSignInFormType;
 

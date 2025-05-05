@@ -1,6 +1,6 @@
 import { ErrorBoundary } from "react-error-boundary";
 import { AuthErrorFallback } from "@/components/common/AuthErrorFallback";
-import SignUpForm from "@/components/common/SignUpForm";
+import SignUpForm from "@/components/common/signupform/SignUpForm";
 
 export default function SignUpPage() {
   return (
