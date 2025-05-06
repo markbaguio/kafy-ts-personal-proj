@@ -19,13 +19,14 @@ import { ApiErrorResponse } from "@/models/ApiResponse";
 import { AxiosErrorCode } from "@/constants";
 import { useErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router";
+import { UserSignInSchema } from "@/lib/schemas/auth/UserSignInFormSchema";
 
-const UserSignInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Password is required"),
-  // email: z.string(),
-  // password: z.string(),
-});
+// const UserSignInSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(1, "Password is required"),
+//   // email: z.string(),
+//   // password: z.string(),
+// });
 
 export type UserSignInFormType = z.infer<typeof UserSignInSchema>;
 
