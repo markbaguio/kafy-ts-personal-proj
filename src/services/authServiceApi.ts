@@ -12,6 +12,7 @@ import { UserSignUpFormType } from "@/components/common/signupform/SignUpForm";
 import { z, ZodError } from "zod";
 import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
+import { UserSignUpFormSchema } from "@/schemas/auth/UserSignUpFormSchema";
 
 // export type SignInPayload = UserSignInFormType;
 export type SignInPayload = z.infer<typeof UserSignInSchema>;
@@ -97,7 +98,8 @@ export async function signOutUser() {
   }
 }
 
-export type signUpPayload = UserSignUpFormType;
+// export type signUpPayload = UserSignUpFormType;
+export type signUpPayload = z.infer<typeof UserSignUpFormSchema>;
 
 export async function signUpUser(
   payload: signUpPayload
@@ -108,7 +110,17 @@ export async function signUpUser(
       payload,
       { withCredentials: true }
     );
-    return response.data;
+    const parsedProfile = ProfileSchema.safeParse(response.data.data);
+
+    if (!parsedProfile.success) {
+      throw new ZodError(parsedProfile.error.errors);
+    }
+    return {
+      ...response.data,
+      data: parsedProfile.data,
+    };
+
+    // return response.data;
   } catch (error) {
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
