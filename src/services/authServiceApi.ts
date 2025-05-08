@@ -9,8 +9,9 @@ import {
 } from "../constants";
 import { isApiErrorResponse } from "@/lib/utils";
 import { UserSignUpFormType } from "@/components/common/signupform/SignUpForm";
-import { z } from "zod";
+import { z, ZodError } from "zod";
 import { UserSignInSchema } from "@/lib/schemas/auth/UserSignInFormSchema";
+import { ProfileSchema } from "@/lib/schemas/profile/ProfileSchema";
 
 // export type SignInPayload = UserSignInFormType;
 export type SignInPayload = z.infer<typeof UserSignInSchema>;
@@ -26,7 +27,18 @@ export async function signInUser(
         withCredentials: true,
       }
     );
-    return response.data;
+    console.log(response);
+
+    const parsedProfile = ProfileSchema.safeParse(response.data.data);
+    if (!parsedProfile.success) {
+      throw new ZodError(parsedProfile.error.errors);
+    }
+    return {
+      ...response.data,
+      data: parsedProfile.data,
+    };
+
+    // return response.data;
   } catch (error: unknown) {
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.

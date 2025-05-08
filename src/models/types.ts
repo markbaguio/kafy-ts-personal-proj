@@ -1,8 +1,4 @@
-export type Profile = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  avatarUrl: string;
-  createdAt: Date;
-};
+import { ProfileSchema } from "@/lib/schemas/profile/ProfileSchema";
+import { z } from "zod";
+
+export type Profile = z.infer<typeof ProfileSchema>;

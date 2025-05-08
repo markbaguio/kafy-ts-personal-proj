@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const ProfileSchema = z.object({
   id: z.string(),
-  firstName: z.string(),
-  lastName: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
   email: z.string().email(),
-  avatarUrl: z.string().url().nullable(),
-  createdAt: z.coerce.date(),
+  avatar_url: z.string().nullable(),
+  created_at: z.coerce.date(),
 });
