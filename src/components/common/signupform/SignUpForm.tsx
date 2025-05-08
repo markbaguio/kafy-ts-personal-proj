@@ -27,7 +27,7 @@ import {
   isZodApiErrorResponse,
 } from "@/lib/utils";
 import { useErrorBoundary } from "react-error-boundary";
-import { UserSignUpFormSchema } from "@/lib/schemas/auth/UserSignUpFormSchema";
+import { UserSignUpFormSchema } from "@/schemas/auth/UserSignUpFormSchema";
 
 // const UserSignUpFormSchema = z
 //   .object({

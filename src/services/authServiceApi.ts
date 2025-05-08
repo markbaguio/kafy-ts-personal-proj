@@ -10,8 +10,8 @@ import {
 import { isApiErrorResponse } from "@/lib/utils";
 import { UserSignUpFormType } from "@/components/common/signupform/SignUpForm";
 import { z, ZodError } from "zod";
-import { UserSignInSchema } from "@/lib/schemas/auth/UserSignInFormSchema";
-import { ProfileSchema } from "@/lib/schemas/profile/ProfileSchema";
+import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
+import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
 
 // export type SignInPayload = UserSignInFormType;
 export type SignInPayload = z.infer<typeof UserSignInSchema>;

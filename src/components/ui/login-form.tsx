@@ -19,7 +19,7 @@ import { ApiErrorResponse } from "@/models/ApiResponse";
 import { AxiosErrorCode } from "@/constants";
 import { useErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router";
-import { UserSignInSchema } from "@/lib/schemas/auth/UserSignInFormSchema";
+import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 
 // const UserSignInSchema = z.object({
 //   email: z.string().email(),
