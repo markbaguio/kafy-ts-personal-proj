@@ -7,11 +7,13 @@ import {
   AxiosErrorCode,
   BASE_URL,
 } from "../constants";
-import { UserSignInFormType } from "@/components/ui/login-form";
 import { isApiErrorResponse } from "@/lib/utils";
 import { UserSignUpFormType } from "@/components/common/signupform/SignUpForm";
+import { z } from "zod";
+import { UserSignInSchema } from "@/lib/schemas/auth/UserSignInFormSchema";
 
-export type SignInPayload = UserSignInFormType;
+// export type SignInPayload = UserSignInFormType;
+export type SignInPayload = z.infer<typeof UserSignInSchema>;
 
 export async function signInUser(
   payload: SignInPayload
