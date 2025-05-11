@@ -2,7 +2,7 @@ import { AuthErrorFallback } from "@/components/common/AuthErrorFallback";
 import { LoginForm } from "@/components/ui/login-form";
 import { ErrorBoundary } from "react-error-boundary";
 
-export function SignInPagge() {
+export function SignInPage() {
   return (
     <ErrorBoundary FallbackComponent={AuthErrorFallback}>
       <div className="flex flex-col-reverse md:flex-row md:justify-cente w-full h-screen">

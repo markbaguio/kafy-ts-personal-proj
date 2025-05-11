@@ -180,6 +180,7 @@ export function LoginForm({
           </p>
         )}
         <Button
+          data-testid="login-button"
           disabled={isSubmitting}
           type="submit"
           variant="main"

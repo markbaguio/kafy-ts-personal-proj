@@ -6,7 +6,7 @@ import Homepage from "@/pages/Homepage";
 import { Menu } from "@/pages/Menu";
 import NotFoundPage from "@/pages/NotFoundPage";
 import Rewards from "@/pages/Rewards";
-import { SignInPagge } from "@/pages/SinInPage/SignInPage";
+import { SignInPage } from "@/pages/SinInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
 import { createBrowserRouter } from "react-router";
 
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
     element: <AuthLayout />,
     errorElement: <NotFoundPage />,
     children: [
-      { path: "signin", element: <SignInPagge /> },
+      { path: "signin", element: <SignInPage /> },
       { path: "signup", element: <SignUpPage /> },
     ],
   },
