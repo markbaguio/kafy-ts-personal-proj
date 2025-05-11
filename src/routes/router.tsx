@@ -6,7 +6,7 @@ import Homepage from "@/pages/Homepage";
 import { Menu } from "@/pages/Menu";
 import NotFoundPage from "@/pages/NotFoundPage";
 import Rewards from "@/pages/Rewards";
-import { SignInPagge } from "@/pages/SignInPage";
+import { SignInPagge } from "@/pages/SinInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
 import { createBrowserRouter } from "react-router";
 
