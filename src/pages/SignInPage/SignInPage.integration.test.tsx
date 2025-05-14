@@ -1,11 +1,10 @@
-import { screen, waitFor } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import { mockServer } from "@/msw/server/server";
 import { http, HttpResponse } from "msw";
 import userEvent from "@testing-library/user-event";
 import { AUTH_SIGN_IN, BASE_URL } from "@/constants";
 import { renderWithProviders } from "@/lib/test-utils";
 import { SignInPage } from "./SignInPage";
-import { ReactNode } from "react";
 
 describe("SignInPage", () => {
   const user = userEvent.setup();

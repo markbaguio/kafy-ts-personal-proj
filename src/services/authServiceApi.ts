@@ -8,7 +8,6 @@ import {
   BASE_URL,
 } from "../constants";
 import { isApiErrorResponse } from "@/lib/utils";
-import { UserSignUpFormType } from "@/components/common/signupform/SignUpForm";
 import { z, ZodError } from "zod";
 import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
