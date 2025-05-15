@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import { mockServer } from "@/mocks/server/server";
 import { http, HttpResponse } from "msw";
 import userEvent from "@testing-library/user-event";
@@ -26,11 +26,17 @@ describe("SignInPage", () => {
     // click the login button
     await user.click(screen.getByTestId("login-button"));
 
-    expect(
-      await screen.findByText(
+    await waitFor(async () => {
+      const toast = await screen.findByText(
         /Unable to reach server. Please check your internet connection./i
-      )
-    ).toBeInTheDocument();
+      );
+      expect(toast).toBeInTheDocument();
+    });
+    // expect(
+    //   await screen.findByText(
+    //     /Unable to reach server. Please check your internet connection./i
+    //   )
+    // ).toBeInTheDocument();
   });
 
   it("signs in successfully and redirects to homepage", () => {
