@@ -1,5 +1,5 @@
 import { screen } from "@testing-library/react";
-import { mockServer } from "@/msw/server/server";
+import { mockServer } from "@/mocks/msw/server/server";
 import { http, HttpResponse } from "msw";
 import userEvent from "@testing-library/user-event";
 import { AUTH_SIGN_IN, BASE_URL } from "@/constants";
@@ -31,5 +31,9 @@ describe("SignInPage", () => {
         /Unable to reach server. Please check your internet connection./i
       )
     ).toBeInTheDocument();
+  });
+
+  it("signs in successfully and redirects to homepage", () => {
+    mockServer;
   });
 });
