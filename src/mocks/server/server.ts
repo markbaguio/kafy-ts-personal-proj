@@ -1,6 +1,5 @@
 import { setupServer } from "msw/node";
 import { handlers } from "../handlers/handlers";
-import { mock } from "node:test";
 
 // export const server = setupServer(...Object.values(authHandlersMock));
 export const mockServer = setupServer(...handlers);
