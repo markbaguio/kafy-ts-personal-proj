@@ -1,8 +1,9 @@
 import { setupServer } from "msw/node";
-import { authHandlersMock } from "../handlers/authHandlersMock";
+import { handlers } from "../handlers/handlers";
+import { mock } from "node:test";
 
 // export const server = setupServer(...Object.values(authHandlersMock));
-export const mockServer = setupServer(...authHandlersMock);
+export const mockServer = setupServer(...handlers);
 
 mockServer.events.on("request:start", ({ request }) => {
   console.log("MSW intercepted:", request.method, request.url);
