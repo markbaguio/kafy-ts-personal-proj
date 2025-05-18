@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { mockServer } from "@/mocks/server/server";
 import { http, HttpResponse } from "msw";
 import userEvent from "@testing-library/user-event";
