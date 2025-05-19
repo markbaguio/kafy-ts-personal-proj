@@ -51,7 +51,8 @@ export function LoginForm({
     mutationFn: signInUser,
     onSuccess: (response) => {
       const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
-      useProfileStore.getState().updateProfile(profile!);
+      // useProfileStore.getState().updateProfile(profile!);
+      useProfileStore.setState({ profile });
       //? on successful login; redirect to homepage.
       navigate("/");
     },
