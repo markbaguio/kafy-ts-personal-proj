@@ -16,10 +16,11 @@ import { ApiErrorResponse } from "@/models/ApiResponse";
  * ? This is because the SignInPage component is not actually navigating to the Homepage component after a successful sign-in.
  * ? Because the <Homepage /> component is not being rendered in the test.
  */
-describe("SignInPage", () => {
-  const user = userEvent.setup();
-  const queryClient = new QueryClient();
 
+const user = userEvent.setup();
+const queryClient = new QueryClient();
+
+describe("SignInPage", () => {
   it("signs in successfully and redirects to homepage", async () => {
     // renderWithProviders(<SignInPage />, {}, `${AUTH_SIGN_IN}`);
 
@@ -43,7 +44,7 @@ describe("SignInPage", () => {
     //? check if the user is redirected to the homepage after a successful sign in.
     const heading = await screen.findByText(/More to sip and savor/i);
     expect(heading).toBeInTheDocument();
-    screen.debug();
+    // screen.debug();
   });
   //? -------------------------------------------------------------------------------------
 
@@ -72,7 +73,7 @@ describe("SignInPage", () => {
     ).toBeInTheDocument();
   });
 
-  it("shows an error boundary when an unexpected error occurs", async () => {
+  it("renders AuthErrorFallback when unexpected error occurs during sign-in", async () => {
     //? override handler using .use to simulate an unexpected error
     mockServer.use(
       http.post<{}, UserSignInRequestBody, ApiErrorResponse>(
@@ -100,8 +101,12 @@ describe("SignInPage", () => {
     await user.click(screen.getByTestId("login-button"));
 
     //? check for the rendered component/jsx
-    screen.debug();
+    // screen.debug();
 
-    expect(screen.getByText(/Something went wrong/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Whoops! Something went wrong/i)
+    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Retry/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Home/i })).toBeInTheDocument();
   });
 });
