@@ -23,8 +23,6 @@ describe("SignInPage", () => {
      * ? -----------------------------------------------------------------------------
      */
     it("signs in successfully and redirects to homepage", async () => {
-      // renderWithProviders(<SignInPage />, {}, `${AUTH_SIGN_IN}`);
-
       render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter initialEntries={["/auth/signin"]}>
