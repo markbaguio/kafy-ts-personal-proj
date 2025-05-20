@@ -111,6 +111,7 @@ export default function PageHeader() {
             ) : (
               <div className="flex gap-2">
                 <Button
+                  data-testid="profile-button"
                   onClick={() => {
                     console.log("profile");
                   }}

@@ -56,11 +56,15 @@ function HomepageSections() {
       }`}
     >
       <div className="bg-cover w-full md:w-[50%] flex justify-center items-center">
-        {index === 0 ? (
+        {/* {index === 0 ? (
           <h1 className="absolute text-milky-white font-bold text-5xl">KAFY</h1>
         ) : (
           <></>
+        )} */}
+        {index === 0 && (
+          <h1 className="absolute text-milky-white font-bold text-5xl">KAFY</h1>
         )}
+
         <img
           src={section.imgUrl}
           alt={section.alt}

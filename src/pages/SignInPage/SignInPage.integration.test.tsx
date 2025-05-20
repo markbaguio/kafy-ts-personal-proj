@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { mockServer } from "@/mocks/server/server";
 import { http, HttpResponse } from "msw";
 import userEvent from "@testing-library/user-event";
@@ -6,10 +6,19 @@ import { AUTH_SIGN_IN, BASE_URL } from "@/constants";
 import { renderWithProviders } from "@/lib/test-utils";
 import { SignInPage } from "./SignInPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter, Route, Routes } from "react-router";
+import {
+  createMemoryRouter,
+  MemoryRouter,
+  Route,
+  RouterProvider,
+  Routes,
+} from "react-router";
 import Homepage from "@/pages/Homepage";
 import { UserSignInRequestBody } from "@/mocks/handlers/handlers";
 import { ApiErrorResponse } from "@/models/ApiResponse";
+import { useProfileStore } from "@/store/useProfileStore";
+import { routes } from "@/routes/routes";
+import { wait } from "@testing-library/user-event/dist/cjs/utils/index.js";
 
 const user = userEvent.setup();
 const queryClient = new QueryClient();
@@ -22,28 +31,65 @@ describe("SignInPage", () => {
      * ? Because the <Homepage /> component is not being rendered in the test.
      * ? -----------------------------------------------------------------------------
      */
-    it("signs in successfully and redirects to homepage", async () => {
+    it("redirects to the homepage and shows Header UI after successful sign-in", async () => {
+      //! BUG: Page header is being rendere on the body.
+      const router = createMemoryRouter(routes, {
+        initialEntries: ["/auth/signin"],
+      });
+
       render(
         <QueryClientProvider client={queryClient}>
-          <MemoryRouter initialEntries={["/auth/signin"]}>
-            <Routes>
-              <Route path={`${AUTH_SIGN_IN}`} element={<SignInPage />} />
-              <Route path="/" element={<Homepage />} />
-            </Routes>
-          </MemoryRouter>
+          <RouterProvider router={router} />
         </QueryClientProvider>
       );
 
       await user.type(screen.getByLabelText(/Email/i), "usertest@gmail.com");
-
       await user.type(screen.getByLabelText(/Password/i), "123456789Test");
-
       await user.click(screen.getByTestId("login-button"));
 
-      //? check if the user is redirected to the homepage after a successful sign in.
-      const heading = await screen.findByText(/More to sip and savor/i);
+      //? main content heading
+      const heading = await screen.findByText(
+        /More to sip and savor/i,
+        {},
+        { timeout: 2000 } //? this timeout is needed to wait for the [mockFetchSectionsData]  to fetch the data due to the mock delay of 1000ms using setTimeout.
+      );
+
+      //? header UI
+      const signOutButton = await screen.findByRole("button", {
+        name: /Sign out/i,
+      });
+      const profileButton = await screen.findByTestId("profile-button");
+
+      //? footer
+      const footerText = await screen.findByText(
+        "Fueled by ☕ & passion. Thanks for stopping by!"
+      );
+
       expect(heading).toBeInTheDocument();
-      // screen.debug();
+      expect(signOutButton).toBeInTheDocument();
+      expect(profileButton).toBeInTheDocument();
+      expect(footerText).toBeInTheDocument();
+      // screen.debug(undefined, Infinity, { highlight: true });
+
+      //   render(
+      //     <QueryClientProvider client={queryClient}>
+      //       <MemoryRouter initialEntries={["/auth/signin"]}>
+      //         <Routes>
+      //           <Route path={`${AUTH_SIGN_IN}`} element={<SignInPage />} />
+      //           <Route path="/" element={<Homepage />} />
+      //         </Routes>
+      //       </MemoryRouter>
+      //     </QueryClientProvider>
+      //   );
+      //   await user.type(screen.getByLabelText(/Email/i), "usertest@gmail.com");
+      //   await user.type(screen.getByLabelText(/Password/i), "123456789Test");
+      //   await user.click(screen.getByTestId("login-button"));
+      //   //? check if the user is redirected to the homepage after a successful sign in.
+      //   const heading = await screen.findByText(/More to sip and savor/i);
+      //   expect(heading).toBeInTheDocument();
+      //   screen.debug();
+      // expect(profile).toBeDefined();
+      // expect(profile.email).toBe("usertest@gmail.com");
     });
   });
 

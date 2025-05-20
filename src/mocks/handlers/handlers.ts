@@ -13,7 +13,6 @@ export const handlers = [
   http.post<{}, UserSignInRequestBody, UserSignInResponstBody>(
     `${BASE_URL}${AUTH_SIGN_IN}`,
     () => {
-      // mock for a successful sign in
       return HttpResponse.json(successfulSignInProfileData);
     }
   ),
