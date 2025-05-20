@@ -14,6 +14,12 @@ import { routes } from "@/routes/routes";
 const user = userEvent.setup();
 const queryClient = new QueryClient();
 
+const mockSignInData = {
+  email: "usertest@gmail.com",
+  password: "123456789Test",
+  invalidEmail: "invalid-email",
+};
+
 describe("SignInPage", () => {
   describe("Success flow", () => {
     //? Homepage is not being rendered that's why the .findbytext isn't working. - Fixed
@@ -33,8 +39,11 @@ describe("SignInPage", () => {
         </QueryClientProvider>
       );
 
-      await user.type(screen.getByLabelText(/Email/i), "usertest@gmail.com");
-      await user.type(screen.getByLabelText(/Password/i), "123456789Test");
+      await user.type(screen.getByLabelText(/Email/i), mockSignInData.email);
+      await user.type(
+        screen.getByLabelText(/Password/i),
+        mockSignInData.password
+      );
       await user.click(screen.getByTestId("login-button"));
 
       //? main content heading
@@ -107,8 +116,11 @@ describe("SignInPage", () => {
       renderWithProviders(<SignInPage />, {}, "/auth/signin");
 
       // fill up the input fields with mock credentials
-      await user.type(screen.getByLabelText(/email/i), "test@example.com");
-      await user.type(screen.getByLabelText(/password/i), "12345678Password");
+      await user.type(screen.getByLabelText(/email/i), mockSignInData.email);
+      await user.type(
+        screen.getByLabelText(/password/i),
+        mockSignInData.password
+      );
 
       // click the login button
       await user.click(screen.getByTestId("login-button"));
@@ -123,6 +135,39 @@ describe("SignInPage", () => {
         screen.getByRole("button", { name: /Retry/i })
       ).toBeInTheDocument();
       expect(screen.getByRole("button", { name: /Home/i })).toBeInTheDocument();
+    });
+
+    //? CLIENT SIDE VALIDATION
+    it("shows validation error when email is invalid", async () => {
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+
+      // fill up the input fields with mock credentials
+      await user.type(
+        screen.getByLabelText(/email/i),
+        mockSignInData.invalidEmail
+      );
+      await user.type(
+        screen.getByLabelText(/password/i),
+        mockSignInData.password
+      );
+
+      // click the login button
+      await user.click(screen.getByTestId("login-button"));
+
+      expect(await screen.findByText(/Invalid email/i)).toBeInTheDocument();
+    });
+
+    it("shows validation error when password is empty.", async () => {
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+      // fill up the input fields with mock credentials
+      await user.type(screen.getByLabelText(/email/i), mockSignInData.email);
+
+      // click the login button
+      await user.click(screen.getByTestId("login-button"));
+
+      expect(
+        await screen.findByText(/Password is required/i)
+      ).toBeInTheDocument();
     });
   });
 
@@ -139,8 +184,11 @@ describe("SignInPage", () => {
       renderWithProviders(<SignInPage />, {}, "/auth/signin");
 
       // fill up the input fields with mock credentials
-      await user.type(screen.getByLabelText(/email/i), "test@example.com");
-      await user.type(screen.getByLabelText(/password/i), "12345678Password");
+      await user.type(screen.getByLabelText(/email/i), mockSignInData.email);
+      await user.type(
+        screen.getByLabelText(/password/i),
+        mockSignInData.password
+      );
 
       // click the login button
       await user.click(screen.getByTestId("login-button"));
