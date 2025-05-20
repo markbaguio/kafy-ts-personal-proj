@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { mockServer } from "@/mocks/server/server";
 import { http, HttpResponse } from "msw";
 import userEvent from "@testing-library/user-event";
@@ -6,19 +6,10 @@ import { AUTH_SIGN_IN, BASE_URL } from "@/constants";
 import { renderWithProviders } from "@/lib/test-utils";
 import { SignInPage } from "./SignInPage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  createMemoryRouter,
-  MemoryRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from "react-router";
-import Homepage from "@/pages/Homepage";
+import { createMemoryRouter, RouterProvider } from "react-router";
 import { UserSignInRequestBody } from "@/mocks/handlers/handlers";
 import { ApiErrorResponse } from "@/models/ApiResponse";
-import { useProfileStore } from "@/store/useProfileStore";
 import { routes } from "@/routes/routes";
-import { wait } from "@testing-library/user-event/dist/cjs/utils/index.js";
 
 const user = userEvent.setup();
 const queryClient = new QueryClient();
