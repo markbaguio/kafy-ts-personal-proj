@@ -137,7 +137,7 @@ export function LoginForm({
             <Input
               {...register("email")}
               id="email"
-              type="email"
+              // type="email"
               className="border-raisin-black placeholder:text-raisin-black"
               placeholder="Email"
               autoComplete="username"
