@@ -23,7 +23,6 @@ describe("SignInPage", () => {
      * ? -----------------------------------------------------------------------------
      */
     it("redirects to the homepage and shows Header UI after successful sign-in", async () => {
-      //! BUG: Page header is being rendere on the body.
       const router = createMemoryRouter(routes, {
         initialEntries: ["/auth/signin"],
       });
