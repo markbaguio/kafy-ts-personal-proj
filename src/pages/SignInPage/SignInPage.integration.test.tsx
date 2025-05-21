@@ -18,6 +18,7 @@ const mockSignInData = {
   email: "usertest@gmail.com",
   password: "123456789Test",
   invalidEmail: "invalid-email",
+  invalidPassword: "invalid-password",
 };
 
 describe("SignInPage", () => {
@@ -167,6 +168,54 @@ describe("SignInPage", () => {
 
       expect(
         await screen.findByText(/Password is required/i)
+      ).toBeInTheDocument();
+    });
+
+    //? BACKEND VALIDATION
+    it("shows an error message when email or password is incorrect", async () => {
+      mockServer.use(
+        http.post<{}, UserSignInRequestBody, ApiErrorResponse>(
+          `${BASE_URL}${AUTH_SIGN_IN}`,
+          async ({ request }) => {
+            const body = await request.json();
+            const { email, password } = body;
+            // check if the credentials are correct. (MOCK)
+            if (
+              email !== mockSignInData.email ||
+              password !== mockSignInData.password
+            ) {
+              return HttpResponse.json(
+                {
+                  statusCode: 400,
+                  errorName: "AuthApiError",
+                  message: "Invalid login credentials",
+                  errorDetails: {
+                    code: "invalid_credentials",
+                    name: "AuthApiError",
+                    status: 400,
+                  },
+                  name: "AuthApiError",
+                },
+                { status: 400 }
+              );
+            }
+            // Optionally, return a successful response if needed
+            // return HttpResponse.json(successfulSignInProfileData); // or whatever your success response is
+          }
+        )
+      );
+
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+
+      await user.type(screen.getByLabelText(/email/i), mockSignInData.email);
+      await user.type(
+        screen.getByLabelText(/password/i),
+        mockSignInData.invalidPassword
+      );
+      await user.click(screen.getByTestId("login-button"));
+
+      expect(
+        await screen.findByText(/Invalid login credentials/i)
       ).toBeInTheDocument();
     });
   });
