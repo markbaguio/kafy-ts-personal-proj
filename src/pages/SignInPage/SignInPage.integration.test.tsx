@@ -184,6 +184,27 @@ describe("SignInPage", () => {
           }
         )
       );
+      // mockServer.use(
+      //   http.post<{}, UserSignInRequestBody, ApiErrorResponse>(
+      //     `${BASE_URL}${AUTH_SIGN_IN}`,
+      //     () => {
+      //       return HttpResponse.json(
+      //         {
+      //           statusCode: 400,
+      //           errorName: "AuthApiError",
+      //           message: "Invalid login credentials",
+      //           errorDetails: {
+      //             code: "invalid_credentials",
+      //             name: "AuthApiError",
+      //             status: 400,
+      //           },
+      //           name: "AuthApiError",
+      //         },
+      //         { status: 455 }
+      //       );
+      //     }
+      //   )
+      // );
 
       renderWithProviders(<SignInPage />, {}, "/auth/signin");
 
