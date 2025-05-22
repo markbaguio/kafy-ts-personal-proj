@@ -69,27 +69,7 @@ describe("SignInPage", () => {
       expect(signOutButton).toBeInTheDocument();
       expect(profileButton).toBeInTheDocument();
       expect(footerText).toBeInTheDocument();
-      // screen.debug(undefined, Infinity, { highlight: true });
-
-      //   render(
-      //     <QueryClientProvider client={queryClient}>
-      //       <MemoryRouter initialEntries={["/auth/signin"]}>
-      //         <Routes>
-      //           <Route path={`${AUTH_SIGN_IN}`} element={<SignInPage />} />
-      //           <Route path="/" element={<Homepage />} />
-      //         </Routes>
-      //       </MemoryRouter>
-      //     </QueryClientProvider>
-      //   );
-      //   await user.type(screen.getByLabelText(/Email/i), "usertest@gmail.com");
-      //   await user.type(screen.getByLabelText(/Password/i), "123456789Test");
-      //   await user.click(screen.getByTestId("login-button"));
-      //   //? check if the user is redirected to the homepage after a successful sign in.
-      //   const heading = await screen.findByText(/More to sip and savor/i);
-      //   expect(heading).toBeInTheDocument();
-      //   screen.debug();
-      // expect(profile).toBeDefined();
-      // expect(profile.email).toBe("usertest@gmail.com");
+      expect(router.state.location.pathname).toBe("/");
     });
   });
 
