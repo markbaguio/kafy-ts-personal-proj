@@ -35,20 +35,4 @@ describe("SignInPage", () => {
     });
     expect(result.success).toBe(false);
   });
-
-  // it("shows a network error toast when there's a connection problem", async () => {
-  //   renderWithProviders(<SignInPage />);
-  //   const loginButton: HTMLButtonElement = screen.getByTestId("login-button");
-  //   const emailInput: HTMLInputElement = screen.getByPlaceholderText("Email");
-  //   const passwordInput: HTMLInputElement =
-  //     screen.getByPlaceholderText("Password");
-  //   fireEvent.change(emailInput, { target: { value: "text@gmail.com" } });
-  //   fireEvent.change(passwordInput, { target: { value: "testpassword" } });
-  //   await user.click(loginButton);
-  //   expect(
-  //     await screen.findByText(
-  //       /Unable to reach server. Please check your internet connection./i
-  //     )
-  //   ).toBeInTheDocument();
-  // });
 });
