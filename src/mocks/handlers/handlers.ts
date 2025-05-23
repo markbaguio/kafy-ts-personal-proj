@@ -13,7 +13,14 @@ export const handlers = [
   http.post<{}, UserSignInRequestBody, UserSignInResponstBody>(
     `${BASE_URL}${AUTH_SIGN_IN}`,
     () => {
-      return HttpResponse.json(successfulSignInProfileData);
+      return HttpResponse.json(successfulSignInProfileData, {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+          "Set-Cookie":
+            "auth_token=fake_access_token; HttpOnly; Path=/; SameSite=Lax; Secure; Max-Age=3600;, refresh_token=fake_refresh_token; HttpOnly; Path=/; SameSite=Lax; Secure; Max-Age=3600",
+        },
+      });
     }
   ),
 ];
