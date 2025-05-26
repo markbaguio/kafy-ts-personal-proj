@@ -47,7 +47,7 @@ describe("SignInPage", () => {
   });
 
   describe("Sign in user submit logic", () => {
-    it("calls signInUser with correct payload", async () => {
+    it("submits form and calls signInUser with user input", async () => {
       const mockPayload: SignInPayload = {
         email: "test@example.com",
         password: "securePassword123",
@@ -55,21 +55,23 @@ describe("SignInPage", () => {
 
       const mockResponse: ApiResponse<Profile> = {
         statusCode: 200,
-        data: successfulSignInProfileData?.data,
+        data: successfulSignInProfileData.data,
       };
 
       const mockedSignInUser = vi.mocked(authServiceApi.signInUser);
       mockedSignInUser.mockResolvedValueOnce(mockResponse);
 
-      const result: ApiResponse<Profile> = await authServiceApi.signInUser(
-        mockPayload
-      );
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
 
-      console.log(result);
+      await user.type(screen.getByLabelText(/Email/i), mockPayload.email);
+      await user.type(screen.getByLabelText(/Password/i), mockPayload.password);
+
+      await user.click(screen.getByTestId("login-button"));
+
+      screen.debug();
 
       expect(mockedSignInUser).toHaveBeenCalledTimes(1);
       expect(mockedSignInUser).toHaveBeenCalledWith(mockPayload);
-      expect(result).toEqual(mockResponse);
     });
   });
 });
