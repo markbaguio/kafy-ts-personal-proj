@@ -20,37 +20,40 @@ const mockPayload: SignInPayload = {
   password: "securePassword123",
 };
 
-describe("SignInPage", () => {
-  it("renders the SignInPage component", () => {
-    renderWithProviders(<SignInPage />, {}, "/auth/signin");
-    expect(
-      screen.getByRole("heading", { name: /Login to your account/i })
-    ).toBeInTheDocument();
-    expect(
-      screen.getAllByText(
-        "Sign up now and start earning Kaffy Coins with every purchase!"
-      )
-    );
-  });
-
-  it("shows required field errors when empty", async () => {
-    renderWithProviders(<SignInPage />, {}, "/auth/signin");
-    const loginButton: HTMLButtonElement = screen.getByTestId("login-button");
-    await user.click(loginButton);
-    expect(await screen.findByText(/Invalid email/i)).toBeInTheDocument();
-    expect(
-      await screen.findByText(/Password is required/i)
-    ).toBeInTheDocument();
-  });
-
-  it("shows field errors when inputs are invalid", async () => {
-    const result = UserSignInSchema.safeParse({
-      email: "invalid-email",
-      password: "",
+describe("SignInPage unit tests", () => {
+  describe("SignInPage rendering", () => {
+    it("renders the SignInPage component", () => {
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+      expect(
+        screen.getByRole("heading", { name: /Login to your account/i })
+      ).toBeInTheDocument();
+      expect(
+        screen.getAllByText(
+          "Sign up now and start earning Kaffy Coins with every purchase!"
+        )
+      );
     });
-    expect(result.success).toBe(false);
   });
 
+  describe("SignInPage form validation", () => {
+    it("shows required field errors when empty", async () => {
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+      const loginButton: HTMLButtonElement = screen.getByTestId("login-button");
+      await user.click(loginButton);
+      expect(await screen.findByText(/Invalid email/i)).toBeInTheDocument();
+      expect(
+        await screen.findByText(/Password is required/i)
+      ).toBeInTheDocument();
+    });
+
+    it("shows field errors when inputs are invalid", async () => {
+      const result = UserSignInSchema.safeParse({
+        email: "invalid-email",
+        password: "",
+      });
+      expect(result.success).toBe(false);
+    });
+  });
   describe("Sign in user submit logic", () => {
     it("submits form and calls signInUser with user input", async () => {
       const mockResponse: ApiResponse<Profile> = {
