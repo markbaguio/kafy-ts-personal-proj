@@ -101,7 +101,7 @@ export function LoginForm({
 
   if (signInMutation.isPending) {
     return (
-      <section>
+      <section data-testid="sign-in-loading">
         <div className="flex flex-col gap-12 h-screen items-center justify-center text-raisin-black">
           <div className="relative flex flex-col items-center justify-center z-0">
             <div className="absolute animate-ping rounded-full border-4 border-t-4 border-raisin-black h-12 w-12"></div>

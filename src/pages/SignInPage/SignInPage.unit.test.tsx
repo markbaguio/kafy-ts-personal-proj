@@ -15,6 +15,11 @@ vi.mock("@/services/authServiceApi", () => ({
 
 const user = userEvent.setup();
 
+const mockPayload: SignInPayload = {
+  email: "test@example.com",
+  password: "securePassword123",
+};
+
 describe("SignInPage", () => {
   it("renders the SignInPage component", () => {
     renderWithProviders(<SignInPage />, {}, "/auth/signin");
@@ -48,11 +53,6 @@ describe("SignInPage", () => {
 
   describe("Sign in user submit logic", () => {
     it("submits form and calls signInUser with user input", async () => {
-      const mockPayload: SignInPayload = {
-        email: "test@example.com",
-        password: "securePassword123",
-      };
-
       const mockResponse: ApiResponse<Profile> = {
         statusCode: 200,
         data: successfulSignInProfileData.data,
@@ -68,10 +68,28 @@ describe("SignInPage", () => {
 
       await user.click(screen.getByTestId("login-button"));
 
-      screen.debug();
-
       expect(mockedSignInUser).toHaveBeenCalledTimes(1);
       expect(mockedSignInUser).toHaveBeenCalledWith(mockPayload);
+    });
+
+    it("shows a Loading state spinner when the form is submitting", async () => {
+      const mockResponse: ApiResponse<Profile> = {
+        statusCode: 200,
+        data: successfulSignInProfileData.data,
+      };
+      const mockedSignInUser = vi.mocked(authServiceApi.signInUser);
+      mockedSignInUser.mockImplementation(
+        () =>
+          new Promise((resolve) => setTimeout(() => resolve(mockResponse), 100))
+      );
+
+      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+
+      await user.type(screen.getByLabelText(/Email/i), mockPayload.email);
+      await user.type(screen.getByLabelText(/Password/i), mockPayload.password);
+      await user.click(screen.getByTestId("login-button"));
+
+      expect(await screen.findByTestId("sign-in-loading")).toBeInTheDocument();
     });
   });
 });
