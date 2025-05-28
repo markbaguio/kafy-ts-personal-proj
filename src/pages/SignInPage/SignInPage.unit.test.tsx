@@ -52,6 +52,8 @@ describe("SignInPage unit tests", () => {
           /Sign up now and start earning Kafy Coins with every purchase!/i
         )
       );
+      expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Password/i)).toBeInTheDocument();
 
       //? FOOTER
       expect(screen.getByTestId("footer")).toBeInTheDocument();
