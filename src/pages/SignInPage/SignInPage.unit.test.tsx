@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SignInPage } from "./SignInPage";
 import { renderWithProviders } from "@/lib/test-utils";
@@ -8,12 +8,16 @@ import { SignInPayload } from "@/services/authServiceApi";
 import { ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 import { successfulSignInProfileData } from "@/mocks/mockData/mockData";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createMemoryRouter, RouterProvider } from "react-router";
+import { routes } from "@/routes/routes";
 
 vi.mock("@/services/authServiceApi", () => ({
   signInUser: vi.fn(),
 }));
 
 const user = userEvent.setup();
+const queryClient = new QueryClient();
 
 const mockPayload: SignInPayload = {
   email: "test@example.com",
@@ -22,16 +26,42 @@ const mockPayload: SignInPayload = {
 
 describe("SignInPage unit tests", () => {
   describe("SignInPage rendering", () => {
-    it("renders the SignInPage component", () => {
-      renderWithProviders(<SignInPage />, {}, "/auth/signin");
+    it("renders the Auth header, SignInPage, and Footer ", () => {
+      // renderWithProviders(<SignInPage />, {}, "/auth/signin");
+
+      const router = createMemoryRouter(routes, {
+        initialEntries: ["/auth/signin"],
+      });
+
+      render(
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      );
+
+      //? AUTH HEADER
+      expect(screen.getByTestId("auth-header")).toBeInTheDocument();
+      expect(screen.getAllByText(/KAFY/i)[0]).toBeInTheDocument();
+
+      // ? MAIN CONTENT
       expect(
         screen.getByRole("heading", { name: /Login to your account/i })
       ).toBeInTheDocument();
       expect(
         screen.getAllByText(
-          "Sign up now and start earning Kaffy Coins with every purchase!"
+          /Sign up now and start earning Kaffy Coins with every purchase!/i
         )
       );
+
+      //? FOOTER
+      expect(screen.getByTestId("footer")).toBeInTheDocument();
+      expect(
+        screen.getByText("Fueled by ☕ & passion. Thanks for stopping by!")
+      ).toBeInTheDocument();
+      expect(screen.getByText("MENU")).toBeInTheDocument();
+      expect(screen.getByText("REWARDS")).toBeInTheDocument();
+      expect(screen.getByText("GIFT CARDS")).toBeInTheDocument();
+      expect(screen.getByText("ABOUT US")).toBeInTheDocument();
     });
   });
 
