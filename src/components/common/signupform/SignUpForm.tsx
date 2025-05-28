@@ -142,7 +142,7 @@ export default function SignUpForm() {
         <h1 className="text-3xl font-bold py-10">Create an Account</h1>
         <span className="font-bold">KAFY REWARDS</span>
         <p className="text-raisin-black text-center text-sm p-2 font-light">
-          Sign up now and start earning Kaffy Coins with every purchase!
+          Sign up now and start earning Kafy Coins with every purchase!
         </p>
         <Card className="flex flex-col gap-6 items-center justify-center drop-shadow-xs max-w-[400px]">
           <CardHeader className="w-full">
