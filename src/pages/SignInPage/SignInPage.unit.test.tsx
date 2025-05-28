@@ -49,7 +49,7 @@ describe("SignInPage unit tests", () => {
       ).toBeInTheDocument();
       expect(
         screen.getAllByText(
-          /Sign up now and start earning Kaffy Coins with every purchase!/i
+          /Sign up now and start earning Kafy Coins with every purchase!/i
         )
       );
 

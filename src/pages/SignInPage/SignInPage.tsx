@@ -12,7 +12,7 @@ export function SignInPage() {
         <div className="flex flex-col items-center justify-center w-full md:w-[50%] h-fit md:h-full bg-raisin-black">
           {/* <Logo darkBg={true} /> */}
           <p className="font-light text-milky-white text-center text-sm md:text-4xl p-5 ">
-            Sign up now and start earning Kaffy Coins with every purchase!
+            Sign up now and start earning Kafy Coins with every purchase!
           </p>
         </div>
       </div>
