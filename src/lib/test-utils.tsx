@@ -1,8 +1,9 @@
+import { routes } from "@/routes/routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render } from "@testing-library/react";
 import { ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { MemoryRouter } from "react-router";
+import { createMemoryRouter, MemoryRouter, RouterProvider } from "react-router";
 import { Toaster } from "sonner";
 
 export function renderWithProviders(
@@ -19,5 +20,19 @@ export function renderWithProviders(
       </MemoryRouter>
     </ErrorBoundary>,
     options
+  );
+}
+
+export function renderWithRoutesAndProviders(initialRoute: string = "/") {
+  const queryClient = new QueryClient();
+
+  const router = createMemoryRouter(routes, {
+    initialEntries: [initialRoute],
+  });
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
