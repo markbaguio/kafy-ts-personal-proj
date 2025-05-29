@@ -159,6 +159,7 @@ export default function SignUpForm() {
               </Label>
               <div className="flex flex-col gap-y-1">
                 <Input
+                  data-testid="first-name-input"
                   {...register("firstName")}
                   id="firstName"
                   placeholder="First name"
@@ -177,6 +178,7 @@ export default function SignUpForm() {
               </div>
               <div className="flex flex-col gap-y-1">
                 <Input
+                  data-testid="last-name-input"
                   {...register("lastName")}
                   id="lastname"
                   placeholder="Last name"
@@ -201,6 +203,7 @@ export default function SignUpForm() {
               </Label>
               <div className="flex flex-col gap-y-1">
                 <Input
+                  data-testid="email-input"
                   {...register("email")}
                   id="email"
                   placeholder="Email"
@@ -220,6 +223,7 @@ export default function SignUpForm() {
               </div>
               <div className="flex flex-col gap-y-1">
                 <Input
+                  data-testid="password-input"
                   {...register("password")}
                   id="password"
                   placeholder="Password"
@@ -269,6 +273,7 @@ export default function SignUpForm() {
               </div>
               <div className="flex flex-col gap-y-1">
                 <Input
+                  data-testid="confirm-password-input"
                   {...register("confirmPassword")}
                   id="confirmPassword"
                   placeholder="Confirm Password"
@@ -287,7 +292,12 @@ export default function SignUpForm() {
                 )}
               </div>
             </div>
-            <Button disabled={isSubmitting} variant="main" type="submit">
+            <Button
+              data-testid="signup-button"
+              disabled={isSubmitting}
+              variant="main"
+              type="submit"
+            >
               Create Account
             </Button>
           </CardContent>
