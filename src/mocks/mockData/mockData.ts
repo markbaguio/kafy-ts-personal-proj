@@ -1,7 +1,7 @@
 import { ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 
-export const successfulSignInProfileData: ApiResponse<Profile> = {
+export const successfulAuthResponse: ApiResponse<Profile> = {
   statusCode: 200,
   data: {
     avatar_url: "",

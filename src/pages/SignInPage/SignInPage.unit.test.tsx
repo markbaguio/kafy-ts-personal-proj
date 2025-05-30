@@ -7,7 +7,7 @@ import * as authServiceApi from "@/services/authServiceApi";
 import { SignInPayload } from "@/services/authServiceApi";
 import { ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
-import { successfulSignInProfileData } from "@/mocks/mockData/mockData";
+import { successfulAuthResponse } from "@/mocks/mockData/mockData";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryRouter, RouterProvider } from "react-router";
 import { routes } from "@/routes/routes";
@@ -90,7 +90,7 @@ describe("SignInPage unit tests", () => {
     it("submits form and calls signInUser with user input", async () => {
       const mockResponse: ApiResponse<Profile> = {
         statusCode: 200,
-        data: successfulSignInProfileData.data,
+        data: successfulAuthResponse.data,
       };
 
       const mockedSignInUser = vi.mocked(authServiceApi.signInUser);
@@ -110,7 +110,7 @@ describe("SignInPage unit tests", () => {
     it("shows a Loading state spinner when the form is submitting", async () => {
       const mockResponse: ApiResponse<Profile> = {
         statusCode: 200,
-        data: successfulSignInProfileData.data,
+        data: successfulAuthResponse.data,
       };
       const mockedSignInUser = vi.mocked(authServiceApi.signInUser);
       mockedSignInUser.mockImplementation(
