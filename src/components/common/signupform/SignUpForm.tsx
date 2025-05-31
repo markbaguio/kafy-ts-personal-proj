@@ -81,7 +81,8 @@ export default function SignUpForm() {
       if (response.data) {
         const profile: Profile = response.data;
         // Use the profile variable here if needed
-        useProfileStore.getState().updateProfile(profile);
+        // useProfileStore.getState().updateProfile(profile);
+        useProfileStore.setState({ profile });
         //? on successful login; redirect to homepage.
         navigate("/");
       }
@@ -111,12 +112,13 @@ export default function SignUpForm() {
             //   type: "manual",
             //   message: "validation error",
             // });
-            return;
+            // return;
           }
         }
       } else if (error instanceof Error) {
         showBoundary(error);
       }
+      signUpMutation.reset();
     },
   });
 
@@ -127,8 +129,30 @@ export default function SignUpForm() {
   ) => {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
     // console.log(data);
-    signUpMutation.mutateAsync(data);
+    //! signUpMutation.mutateAsync(data) is what throws an error in the test, because it return a promise and that promise is not being handled correctly.
+    //! Serialized Error: { statusCode: 503, errorName: 'ERR_NETWORK', errorDetails: undefined }
+    //!This error originated in "src/pages/SignUpPage/SignUpPage.integration.test.tsx" test file. It doesn't mean the error was thrown inside the file itself, but while it was running.
+    //!The latest test that might've caused the error is "shows a toast when network error occurs". It might mean one of the following:
+    //!- The error was thrown, while Vitest was running this test.
+    //!- If the error occurred after the test had been completed, this was the last documented test before it was thrown.
+    // signUpMutation.mutateAsync(data);
+    signUpMutation.mutate(data);
   };
+
+  // if (signUpMutation.isPending) {
+  //   return (
+  //     <section data-testid="sign-in-loading">
+  //       <div className="flex flex-col gap-12 h-screen items-center justify-center text-raisin-black">
+  //         <div className="relative flex flex-col items-center justify-center z-0">
+  //           <div className="absolute animate-ping rounded-full border-4 border-t-4 border-raisin-black h-12 w-12"></div>
+  //           <div className="absolute animate-ping delay-200 rounded-full border-4 border-t-4 border-golden-brown h-12 w-12"></div>
+  //           <div className="absolute animate-ping delay-400 rounded-full border-4 border-t-4 border-royal-brown h-12 w-12"></div>
+  //         </div>
+  //         <span className="text-2xl">Signing up...</span>
+  //       </div>
+  //     </section>
+  //   );
+  // }
 
   return (
     <form
