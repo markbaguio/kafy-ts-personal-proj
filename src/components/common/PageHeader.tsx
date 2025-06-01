@@ -123,6 +123,7 @@ export default function PageHeader() {
                   <User />
                 </Button>
                 <Button
+                  data-testid="signout-button"
                   onClick={() => {
                     signOutMutation.mutate();
                   }}
