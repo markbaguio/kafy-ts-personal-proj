@@ -93,7 +93,7 @@ describe("SignUpPage unit tests", () => {
   });
 
   //? FRONTEND VALIDATION
-  describe.only("SignUpPage form validation", () => {
+  describe("SignUpPage form validation", () => {
     it("shows required field errors when empty", async () => {
       renderWithProviders(<SignUpPage />, {}, "/auth/signup");
 
