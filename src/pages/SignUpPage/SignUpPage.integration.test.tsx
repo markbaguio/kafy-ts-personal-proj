@@ -68,7 +68,6 @@ describe("SignUpPage", () => {
       );
 
       await user.click(screen.getByTestId("signup-button"));
-      screen.debug(undefined, Infinity);
 
       //? Assertions
       //? Check if the UI is properly rendered on the homepage.
@@ -94,6 +93,7 @@ describe("SignUpPage", () => {
       );
 
       //? Foother
+      expect(await screen.findByTestId("footer")).toBeInTheDocument();
       expect(
         await screen.findByText(
           "Fueled by ☕ & passion. Thanks for stopping by!"
