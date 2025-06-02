@@ -12,3 +12,10 @@ export const successfulAuthResponse: ApiResponse<Profile> = {
     last_name: "test",
   },
 };
+
+export const mockSignInData = {
+  email: "usertest@gmail.com",
+  password: "123456789Test",
+  invalidEmail: "invalid-email",
+  invalidPassword: "invalid-password",
+};

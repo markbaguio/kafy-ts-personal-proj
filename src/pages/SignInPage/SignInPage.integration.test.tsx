@@ -10,16 +10,17 @@ import { createMemoryRouter, RouterProvider } from "react-router";
 import { UserSignInRequestBody } from "@/mocks/handlers/handlers";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { routes } from "@/routes/routes";
+import { mockSignInData } from "@/mocks/mockData/mockData";
 
 const user = userEvent.setup();
 const queryClient = new QueryClient();
 
-const mockSignInData = {
-  email: "usertest@gmail.com",
-  password: "123456789Test",
-  invalidEmail: "invalid-email",
-  invalidPassword: "invalid-password",
-};
+// const mockSignInData = {
+//   email: "usertest@gmail.com",
+//   password: "123456789Test",
+//   invalidEmail: "invalid-email",
+//   invalidPassword: "invalid-password",
+// };
 
 describe("SignInPage", () => {
   describe("Success flow", () => {
