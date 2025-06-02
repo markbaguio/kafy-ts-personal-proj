@@ -98,7 +98,12 @@ export default function PageHeader() {
             </nav>
           </div>
           <div className="hidden lg:flex flex-row gap-3">
-            <Button asChild variant="ghost" className="flex items-center gap-0">
+            <Button
+              date-testid="store-locator-button"
+              asChild
+              variant="ghost"
+              className="flex items-center gap-0"
+            >
               <Link to="/storelocator">
                 <Locate className="w-5 h-5 mr-2" />
                 Store Locator
@@ -106,10 +111,13 @@ export default function PageHeader() {
             </Button>
             {profile === null ? (
               <div className="flex gap-2">
-                <Button variant="outline">
+                <Button
+                  data-testid="page-header-signin-button"
+                  variant="outline"
+                >
                   <Link to={AUTH_SIGN_IN}>Sign in</Link>
                 </Button>
-                <Button variant="main">
+                <Button data-testid="page-header-signup-button" variant="main">
                   <Link to={AUTH_SIGN_UP}>Join now</Link>
                 </Button>
               </div>
