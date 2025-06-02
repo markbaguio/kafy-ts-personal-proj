@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router";
-import Logo from "./Logo.tsx";
-import { Button } from "../ui/button.tsx";
+import Logo from "../Logo.tsx";
+import { Button } from "../../ui/button.tsx";
 import { Locate, Menu, User } from "lucide-react";
 import {
   Sheet,
@@ -16,6 +16,8 @@ import { AUTH_SIGN_IN, AUTH_SIGN_UP } from "@/constants.ts";
 import { useMutation } from "@tanstack/react-query";
 import { signOutUser } from "@/services/authServiceApi.ts";
 import { toast } from "sonner";
+
+//? Setup unit and integration test.
 
 type navItemType = {
   name: string;

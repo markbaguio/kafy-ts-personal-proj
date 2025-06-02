@@ -1,5 +1,5 @@
 import Footer from "./components/common/Footer";
-import PageHeader from "./components/common/PageHeader";
+import PageHeader from "./components/common/PageHeader/PageHeader";
 
 function App() {
   return (
