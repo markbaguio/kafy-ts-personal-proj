@@ -36,7 +36,7 @@ export default function PageHeader() {
 
   const navigate = useNavigate();
   const profile = useProfileStore((state) => state.profile);
-  console.log(profile);
+  console.log(`profile: ${profile}`);
 
   const signOutMutation = useMutation({
     mutationFn: signOutUser,
