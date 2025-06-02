@@ -80,9 +80,10 @@ export default function PageHeader() {
               <Logo />
             </Link>
             {/** DESKTOP NAVBAR */}
-            <nav className="hidden lg:flex gap-6">
+            <nav data-testid="nav" className="hidden lg:flex gap-6">
               {navItems.map((navItem) => (
                 <NavLink
+                  data-testid={`${navItem.name}-nav-button`}
                   key={navItem.path}
                   to={navItem.path}
                   className={({ isActive }) =>
@@ -99,7 +100,7 @@ export default function PageHeader() {
           </div>
           <div className="hidden lg:flex flex-row gap-3">
             <Button
-              date-testid="store-locator-button"
+              data-testid="store-locator-button"
               asChild
               variant="ghost"
               className="flex items-center gap-0"
