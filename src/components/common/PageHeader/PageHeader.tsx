@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
-import { useProfileStore } from "@/store/useProfileStore.ts";
+import { useAuthStore } from "@/store/useAuthStore.ts";
 import { AUTH_SIGN_IN, AUTH_SIGN_UP } from "@/constants.ts";
 import { useMutation } from "@tanstack/react-query";
 import { signOutUser } from "@/services/authServiceApi.ts";
@@ -35,7 +35,7 @@ export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  const profile = useProfileStore((state) => state.profile);
+  const profile = useAuthStore((state) => state.profile);
   console.log(`profile: ${profile}`);
 
   const signOutMutation = useMutation({
@@ -43,7 +43,8 @@ export default function PageHeader() {
     onSuccess: () => {
       //? on successful sign out; redirect to homepage.
       navigate("/auth/signin");
-      useProfileStore.getState().deleteProfile();
+      // useProfileStore.getState().deleteProfile();
+      useAuthStore.setState({ profile: null });
       toast.success("Successfully signed out.");
     },
     onError: (error) => {

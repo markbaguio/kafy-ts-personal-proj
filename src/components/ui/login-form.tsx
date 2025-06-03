@@ -13,7 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { SignInPayload, signInUser } from "@/services/authServiceApi";
-import { useProfileStore } from "@/store/useProfileStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "sonner";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { AxiosErrorCode } from "@/constants";
@@ -52,7 +52,7 @@ export function LoginForm({
     onSuccess: (response) => {
       const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
       // useProfileStore.getState().updateProfile(profile!);
-      useProfileStore.setState({ profile });
+      useAuthStore.setState({ profile });
       //? on successful login; redirect to homepage.
       navigate("/");
     },
