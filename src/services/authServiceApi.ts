@@ -63,7 +63,7 @@ export async function signInUser(
   }
 }
 
-export async function signOutUser() {
+export async function signOutUser(): Promise<ApiResponse<null>> {
   try {
     const response = await axios.post(
       `${BASE_URL}/auth/signout`,
@@ -72,7 +72,10 @@ export async function signOutUser() {
         withCredentials: true,
       }
     );
-    console.log(response);
+    // console.log("signout response:", response);
+    return {
+      ...response.data,
+    };
   } catch (error) {
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
