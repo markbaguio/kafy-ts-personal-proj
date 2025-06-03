@@ -5,7 +5,10 @@ import { Link } from "react-router";
 
 export default function Footer() {
   return (
-    <footer className="bg-milky-white flex flex-col-reverse md:flex-row p-6">
+    <footer
+      data-testid="footer"
+      className="bg-milky-white flex flex-col-reverse md:flex-row p-6"
+    >
       <div className="flex flex-col w-full items-start p-3 gap-2 md:w-[40%]">
         <Link to="/">
           <Logo />

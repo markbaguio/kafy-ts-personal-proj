@@ -1,4 +1,9 @@
-import { cn, getAuthApiErrorMessage } from "@/lib/utils";
+import {
+  cn,
+  handleZodApiFieldErrors,
+  isAuthApiErrorResponse,
+  isZodApiErrorResponse,
+} from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -6,20 +11,26 @@ import { Facebook } from "lucide-react";
 import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useAuth } from "@/hooks/useAuth";
+import { useMutation } from "@tanstack/react-query";
+import { SignInPayload, signInUser } from "@/services/authServiceApi";
+import { useProfileStore } from "@/store/useProfileStore";
 import { toast } from "sonner";
+import { ApiErrorResponse } from "@/models/ApiResponse";
+import { AxiosErrorCode } from "@/constants";
+import { useErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router";
-import {
-  isAuthApiError,
-  isAuthRetryableFetchError,
-} from "@supabase/supabase-js";
+import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 
-const UserSignInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(1, "Password is required"),
-});
+// const UserSignInSchema = z.object({
+//   email: z.string().email(),
+//   password: z.string().min(1, "Password is required"),
+//   // email: z.string(),
+//   // password: z.string(),
+// });
 
-type UserSignInFormType = z.infer<typeof UserSignInSchema>;
+export type UserSignInFormType = z.infer<typeof UserSignInSchema>;
+
+// TODO: Make the SignInErrorFallback beautiful.
 
 export function LoginForm({
   className,
@@ -33,44 +44,75 @@ export function LoginForm({
   } = useForm<UserSignInFormType>({
     resolver: zodResolver(UserSignInSchema),
   });
-
-  const { signInUser } = useAuth();
+  const { showBoundary } = useErrorBoundary();
   const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<UserSignInFormType> = async (
+  const signInMutation = useMutation({
+    mutationFn: signInUser,
+    onSuccess: (response) => {
+      const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
+      // useProfileStore.getState().updateProfile(profile!);
+      useProfileStore.setState({ profile });
+      //? on successful login; redirect to homepage.
+      navigate("/");
+    },
+    onError: (error) => {
+      if (error instanceof ApiErrorResponse) {
+        if (error.errorName === AxiosErrorCode.NetworkError) {
+          toast.warning(`${error.message}`);
+          return;
+        }
+        if (isAuthApiErrorResponse(error)) {
+          setError("root", { type: "manual", message: error.message });
+          console.error(error);
+          return;
+        } else if (isZodApiErrorResponse(error)) {
+          const fieldErrors = error.errorDetails?.fieldErrors;
+          if (error.errorDetails?.formErrors.length !== 0) {
+            console.error(error.errorDetails?.formErrors);
+            setError("root", {
+              type: "manual",
+              message: `${error.errorDetails?.formErrors[0]}`,
+            });
+          }
+          if (fieldErrors) {
+            // Object.entries(fieldErrors).forEach(([field, messages]) => {
+            //   if (messages.length > 0) {
+            //     setError(field as keyof SignInPayload, {
+            //       type: "manual",
+            //       message: messages[0],
+            //     });
+            //   }
+            // });
+            handleZodApiFieldErrors(fieldErrors, setError);
+          }
+        }
+      } else if (error instanceof Error) {
+        showBoundary(error);
+      }
+    },
+  });
+
+  const onSubmit: SubmitHandler<SignInPayload> = async (
     data: UserSignInFormType
   ) => {
-    // await new Promise((resolve) => setTimeout(resolve, 1000));
-    // console.log(data);
-    try {
-      const result = await signInUser(data.email, data.password);
-
-      if (result) {
-        const display_name: string =
-          result.user?.user_metadata?.display_name || "User";
-        toast(`Welcome back ${display_name}`);
-        navigate("/");
-      }
-    } catch (error) {
-      if (isAuthApiError(error)) {
-        const processedErrorMessage: string = getAuthApiErrorMessage(error);
-        setError("root", {
-          type: "manual",
-          message: `${processedErrorMessage}`,
-        });
-        console.error(error);
-      } else if (isAuthRetryableFetchError(error)) {
-        setError("root", {
-          type: "manual",
-          message: `Network Error. Please check your connection.`,
-        });
-        console.error(error);
-      } else if (error instanceof Error) {
-        setError("root", { type: "manual", message: `An error occurred` });
-        console.error(error);
-      }
-    }
+    signInMutation.mutate(data);
   };
+
+  if (signInMutation.isPending) {
+    return (
+      <section data-testid="sign-in-loading">
+        <div className="flex flex-col gap-12 h-screen items-center justify-center text-raisin-black">
+          <div className="relative flex flex-col items-center justify-center z-0">
+            <div className="absolute animate-ping rounded-full border-4 border-t-4 border-raisin-black h-12 w-12"></div>
+            <div className="absolute animate-ping delay-200 rounded-full border-4 border-t-4 border-golden-brown h-12 w-12"></div>
+            <div className="absolute animate-ping delay-400 rounded-full border-4 border-t-4 border-royal-brown h-12 w-12"></div>
+          </div>
+          <span className="text-2xl">Signing in...</span>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <form
@@ -95,7 +137,7 @@ export function LoginForm({
             <Input
               {...register("email")}
               id="email"
-              type="email"
+              // type="email"
               className="border-raisin-black placeholder:text-raisin-black"
               placeholder="Email"
               autoComplete="username"
@@ -139,6 +181,7 @@ export function LoginForm({
           </p>
         )}
         <Button
+          data-testid="login-button"
           disabled={isSubmitting}
           type="submit"
           variant="main"

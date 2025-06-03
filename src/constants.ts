@@ -164,3 +164,21 @@ export const RewardPerks: RewardPerksType[] = [
 
 export const RewardsPerksHeader = "Limitless Perks";
 export const RewardsPerksDescription = `Sign up for effortless ordering, exclusive perks, and—yes—free coffee. Because every great sip deserves a great reward.`;
+
+// URLs
+export const BASE_URL = "http://localhost:5000";
+export const AUTH_SIGN_IN = "/auth/signin";
+export const AUTH_SIGN_UP = "/auth/signup";
+export const AUTH_SIGN_OUT = "/auth/signout";
+
+// AXIOS ERROR CODE: for axios errors not
+export enum AxiosErrorCode {
+  NetworkError = "ERR_NETWORK",
+}
+
+// EXPECTED ERROR NAMES FROM THE BACKEND - ERROR NAMES USED FOR IDENTIFYING IF THE ERROR IS A ZodError, AuthApiError(Supabase), Error... etc
+export enum ApiErrorName {
+  ZodError = "ZodError",
+  AuthApiError = "AuthApiError",
+  UnexpectedError = "Error",
+}
