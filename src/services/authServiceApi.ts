@@ -2,6 +2,7 @@ import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 import axios, { isAxiosError } from "axios";
 import {
+  AUTH_ME,
   AUTH_SIGN_IN,
   AUTH_SIGN_UP,
   AxiosErrorCode,
@@ -12,6 +13,7 @@ import { z, ZodError } from "zod";
 import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
 import { UserSignUpFormSchema } from "@/schemas/auth/UserSignUpFormSchema";
+import { isAuthApiError } from "@supabase/supabase-js";
 
 // export type SignInPayload = UserSignInFormType;
 export type SignInPayload = z.infer<typeof UserSignInSchema>;
@@ -141,6 +143,30 @@ export async function signUpUser(
           responseErrorData.errorDetails
         );
       }
+    }
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export async function getRefreshProfile(): Promise<ApiResponse<Profile>> {
+  try {
+    const response = await axios.get<ApiResponse<Profile>>(
+      `${BASE_URL}${AUTH_ME}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return {
+      ...response.data,
+    };
+  } catch (error) {
+    if (isAuthApiError(error)) {
+      throw new ApiErrorResponse(
+        error.status ?? 500,
+        error.name ?? "AUTH_API_ERROR",
+        error.message ?? "Authentication API error"
+      );
     }
     throw new Error("An unexpected error occurred");
   }
