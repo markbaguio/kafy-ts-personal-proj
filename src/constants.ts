@@ -182,4 +182,5 @@ export enum ApiErrorName {
   ZodError = "ZodError",
   AuthApiError = "AuthApiError",
   UnexpectedError = "Error",
+  AuthSessionMissingError = "AuthSessionMissingError",
 }

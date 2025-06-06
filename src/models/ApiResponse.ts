@@ -36,3 +36,9 @@ export type UnexpectedErrorDetails = {
   message: string;
   stack: string;
 };
+
+export type AuthSessionMissingErrorDetails = {
+  name: string;
+  status: string;
+  _isAuthError: boolean;
+};
