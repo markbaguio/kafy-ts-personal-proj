@@ -184,3 +184,8 @@ export enum ApiErrorName {
   UnexpectedError = "Error",
   AuthSessionMissingError = "AuthSessionMissingError",
 }
+
+// Custom Error Message
+export enum CustomErrorMessage {
+  NoInternetConnectionMessage = "You are offline. Check your internet connection.",
+}
