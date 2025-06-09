@@ -29,17 +29,25 @@ export type AuthStore = {
 };
 
 export const useAuthStore = create<AuthStore>()(
-  persist(
-    (set, get) => ({
-      profile: null,
-      setProfile: (profile) => set({ profile }),
-      get isSignedIn() {
-        return !!get().profile;
-      },
-    }),
-    {
-      name: "auth-store",
-      partialize: (state: AuthStore) => ({ profile: state.profile }),
-    }
-  )
+  // persist(
+  //   (set, get) => ({
+  //     profile: null,
+  //     setProfile: (profile) => set({ profile }),
+  //     get isSignedIn() {
+  //       return !!get().profile;
+  //     },
+  //   }),
+  //   {
+  //     name: "auth-store",
+  //     partialize: (state: AuthStore) => ({ profile: state.profile }),
+  //   }
+  // )
+  (set, get) => ({
+    profile: null,
+    setProfile: (profile) => set({ profile }),
+    isSignedIn: false,
+    // get isSignedIn() {
+    //   return !!get().profile;
+    // },
+  })
 );

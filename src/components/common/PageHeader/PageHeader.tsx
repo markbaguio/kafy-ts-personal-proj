@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { LARGE_SCREEN } from "@/lib/constants.ts";
 import { useAuthStore } from "@/store/useAuthStore.ts";
 import { AUTH_SIGN_IN, AUTH_SIGN_UP } from "@/constants.ts";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signOutUser } from "@/services/authServiceApi.ts";
 import { toast } from "sonner";
 
@@ -34,9 +34,9 @@ const navItems: navItemType[] = [
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
-  const profile = useAuthStore((state) => state.profile);
-  console.log(`profile: ${profile}`);
 
   const signOutMutation = useMutation({
     mutationFn: signOutUser,
@@ -44,13 +44,22 @@ export default function PageHeader() {
       //? on successful sign out; redirect to homepage.
       navigate("/auth/signin");
       // useProfileStore.getState().deleteProfile();
-      useAuthStore.setState({ profile: null });
+      useAuthStore.setState({ profile: null, isSignedIn: false });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.removeQueries({
+        queryKey: ["me"],
+      });
       toast.success("Successfully signed out.");
     },
     onError: (error) => {
       console.error(error);
     },
   });
+
+  const profile = useAuthStore((state) => state.profile);
+  const isSignedIn = useAuthStore((state) => state.isSignedIn);
+  console.log(`Page header profile:`, profile);
+  console.log(`signed in:`, isSignedIn);
 
   useEffect(() => {
     const handleResize = () => {
