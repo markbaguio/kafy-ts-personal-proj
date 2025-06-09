@@ -8,11 +8,6 @@ import { useAuthStore } from "@/store/useAuthStore";
 export default function MainLayout() {
   useAuth();
 
-  const isSignedIn = useAuthStore((state) => state.isSignedIn);
-  console.log(isSignedIn);
-  // const profile = useAuthStore((state) => state.profile);
-  // console.log("Main layout useAuthStore:", profile);
-
   return (
     <ErrorBoundary fallback={<div>Miau</div>}>
       <div className="flex flex-col">
