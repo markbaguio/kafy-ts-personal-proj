@@ -5,11 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useAuth } from "@/hooks/useAuth";
 import { useAuthStore } from "@/store/useAuthStore";
 
-//TODO: Add tanstack-query useQuery hook for the useAuthStore.
-//TODO: Implement a simple isSignedIne in the usAuthStore or a hook.
-
 export default function MainLayout() {
-  //TODO: check kung anong error code yung sinesend ng backend kapag walang access_token/walang cookie yung request sa /auth/me
   useAuth();
 
   const isSignedIn = useAuthStore((state) => state.isSignedIn);
