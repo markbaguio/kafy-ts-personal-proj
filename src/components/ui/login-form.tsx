@@ -115,7 +115,7 @@ export function LoginForm({
           Login to your account
         </h1>
         <p className="text-sm text-balance text-raisin-black">
-          Enter your email below to login to your account
+          Enter your email and password below to login to your account
         </p>
       </div>
       <div className="grid gap-6">
