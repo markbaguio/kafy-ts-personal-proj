@@ -37,14 +37,20 @@ export default function PageHeader() {
   const queryClient = useQueryClient();
 
   const navigate = useNavigate();
+  const profile = useAuthStore((state) => state.profile);
 
   const signOutMutation = useMutation({
     mutationFn: signOutUser,
     onSuccess: () => {
       //? on successful sign out; redirect to homepage.
-      navigate("/auth/signin");
-      // useAuthStore.setState({ profile: null, isSignedIn: false });
+
+      //? broadcast log out to other tabs.
+      const broadcastChannel = new BroadcastChannel("auth");
+      broadcastChannel.postMessage("logout");
+      broadcastChannel.close();
       useAuthStore.getState().signOut();
+      navigate("/auth/signin");
+
       queryClient.invalidateQueries({ queryKey: ["me"] });
       queryClient.removeQueries({
         queryKey: ["me"],
@@ -56,10 +62,9 @@ export default function PageHeader() {
     },
   });
 
-  const profile = useAuthStore((state) => state.profile);
-  const isSignedIn = useAuthStore((state) => state.isSignedIn);
-  console.log(`Page header profile:`, profile);
-  console.log(`signed in:`, isSignedIn);
+  // const isSignedIn = useAuthStore((state) => state.isSignedIn);
+  // console.log(`Page header profile:`, profile);
+  // console.log(`signed in:`, isSignedIn);
 
   useEffect(() => {
     const handleResize = () => {
