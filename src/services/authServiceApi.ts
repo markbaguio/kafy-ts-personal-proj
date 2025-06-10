@@ -29,7 +29,7 @@ export async function signInUser(
         withCredentials: true,
       }
     );
-    console.log(response);
+    // console.log(response);
 
     const parsedProfile = ProfileSchema.safeParse(response.data.data);
     if (!parsedProfile.success) {
