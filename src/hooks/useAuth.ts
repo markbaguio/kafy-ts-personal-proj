@@ -34,7 +34,7 @@ export function useAuth() {
   });
 
   useEffect(() => {
-    console.log("query.data change, executing...");
+    // console.log("query.data change, executing...");
 
     if (query.data?.data) {
       useAuthStore.setState({ profile: query.data?.data });
