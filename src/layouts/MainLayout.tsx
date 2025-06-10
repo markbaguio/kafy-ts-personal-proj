@@ -1,22 +1,20 @@
 import Footer from "@/components/common/Footer";
 import PageHeader from "@/components/common/PageHeader/PageHeader";
 import { Outlet } from "react-router";
-import { ErrorBoundary } from "react-error-boundary";
 import { useAuth } from "@/hooks/useAuth";
-import { useAuthStore } from "@/store/useAuthStore";
+
+//TODO: implement broadcast channel to sync signout on all tabs.
 
 export default function MainLayout() {
   useAuth();
 
   return (
-    <ErrorBoundary fallback={<div>Miau</div>}>
-      <div className="flex flex-col">
-        <PageHeader />
-        <main className="flex grow justify-center items-center">
-          <Outlet />
-        </main>
-        <Footer />
-      </div>
-    </ErrorBoundary>
+    <div className="flex flex-col">
+      <PageHeader />
+      <main className="flex grow justify-center items-center">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 }
