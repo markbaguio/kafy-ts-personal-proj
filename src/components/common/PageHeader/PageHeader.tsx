@@ -43,8 +43,8 @@ export default function PageHeader() {
     onSuccess: () => {
       //? on successful sign out; redirect to homepage.
       navigate("/auth/signin");
-      // useProfileStore.getState().deleteProfile();
-      useAuthStore.setState({ profile: null, isSignedIn: false });
+      // useAuthStore.setState({ profile: null, isSignedIn: false });
+      useAuthStore.getState().signOut();
       queryClient.invalidateQueries({ queryKey: ["me"] });
       queryClient.removeQueries({
         queryKey: ["me"],
