@@ -18,7 +18,7 @@ import { signUpUser } from "@/services/authServiceApi";
 import { AxiosErrorCode } from "@/constants";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
-import { useProfileStore } from "@/store/useProfileStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "sonner";
 import {
   cn,
@@ -82,7 +82,7 @@ export default function SignUpForm() {
         const profile: Profile = response.data;
         // Use the profile variable here if needed
         // useProfileStore.getState().updateProfile(profile);
-        useProfileStore.setState({ profile });
+        useAuthStore.setState({ profile });
         //? on successful login; redirect to homepage.
         navigate("/");
       }

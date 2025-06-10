@@ -170,6 +170,7 @@ export const BASE_URL = "http://localhost:5000";
 export const AUTH_SIGN_IN = "/auth/signin";
 export const AUTH_SIGN_UP = "/auth/signup";
 export const AUTH_SIGN_OUT = "/auth/signout";
+export const AUTH_ME = "/auth/me";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {
@@ -181,4 +182,10 @@ export enum ApiErrorName {
   ZodError = "ZodError",
   AuthApiError = "AuthApiError",
   UnexpectedError = "Error",
+  AuthSessionMissingError = "AuthSessionMissingError",
+}
+
+// Custom Error Message
+export enum CustomErrorMessage {
+  NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }

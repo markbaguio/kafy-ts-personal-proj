@@ -2,6 +2,7 @@ import { ApiErrorName } from "@/constants";
 import {
   ApiErrorResponse,
   AuthApiErrorDetails,
+  AuthSessionMissingErrorDetails,
   UnexpectedErrorDetails,
   ZodErrorDetails,
 } from "@/models/ApiResponse";
@@ -62,6 +63,15 @@ export function isUnexpectedApiErrorResponse(
   return (
     error instanceof ApiErrorResponse &&
     error.errorName === ApiErrorName.UnexpectedError
+  );
+}
+
+export function isAuthSessinoMissingErrorResponse(
+  error: unknown
+): error is ApiErrorResponse<AuthSessionMissingErrorDetails> {
+  return (
+    error instanceof ApiErrorResponse &&
+    error.name === ApiErrorName.AuthSessionMissingError
   );
 }
 

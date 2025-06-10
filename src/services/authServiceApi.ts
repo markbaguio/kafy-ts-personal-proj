@@ -2,10 +2,12 @@ import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
 import { Profile } from "@/models/types";
 import axios, { isAxiosError } from "axios";
 import {
+  AUTH_ME,
   AUTH_SIGN_IN,
   AUTH_SIGN_UP,
   AxiosErrorCode,
   BASE_URL,
+  CustomErrorMessage,
 } from "../constants";
 import { isApiErrorResponse } from "@/lib/utils";
 import { z, ZodError } from "zod";
@@ -27,7 +29,7 @@ export async function signInUser(
         withCredentials: true,
       }
     );
-    console.log(response);
+    // console.log(response);
 
     const parsedProfile = ProfileSchema.safeParse(response.data.data);
     if (!parsedProfile.success) {
@@ -133,6 +135,49 @@ export async function signUpUser(
           "Unable to reach server. Please check your internet connection."
         );
       }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
+    }
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export async function getRefreshProfile(): Promise<ApiResponse<Profile>> {
+  try {
+    const response = await axios.get<ApiResponse<Profile>>(
+      `${BASE_URL}${AUTH_ME}`,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return {
+      ...response.data,
+    };
+  } catch (error) {
+    // console.log(error);
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data;
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          CustomErrorMessage.NoInternetConnectionMessage
+        );
+      }
+      // if (isAuthApiError(responseErrorData)) {
+      //   throw new ApiErrorResponse(
+      //     error.status ?? 500,
+      //     error.name ?? "AUTH_API_ERROR",
+      //     error.message ?? "Authentication API error"
+      //   );
+      // }
       if (responseErrorData && isApiErrorResponse(responseErrorData)) {
         throw new ApiErrorResponse(
           responseErrorData.statusCode,

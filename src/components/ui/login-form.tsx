@@ -13,13 +13,14 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { SignInPayload, signInUser } from "@/services/authServiceApi";
-import { useProfileStore } from "@/store/useProfileStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { toast } from "sonner";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { AxiosErrorCode } from "@/constants";
 import { useErrorBoundary } from "react-error-boundary";
 import { useNavigate } from "react-router";
 import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
+import Loading from "./loading";
 
 // const UserSignInSchema = z.object({
 //   email: z.string().email(),
@@ -52,7 +53,7 @@ export function LoginForm({
     onSuccess: (response) => {
       const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
       // useProfileStore.getState().updateProfile(profile!);
-      useProfileStore.setState({ profile });
+      useAuthStore.setState({ profile });
       //? on successful login; redirect to homepage.
       navigate("/");
     },
@@ -100,18 +101,7 @@ export function LoginForm({
   };
 
   if (signInMutation.isPending) {
-    return (
-      <section data-testid="sign-in-loading">
-        <div className="flex flex-col gap-12 h-screen items-center justify-center text-raisin-black">
-          <div className="relative flex flex-col items-center justify-center z-0">
-            <div className="absolute animate-ping rounded-full border-4 border-t-4 border-raisin-black h-12 w-12"></div>
-            <div className="absolute animate-ping delay-200 rounded-full border-4 border-t-4 border-golden-brown h-12 w-12"></div>
-            <div className="absolute animate-ping delay-400 rounded-full border-4 border-t-4 border-royal-brown h-12 w-12"></div>
-          </div>
-          <span className="text-2xl">Signing in...</span>
-        </div>
-      </section>
-    );
+    return <Loading text="Signing in..." />;
   }
 
   return (
