@@ -4,6 +4,7 @@ import AboutUs from "@/pages/AboutUs";
 import GiftCards from "@/pages/GiftCards";
 import Homepage from "@/pages/Homepage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import Rewards from "@/pages/Rewards";
 import { SignInPage } from "@/pages/SignInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
@@ -24,6 +25,7 @@ export const routes: RouteObject[] = [
         element: <GiftCards />,
       },
       { path: "/about-us", element: <AboutUs /> },
+      { path: "/profile", element: <ProfilePage /> },
     ],
   },
   {
