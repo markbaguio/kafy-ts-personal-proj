@@ -3,12 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { User } from "lucide-react";
 import ShoppingBagSVG from "@/assets/ProfilePage/shopping-bag-svgrepo-com.svg";
 import { Button } from "@/components/ui/button";
+import StarSVG from "@/assets/ProfilePage/star-svgrepo-com.svg";
 
 export default function ProfilePage() {
   const { data } = useQuery(createGetProfileQueryOptions());
 
   return (
-    <section className="w-screen bg-off-white-2/50 grid grid-cols-1 lg:grid-flow-col lg:grid-cols-3 p-10 gap-15 min-h-[850px] max-h-lvh overflow-y-auto">
+    <section className="w-screen bg-off-white-2/50 grid grid-cols-1 lg:grid-flow-col lg:grid-cols-3 grid-rows-2 p-10 gap-5 min-h-[850px] max-h-lvh overflow-y-auto">
       {/** Profile grid */}
       <div className="overflow-hidden bg-milky-white rounded-[30px] shadow-xl row-span-2 col-span-2 lg:col-span-1 flex flex-col gap-10 items-center p-5">
         <div className="flex flex-col items-center gap-10 p-15 w-full">
@@ -16,7 +17,7 @@ export default function ProfilePage() {
             <User className="w-[200px] h-[200px]" />
           </div>
           <div className="flex flex-col text-center">
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-5xl font-bold">
               {data?.data?.first_name} {""}
               {data?.data?.last_name}
             </h1>
@@ -88,10 +89,41 @@ export default function ProfilePage() {
           <Button variant={"main"}>Edit profile</Button>
         </div>
       </div>
-      <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2">
-        Analytics
+      <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-1 grid grid-cols-6 grid-rows-2 grid-flow-dense gap-2 p-5">
+        <div className="bg-black-coffee/85 rounded-[15px] col-span-4 flex flex-row justify-center items-center gap-4">
+          <p className="text-milky-white font-light text-3xl">
+            Average rating given
+          </p>
+          <div className="h-[150px] w-[150px] rounded-full border-3 flex flex-col justify-center items-center">
+            <span className="text-5xl font-bold text-milky-white">4.4</span>
+            <img src={StarSVG} alt="Star svg" className="h-[50px] w-[50px]" />
+          </div>
+        </div>
+        <div className="bg-light-caramel rounded-[15px] col-span-2 row-span-1 flex flex-col justify-center items-center p-5 gap-2">
+          <p className="text-3xl text-raisin-black text-center">
+            Average items per order
+          </p>
+          <span className="text-4xl font-bold text-raisin-black">
+            2.3 items
+          </span>
+        </div>
+        <div className="bg-golden-brown/70 rounded-[15px] col-span-2 flex flex-col justify-center items-center text-center gap-5">
+          <span className="text-3xl text-milky-white font-bold">
+            Check out what's brewing!
+          </span>
+          <Button
+            variant="outline2"
+            className="text-light-caramel border-light-caramel hover:bg-light-caramel hover:text-raisin-black"
+          >
+            Check out
+          </Button>
+        </div>
+        <div className="bg-royal-brown/90 rounded-[15px] col-span-4">4</div>
       </div>
-      <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2">
+      <div
+        className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-1
+      "
+      >
         Order history
       </div>
     </section>
