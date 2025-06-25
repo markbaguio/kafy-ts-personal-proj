@@ -1,9 +1,10 @@
 import { createGetProfileQueryOptions } from "@/queryOptions/createGetProfileQueryOptions";
 import { useQuery } from "@tanstack/react-query";
-import { User } from "lucide-react";
+import { CalendarCheck2Icon, User } from "lucide-react";
 import ShoppingBagSVG from "@/assets/ProfilePage/shopping-bag-svgrepo-com.svg";
 import { Button } from "@/components/ui/button";
 import StarSVG from "@/assets/ProfilePage/star-svgrepo-com.svg";
+import Logo from "@/components/common/Logo";
 
 export default function ProfilePage() {
   const { data } = useQuery(createGetProfileQueryOptions());
@@ -89,43 +90,67 @@ export default function ProfilePage() {
           <Button variant={"main"}>Edit profile</Button>
         </div>
       </div>
-      <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-1 grid grid-cols-6 grid-rows-2 grid-flow-dense gap-2 p-5">
-        <div className="bg-black-coffee/85 rounded-[15px] col-span-4 flex flex-row justify-center items-center gap-4">
-          <p className="text-milky-white font-light text-3xl">
-            Average rating given
-          </p>
-          <div className="h-[150px] w-[150px] rounded-full border-3 flex flex-col justify-center items-center">
-            <span className="text-5xl font-bold text-milky-white">4.4</span>
-            <img src={StarSVG} alt="Star svg" className="h-[50px] w-[50px]" />
-          </div>
-        </div>
-        <div className="bg-light-caramel rounded-[15px] col-span-2 row-span-1 flex flex-col justify-center items-center p-5 gap-2">
-          <p className="text-3xl text-raisin-black text-center">
-            Average items per order
-          </p>
-          <span className="text-4xl font-bold text-raisin-black">
-            2.3 items
-          </span>
-        </div>
-        <div className="bg-golden-brown/70 rounded-[15px] col-span-2 flex flex-col justify-center items-center text-center gap-5">
-          <span className="text-3xl text-milky-white font-bold">
-            Check out what's brewing!
-          </span>
-          <Button
-            variant="outline2"
-            className="text-light-caramel border-light-caramel hover:bg-light-caramel hover:text-raisin-black"
-          >
-            Check out
-          </Button>
-        </div>
-        <div className="bg-royal-brown/90 rounded-[15px] col-span-4">4</div>
-      </div>
+      {/** More simple Analytics */}
+      <AnalyticsBentoGrid />
       <div
         className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-1
       "
       >
-        Order history
+        <OrderHistory />
       </div>
     </section>
   );
 }
+
+function AnalyticsBentoGrid() {
+  return (
+    <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-1 grid grid-cols-6 grid-rows-2 grid-flow-dense gap-2 p-5">
+      <div className="bg-cappuccino/80 rounded-[15px] col-span-1 flex flex-col justify-center items-center">
+        <Logo classname="" />
+        {/* <img src={KafyLogo} className="h-[100px] w-[100px]" /> */}
+      </div>
+      <div className="bg-black-coffee/85 rounded-[15px] col-span-3 flex flex-row justify-center items-center gap-4">
+        <p className="text-milky-white font-light text-3xl">
+          Average rating given
+        </p>
+        <div className="h-[150px] w-[150px] rounded-full border-3 flex flex-col justify-center items-center">
+          <span className="text-5xl font-bold text-milky-white">4.4</span>
+          <img src={StarSVG} alt="Star svg" className="h-[50px] w-[50px]" />
+        </div>
+      </div>
+
+      <div className="bg-light-caramel rounded-[15px] col-span-2 row-span-1 flex flex-col justify-center items-center p-5 gap-2">
+        <p className="text-3xl text-raisin-black text-center">
+          Average items per order
+        </p>
+        <span className="text-4xl font-bold text-raisin-black">2.3 items</span>
+      </div>
+      <div className="bg-golden-brown/70 rounded-[15px] col-span-3 flex flex-col justify-center items-center text-center gap-5">
+        <span className="text-3xl text-milky-white font-bold">
+          Check out what's brewing!
+        </span>
+        <Button
+          variant="outline2"
+          className="text-light-caramel border-light-caramel hover:bg-light-caramel hover:text-raisin-black"
+        >
+          Check out
+        </Button>
+      </div>
+      <div className="bg-royal-brown/90 rounded-[15px] col-span-3 text-milky-white flex flex-row justify-items-start items-center gap-2 p-2">
+        <CalendarCheck2Icon className="stroke-1 text-milky-white w-[150px] h-[150px]" />
+        <div className="w-full">
+          <h5 className="font-light text-3xl">Last order</h5>
+          <p className="text-4xl font-bold">June 15, 2025</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OrderHistory() {
+  return <p>Order history</p>;
+}
+
+type OrderHistoryItemProps = {};
+
+function OrderHistoryItem() {}
