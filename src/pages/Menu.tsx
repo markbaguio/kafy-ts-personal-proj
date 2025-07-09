@@ -5,7 +5,7 @@ export function Menu() {
   return (
     <div className="w-full">
       {/** Ribbon/banner */}
-      <div className="w-full bg-light-caramel/30 p-5 flex justify-start">
+      <div className="w-full bg-light-caramel/30 p-1 py-3 flex justify-start">
         <Button className="text-lg font-normal" variant="ghost2" asChild>
           <Link to="/favorites">
             <span>Favorites</span>
