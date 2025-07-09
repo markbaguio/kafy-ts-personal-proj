@@ -7,4 +7,5 @@ export const ProfileSchema = z.object({
   email: z.string().email(),
   avatar_url: z.string().nullable(),
   created_at: z.coerce.date(),
+  updated_at: z.coerce.date().nullable(),
 });

@@ -8,7 +8,7 @@ import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import Rewards from "@/pages/Rewards";
 import { SignInPage } from "@/pages/SignInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
-import { Menu } from "lucide-react";
+import { Menu } from "@/pages/Menu";
 import { RouteObject } from "react-router";
 
 export const routes: RouteObject[] = [

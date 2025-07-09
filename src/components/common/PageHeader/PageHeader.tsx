@@ -159,6 +159,18 @@ export default function PageHeader() {
                 </Button>
               </div>
             )}
+            {/** For testing */}
+            <Button
+              data-testid="profile-button"
+              onClick={() => {
+                // console.log("profile");
+                navigate("/profile");
+              }}
+              variant="main"
+            >
+              <User />
+            </Button>
+            {/** --------------------- */}
           </div>
 
           {/** Mobile view */}
