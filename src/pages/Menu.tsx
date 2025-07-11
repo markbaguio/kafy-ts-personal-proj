@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 
 export function Menu() {
@@ -24,8 +25,8 @@ export function Menu() {
       </div>
       {/** Main */}
       <div className="flex w-full pl-10">
-        <MenuSidebar />
-        <main className="w-full h-lvh p-5 bg-success-green">
+        <MenuSidebar className="h-lvh w-[300px] flex flex-col gap-10 py-15" />
+        <main className="w-full h-lvh p-5 py-15 bg-success-green">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente,
           eligendi.
         </main>
@@ -34,9 +35,10 @@ export function Menu() {
   );
 }
 
-export function MenuSidebar() {
+export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
   return (
-    <aside className="h-lvh w-[300px] flex flex-col justify-center gap-10">
+    // <aside className="h-lvh w-[300px] flex flex-col gap-10 py-5">
+    <aside className={cn(className)}>
       <div className="w-full flex flex-col justify-center  gap-4">
         <div className="">
           <span className="text-2xl font-bold">Drinks</span>
