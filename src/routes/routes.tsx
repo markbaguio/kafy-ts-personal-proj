@@ -8,7 +8,7 @@ import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import Rewards from "@/pages/Rewards";
 import { SignInPage } from "@/pages/SignInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
-import { Menu } from "@/pages/MenuPage/Menu";
+import { MenuPage } from "@/pages/MenuPage/MenuPage";
 import { RouteObject } from "react-router";
 
 export const routes: RouteObject[] = [
@@ -18,7 +18,7 @@ export const routes: RouteObject[] = [
     errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <Homepage /> },
-      { path: "/menu", element: <Menu /> },
+      { path: "/menu", element: <MenuPage /> },
       { path: "/rewards", element: <Rewards /> },
       {
         path: "/gift",

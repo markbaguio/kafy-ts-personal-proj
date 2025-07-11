@@ -1,7 +1,7 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
-import { MenuItemType } from "./schemas/Menu/MenuItem";
+import { MenuItemType } from "./schemas/Menu/MenuItemSchema";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {

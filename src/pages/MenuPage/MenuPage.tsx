@@ -1,12 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { MenuIcon } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
 
-export function Menu() {
+export function MenuPage() {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <div className="w-full">
       {/** Ribbon/banner */}
       <div className="w-full bg-light-caramel/30 flex justify-start items-center gap-5 h-[50px] pl-10 ">
+        <Button
+          className="text-lg font-normal p-0"
+          variant="ghost2"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <MenuIcon />
+          <span>Menu</span>
+        </Button>
         <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
           <Link to="/favorites">
             <span>Favorites</span>
@@ -24,8 +37,13 @@ export function Menu() {
         </Button>
       </div>
       {/** Main */}
-      <div className="flex w-full pl-10">
-        <MenuSidebar className="h-lvh w-[300px] flex flex-col gap-10 py-15" />
+      <div className="flex w-full">
+        <MenuSidebar
+          className={`h-lvh w-[300px] flex flex-col gap-10 py-15 pl-12 ${
+            isOpen ? "flex" : "hidden"
+          }`}
+        />
+        {/* <MenuSidebar className="h-lvh w-[300px] flex flex-col gap-10 py-15" /> */}
         <main className="w-full h-lvh p-5 py-15 bg-success-green">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente,
           eligendi.
@@ -44,13 +62,13 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
           <span className="text-2xl font-bold">Drinks</span>
         </div>
         <div
-          className="text-2xl font-light flex flex-col gap-1
+          className="flex flex-col gap-1
         "
         >
           {/* <Link to="/menu/hot">Hot</Link>
            */}
           <Button
-            className="w-full p-0 text-2xl font-light justify-start"
+            className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
             size="lg"
             asChild
@@ -58,7 +76,7 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
             <Link to="/menu/hot">Hot</Link>
           </Button>
           <Button
-            className="w-full p-0 text-2xl font-light justify-start"
+            className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
             size="lg"
             asChild
@@ -78,7 +96,7 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
           {/* <Link to="/menu/hot">Hot</Link>
            */}
           <Button
-            className="w-full p-0 text-2xl font-light justify-start"
+            className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
             size="lg"
             asChild
@@ -86,7 +104,7 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
             <Link to="/menu/hot">Pastry</Link>
           </Button>
           <Button
-            className="w-full p-0 text-2xl font-light justify-start"
+            className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
             size="lg"
             asChild
@@ -94,7 +112,7 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
             <Link to="/menu/hot">Snacks</Link>
           </Button>
           <Button
-            className="w-full p-0 text-2xl font-light justify-start"
+            className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
             size="lg"
             asChild
@@ -102,7 +120,7 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
             <Link to="/menu/hot">Lunch</Link>
           </Button>
           <Button
-            className="w-full p-0 text-2xl font-light justify-start"
+            className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
             size="lg"
             asChild
