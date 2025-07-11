@@ -13,7 +13,7 @@ export function Menu() {
         </Button>
         <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
           <Link to="/favorites">
-            <span>Features</span>
+            <span>Featured</span>
           </Link>
         </Button>
         <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
