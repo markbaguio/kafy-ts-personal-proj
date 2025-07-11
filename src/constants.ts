@@ -1,6 +1,7 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
+import { MenuItemType } from "./schemas/Menu/MenuItem";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -189,3 +190,126 @@ export enum ApiErrorName {
 export enum CustomErrorMessage {
   NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }
+
+export const MenuItemsMockData: MenuItemType[] = [
+  {
+    id: 1,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Black Coffee",
+    description: "Classic hot black coffee.",
+    is_available: true,
+    category: "hot",
+    price: 90,
+    image_url:
+      "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 2,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Latte",
+    description: "Espresso with steamed milk.",
+    is_available: true,
+    category: "hot",
+    price: 150,
+    image_url:
+      "https://images.unsplash.com/photo-1561882468-9110e03e0f78?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 3,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Caramel Latte",
+    description: "A sweet latte with caramel syrup.",
+    is_available: true,
+    category: "hot",
+    price: 170,
+    image_url:
+      "https://images.unsplash.com/photo-1599398054066-846f28917f38?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 4,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Cappuccino",
+    description: "Espresso with steamed milk and foam.",
+    is_available: true,
+    category: "hot",
+    price: 150,
+    image_url:
+      "https://images.unsplash.com/photo-1557006021-b85faa2bc5e2?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 5,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Americano",
+    description: "Espresso diluted with hot water.",
+    is_available: true,
+    category: "hot",
+    price: 120,
+    image_url:
+      "https://images.unsplash.com/photo-1532004491497-ba35c367d634?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 6,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Espresso",
+    description: "A single espresso shot.",
+    is_available: true,
+    category: "hot",
+    price: 100,
+    image_url:
+      "https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 7,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Macchiato",
+    description: "Espresso with a small amount of foam.",
+    is_available: true,
+    category: "hot",
+    price: 120,
+    image_url:
+      "https://images.unsplash.com/photo-1557772611-722dabe20327?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 8,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Mocha",
+    description: "Chocolate espresso drink with steamed milk and foam.",
+    is_available: true,
+    category: "hot",
+    price: 170,
+    image_url:
+      "https://images.unsplash.com/photo-1607260550778-aa9d29444ce1?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 9,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Hot Chocolate",
+    description: "Hot chocolate with milk.",
+    is_available: true,
+    category: "hot",
+    price: 140,
+    image_url:
+      "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&q=60&w=800",
+  },
+  {
+    id: 10,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Chai Latte",
+    description: "A flavorful chai tea latte.",
+    is_available: false,
+    category: "hot",
+    price: 150,
+    image_url:
+      "https://images.unsplash.com/photo-1578899952107-9c390f1af1b7?w=900",
+  },
+];
