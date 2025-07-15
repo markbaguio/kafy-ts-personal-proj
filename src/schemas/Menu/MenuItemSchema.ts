@@ -1,7 +1,7 @@
 import z from "zod";
 
-export const MenuItemSchema = z.object({
-  id: z.number(),
+export const ProductSchema = z.object({
+  product_id: z.number(),
   category: z.enum(["hot", "cold"]),
   created_at: z.string(),
   description: z.string(),
@@ -12,4 +12,4 @@ export const MenuItemSchema = z.object({
   updated_at: z.string().nullable(),
 });
 
-export type MenuItemType = z.infer<typeof MenuItemSchema>;
+export type ProductType = z.infer<typeof ProductSchema>;

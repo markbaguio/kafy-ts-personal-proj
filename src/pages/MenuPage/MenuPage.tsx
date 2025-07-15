@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { MenuItemsMockData } from "@/constants";
+import { MenuItemsMockData, PESOSIGN } from "@/constants";
 import { cn } from "@/lib/utils";
-import { MenuItemType } from "@/schemas/Menu/MenuItemSchema";
-import { MenuIcon } from "lucide-react";
+import { Heart, MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
+import { Badge } from "@/components/ui/badge";
 
 export function MenuPage() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -50,7 +50,7 @@ export function MenuPage() {
             <h3 className="text-2xl font-bold">Menu</h3>
           </div>
           {MenuItemsMockData.map((menuItem) => (
-            <MenuItemCard key={menuItem.id} {...menuItem} />
+            <MenuItemCard key={menuItem.product_id} {...menuItem} />
           ))}
         </main>
       </div>
@@ -138,31 +138,71 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
   );
 }
 
-export type MenuItemProps = MenuItemType;
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ProductType } from "@/schemas/Menu/MenuItemSchema";
 
 export function MenuItemCard({
-  id,
-  category,
+  name,
   description,
   image_url,
-  is_available,
-  name,
   price,
-}: MenuItemProps) {
+}: ProductType & React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "bg-milky-white text-raisin-black flex flex-col gap-6 rounded-xl border p-6 py-6 shadow-lg min-w-[300px] max-w-[300px] min-h-[300px]"
+        "bg-milky-white text-raisin-black flex flex-col gap-2 rounded-xl border p-6 py-6 shadow-lg min-w-[300px] max-w-[350px] min-h-[300px] h-fit"
       )}
     >
-      <img className="rounded-sm" src={image_url} alt={`${image_url}`} />
-      <div>
-        <h2 className="text-xl font-normal">{name}</h2>
-        <p className=" text-sm font-light text-raisin-black-muted">
-          {description}
-        </p>
-        <span className="text-success-green text-lg font-light">{price}</span>
+      {/**card content */}
+      {/**card img */}
+      <div className="bg-success-green overflow-hidden rounded-lg">
+        <img src={image_url} alt={`${image_url}`} />
+      </div>
+      <div className="flex justify-between">
+        {price >= 90 && price <= 140 ? (
+          <Badge
+            variant="outline"
+            className="bg-success-green/20 text-success-green-accent rounded-lg"
+          >
+            Best seller
+          </Badge>
+        ) : (
+          <div></div>
+        )}
+        <FavoriteButton price={price} />
+      </div>
+      <div className="flex flex-col">
+        <h2 className="text-xl/tight font-bold">{name}</h2>
+        <span className=" text-lg/tight font-normal">
+          {PESOSIGN}
+          {price}
+        </span>
       </div>
     </div>
+  );
+}
+
+type FavoriteButtonProps = {
+  price: number;
+};
+
+function FavoriteButton({
+  price,
+  ...props
+}: FavoriteButtonProps & React.ComponentProps<"svg">) {
+  const isFavorited = price >= 90 && price <= 140;
+  return (
+    <Heart
+      fill={isFavorited ? "red" : "none"}
+      color={isFavorited ? "red" : "black"}
+      {...props}
+    />
   );
 }

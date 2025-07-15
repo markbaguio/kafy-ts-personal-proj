@@ -1,7 +1,9 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
-import { MenuItemType } from "./schemas/Menu/MenuItemSchema";
+import { ProductType } from "./schemas/Menu/MenuItemSchema";
+
+export const PESOSIGN: string = "₱";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -191,9 +193,9 @@ export enum CustomErrorMessage {
   NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }
 
-export const MenuItemsMockData: MenuItemType[] = [
+export const MenuItemsMockData: ProductType[] = [
   {
-    id: 1,
+    product_id: 1,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Black Coffee",
@@ -205,19 +207,19 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=800",
   },
   {
-    id: 2,
+    product_id: 2,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Latte",
     description: "Espresso with steamed milk.",
     is_available: true,
     category: "hot",
-    price: 150,
+    price: 140,
     image_url:
       "https://images.unsplash.com/photo-1561882468-9110e03e0f78?auto=format&fit=crop&q=80&w=800",
   },
   {
-    id: 3,
+    product_id: 3,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Caramel Latte",
@@ -229,7 +231,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1599398054066-846f28917f38?auto=format&fit=crop&q=80&w=800",
   },
   {
-    id: 4,
+    product_id: 4,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Cappuccino",
@@ -241,7 +243,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1557006021-b85faa2bc5e2?auto=format&fit=crop&q=80&w=800",
   },
   {
-    id: 5,
+    product_id: 5,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Americano",
@@ -253,7 +255,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1532004491497-ba35c367d634?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    id: 6,
+    product_id: 6,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Espresso",
@@ -265,7 +267,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    id: 7,
+    product_id: 7,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Macchiato",
@@ -277,7 +279,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1557772611-722dabe20327?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    id: 8,
+    product_id: 8,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Mocha",
@@ -289,7 +291,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1607260550778-aa9d29444ce1?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    id: 9,
+    product_id: 9,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Hot Chocolate",
@@ -301,7 +303,7 @@ export const MenuItemsMockData: MenuItemType[] = [
       "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&q=60&w=800",
   },
   {
-    id: 10,
+    product_id: 10,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Chai Latte",
