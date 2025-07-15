@@ -149,11 +149,16 @@ import {
 import { ProductType } from "@/schemas/Menu/MenuItemSchema";
 
 export function MenuItemCard({
+  product_id,
   name,
   description,
   image_url,
   price,
 }: ProductType & React.ComponentProps<"div">) {
+  function handleToggleFavorite(product_id: number) {
+    console.log("Toggle favorite", product_id);
+  }
+
   return (
     <div
       className={cn(
@@ -176,7 +181,11 @@ export function MenuItemCard({
         ) : (
           <div></div>
         )}
-        <FavoriteButton price={price} />
+        <FavoriteButton
+          price={price}
+          product_id={product_id}
+          handleToggle={handleToggleFavorite}
+        />
       </div>
       <div className="flex flex-col">
         <h2 className="text-xl/tight font-bold">{name}</h2>
@@ -191,18 +200,33 @@ export function MenuItemCard({
 
 type FavoriteButtonProps = {
   price: number;
+  product_id: number;
+  handleToggle: (product_id: number) => void;
 };
 
 function FavoriteButton({
   price,
+  handleToggle,
+  product_id,
   ...props
-}: FavoriteButtonProps & React.ComponentProps<"svg">) {
+}: FavoriteButtonProps & React.ComponentProps<"button">) {
   const isFavorited = price >= 90 && price <= 140;
   return (
-    <Heart
-      fill={isFavorited ? "red" : "none"}
-      color={isFavorited ? "red" : "black"}
+    <button
+      type="button"
+      onClick={() => handleToggle(product_id)}
+      style={{
+        background: "none",
+        border: "none",
+        padding: 0,
+        cursor: "pointer",
+      }}
       {...props}
-    />
+    >
+      <Heart
+        fill={isFavorited ? "red" : "none"}
+        color={isFavorited ? "red" : "black"}
+      />
+    </button>
   );
 }
