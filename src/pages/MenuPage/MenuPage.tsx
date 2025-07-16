@@ -1,68 +1,112 @@
 import { Button } from "@/components/ui/button";
-import { MenuItemsMockData, PESOSIGN } from "@/constants";
+import { MenuDrinkCategories, MenuFoodCategories, PESOSIGN } from "@/constants";
 import { cn } from "@/lib/utils";
 import { Heart, MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { ProductType } from "@/schemas/Menu/MenuItemSchema";
+import { Separator } from "@/components/ui/separator";
 
 export function MenuPage() {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  // const [isOpen, setIsOpen] = useState<boolean>(true);
 
-  function handleToggleSidebar() {
-    setIsOpen((prev) => !prev);
-    console.log("isOpen:", isOpen);
-  }
+  // function handleToggleSidebar() {
+  //   setIsOpen((prev) => !prev);
+  // }
   return (
     <div className="w-full">
       {/** Ribbon/banner */}
-      <MenuBanner onToggleSideBar={handleToggleSidebar} />
+      <MenuBanner />
       {/** Main */}
       <div className="flex w-full">
         <MenuSidebar
-          className={`h-lvh w-[300px] flex flex-col gap-10 py-15 pl-12 ${
-            isOpen ? "flex" : "hidden"
-          } `}
+          className={cn(
+            `h-lvh w-[300px] gap-10 py-15 pl-12 transition-transform duration-100 ease-in-out`,
+            // isOpen ? "translate-x-0" : "-translate-x-full"
+            // isOpen ? "flex flex-col" : "hidden",
+            "hidden lg:flex flex-col"
+          )}
         />
-        <main className="w-full h-full p-5 py-15 flex flex-wrap gap-5">
+        <main
+          className={cn(
+            `w-full h-full p-5 py-15 flex flex-wrap gap-20 duration-300`
+            // !isOpen && "ml-[-300px]"
+          )}
+        >
           <div className="w-full h-fit">
-            <h3 className="text-2xl font-bold">Menu</h3>
+            <h3 className="text-4xl font-bold">Menu</h3>
           </div>
-          {MenuItemsMockData.map((menuItem) => (
+          {/* {MenuItemsMockData.map((menuItem) => (
             <MenuItemCard key={menuItem.product_id} {...menuItem} />
-          ))}
+          ))} */}
+          <section className="flex flex-col w-full gap-5 ">
+            <h3 className="text-3xl font-bold">Drinks</h3>
+            <Separator />
+            <div className="flex flex-row gap-5">
+              {MenuDrinkCategories.map((menuCategory) => (
+                <MenuCategory key={menuCategory.id} {...menuCategory} />
+              ))}
+            </div>
+          </section>
+          <section className="flex flex-col w-full gap-5 ">
+            <h3 className="text-3xl font-bold">Food</h3>
+            <Separator />
+            <div className="flex flex-row gap-5">
+              {MenuFoodCategories.map((menuCategory) => (
+                <MenuCategory key={menuCategory.id} {...menuCategory} />
+              ))}
+            </div>
+          </section>
         </main>
       </div>
     </div>
   );
 }
 
+type MenuCategoryProps = {
+  category: string;
+  img_url: string;
+};
+
+export function MenuCategory({ category, img_url }: MenuCategoryProps) {
+  return (
+    <div className="flex flex-row gap-3 p-3 justify-start items-center w-[400px] hover:bg-raisin-black/20 hover:cursor-pointer duration-500">
+      <img
+        className="w-[150px] h-[150px] rounded-full object-cover"
+        src={img_url}
+        alt={img_url}
+      />
+      <span className="text-2xl font-normal">{category}</span>
+    </div>
+  );
+}
+
 type MenuBannerProps = {
-  onToggleSideBar: () => void;
+  // onToggleSideBar: () => void;
 };
 
 function MenuBanner({
-  onToggleSideBar,
+  // onToggleSideBar,
   className,
   ...props
 }: MenuBannerProps & React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        `w-full bg-light-caramel/30 flex justify-start items-center gap-5 h-[50px] pl-10 `,
+        `w-full bg-light-caramel/30 flex justify-start items-center gap-5 h-[50px] pl-10 overflow-x-croll`,
         className
       )}
       {...props}
     >
-      <Button
+      {/* <Button
         className="text-lg font-normal p-0"
         variant="ghost2"
-        onClick={onToggleSideBar}
+        // onClick={onToggleSideBar}
       >
         <MenuIcon />
         <span>Menu</span>
-      </Button>
+      </Button> */}
       <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
         <Link to="/favorites">
           <span>Favorites</span>
@@ -84,7 +128,6 @@ function MenuBanner({
 
 export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
   return (
-    // <aside className="h-lvh w-[300px] flex flex-col gap-10 py-5">
     <aside className={cn(className)}>
       <div className="w-full flex flex-col justify-center">
         <div className="">

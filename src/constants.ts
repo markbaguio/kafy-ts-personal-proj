@@ -192,6 +192,55 @@ export enum ApiErrorName {
 export enum CustomErrorMessage {
   NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }
+// ? MOCK
+export type MenuDrinkCategoriesType = {
+  id: number;
+  category: string;
+  img_url: string;
+};
+
+export const MenuDrinkCategories: MenuDrinkCategoriesType[] = [
+  {
+    id: 1,
+    category: "Hot Coffee",
+    img_url:
+      "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 2,
+    category: "Cold Coffee",
+    img_url:
+      "https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+
+export type MenuFoodCategoriesType = {
+  id: number;
+  category: string;
+  img_url: string;
+};
+
+export const MenuFoodCategories: MenuFoodCategoriesType[] = [
+  {
+    id: 3,
+    category: "Pastries",
+    img_url:
+      "https://images.unsplash.com/photo-1609590981063-d495e2914ce4?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    id: 4,
+    category: "Lunch",
+    img_url:
+      "https://plus.unsplash.com/premium_photo-1672242676674-f4349cc6470e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    id: 5,
+    category: "Treats",
+    img_url:
+      "https://images.unsplash.com/photo-1700649405390-574054e0d190?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+//?
 
 export const MenuItemsMockData: ProductType[] = [
   {
