@@ -5,45 +5,25 @@ import { Heart, MenuIcon } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
 import { Badge } from "@/components/ui/badge";
+import { ProductType } from "@/schemas/Menu/MenuItemSchema";
 
 export function MenuPage() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  function handleToggleSidebar() {
+    setIsOpen((prev) => !prev);
+    console.log("isOpen:", isOpen);
+  }
   return (
     <div className="w-full">
       {/** Ribbon/banner */}
-      <div className="w-full bg-light-caramel/30 flex justify-start items-center gap-5 h-[50px] pl-10 ">
-        <Button
-          className="text-lg font-normal p-0"
-          variant="ghost2"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          <MenuIcon />
-          <span>Menu</span>
-        </Button>
-        <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
-          <Link to="/favorites">
-            <span>Favorites</span>
-          </Link>
-        </Button>
-        <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
-          <Link to="/favorites">
-            <span>Featured</span>
-          </Link>
-        </Button>
-        <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
-          <Link to="/favorites">
-            <span>Previous</span>
-          </Link>
-        </Button>
-      </div>
+      <MenuBanner onToggleSideBar={handleToggleSidebar} />
       {/** Main */}
       <div className="flex w-full">
         <MenuSidebar
           className={`h-lvh w-[300px] flex flex-col gap-10 py-15 pl-12 ${
             isOpen ? "flex" : "hidden"
-          }`}
+          } `}
         />
         <main className="w-full h-full p-5 py-15 flex flex-wrap gap-5">
           <div className="w-full h-fit">
@@ -58,11 +38,55 @@ export function MenuPage() {
   );
 }
 
+type MenuBannerProps = {
+  onToggleSideBar: () => void;
+};
+
+function MenuBanner({
+  onToggleSideBar,
+  className,
+  ...props
+}: MenuBannerProps & React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        `w-full bg-light-caramel/30 flex justify-start items-center gap-5 h-[50px] pl-10 `,
+        className
+      )}
+      {...props}
+    >
+      <Button
+        className="text-lg font-normal p-0"
+        variant="ghost2"
+        onClick={onToggleSideBar}
+      >
+        <MenuIcon />
+        <span>Menu</span>
+      </Button>
+      <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
+        <Link to="/favorites">
+          <span>Favorites</span>
+        </Link>
+      </Button>
+      <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
+        <Link to="/favorites">
+          <span>Featured</span>
+        </Link>
+      </Button>
+      <Button className="text-lg font-normal p-0" variant="ghost2" asChild>
+        <Link to="/favorites">
+          <span>Previous</span>
+        </Link>
+      </Button>
+    </div>
+  );
+}
+
 export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
   return (
     // <aside className="h-lvh w-[300px] flex flex-col gap-10 py-5">
     <aside className={cn(className)}>
-      <div className="w-full flex flex-col justify-center  gap-4">
+      <div className="w-full flex flex-col justify-center">
         <div className="">
           <h3 className="text-2xl font-bold">Drinks</h3>
         </div>
@@ -70,8 +94,6 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
           className="flex flex-col gap-1
         "
         >
-          {/* <Link to="/menu/hot">Hot</Link>
-           */}
           <Button
             className="w-full p-0 text-2xl font-normal text-raisin-black-muted justify-start"
             variant="ghost2"
@@ -138,20 +160,9 @@ export function MenuSidebar({ className }: React.ComponentProps<"aside">) {
   );
 }
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ProductType } from "@/schemas/Menu/MenuItemSchema";
-
 export function MenuItemCard({
   product_id,
   name,
-  description,
   image_url,
   price,
 }: ProductType & React.ComponentProps<"div">) {
