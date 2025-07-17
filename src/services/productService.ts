@@ -1,7 +1,7 @@
 import { AxiosErrorCode, BASE_URL, MENU } from "@/constants";
 import { isApiErrorResponse } from "@/lib/utils";
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
-import { Product, ProductCategoryEnum } from "@/models/types";
+import { Product, MockProductCategoryEnum } from "@/models/types";
 import { ProductArraySchema } from "@/schemas/Menu/MenuSchema";
 import axios, { isAxiosError } from "axios";
 import { ZodError } from "zod";
@@ -12,7 +12,7 @@ type GetProductPayload = {
 };
 
 export async function getAllProducts({
-  category = ProductCategoryEnum.hot,
+  category = MockProductCategoryEnum.hot,
   page = 1,
 }: GetProductPayload): Promise<ApiResponse<Product[]>> {
   try {
