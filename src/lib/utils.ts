@@ -90,3 +90,7 @@ export function handleZodApiFieldErrors<T extends FieldValues>(
     }
   });
 }
+
+export function capitalizeFirstLetter(value: string) {
+  return value.charAt(0).toUpperCase() + String(value).slice(1);
+}
