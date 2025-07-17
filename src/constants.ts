@@ -1,7 +1,7 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
+import { Product } from "./models/types";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
-import { ProductType } from "./schemas/Menu/MenuItemSchema";
 
 export const PESOSIGN: string = "₱";
 
@@ -174,6 +174,7 @@ export const AUTH_SIGN_IN = "/auth/signin";
 export const AUTH_SIGN_UP = "/auth/signup";
 export const AUTH_SIGN_OUT = "/auth/signout";
 export const AUTH_ME = "/auth/me";
+export const MENU = "/menu";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {
@@ -242,7 +243,7 @@ export const MenuFoodCategories: MenuFoodCategoriesType[] = [
 ];
 //?
 
-export const MenuItemsMockData: ProductType[] = [
+export const MenuItemsMockData: Product[] = [
   {
     product_id: 1,
     created_at: "2025-07-01T05:31:56.115117+00:00",
