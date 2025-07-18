@@ -18,7 +18,7 @@ export const routes: RouteObject[] = [
     errorElement: <NotFoundPage />,
     children: [
       { index: true, element: <Homepage /> },
-      { path: "/menu", element: <MenuPage /> },
+      { path: "/api/menu", element: <MenuPage /> },
       { path: "/rewards", element: <Rewards /> },
       {
         path: "/gift",

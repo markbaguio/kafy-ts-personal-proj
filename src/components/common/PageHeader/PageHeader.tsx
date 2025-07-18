@@ -26,7 +26,7 @@ type navItemType = {
 
 const navItems: navItemType[] = [
   { name: "HOME", path: "/" },
-  { name: "MENU", path: "/menu" },
+  { name: "MENU", path: "/api/menu" },
   { name: "REWARDS", path: "/rewards" },
   { name: "GIFT CARDS", path: "/gift" },
 ];
