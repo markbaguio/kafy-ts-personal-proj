@@ -6,11 +6,10 @@ import {
 } from "@/constants";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
 import { Coffee, Heart } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { MockProductCategoryEnum } from "@/models/types";
-import { useState } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -33,11 +32,30 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useQuery } from "@tanstack/react-query";
+import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
 
 export default function MenuPage() {
-  const [selectedCategory, setSelectedCategory] =
-    useState<MockProductCategoryEnum>(MockProductCategoryEnum.hot);
-  const [quantity, setQuantity] = useState(0);
+  // const [selectedCategory, setSelectedCategory] =
+  //   useState<MockProductCategoryEnum>(MockProductCategoryEnum.hot);
+  const [searchParams, setSearchParams] = useSearchParams({
+    category: "hot",
+    page: "1",
+  });
+
+  const { data } = useQuery(
+    createGetProductQueryOptions(
+      {
+        page: searchParams.get("page") ?? "1",
+        catergory: searchParams.get("category") ?? MockProductCategoryEnum.hot,
+      },
+      {
+        retry: 1,
+      }
+    )
+  );
+
+  console.log("Data from query:", data);
 
   function handleToggleFavorite(product_id: number) {
     console.log(product_id);
@@ -54,20 +72,11 @@ export default function MenuPage() {
               <p className="text-sm/tight font-light">Menu</p>
             </div>
           </div>
-          {/* <div className="flex items-center gap-2 px-2 py-2">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-              <Coffee className="size-4" />
-            </div>
-            <div className="flex flex-col gap-0.5 leading-none">
-              <span className="font-semibold">Kafy</span>
-              <span className="text-xs text-sidebar-foreground/70">Menu</span>
-            </div>
-          </div> */}
         </SidebarHeader>
         <SidebarContent>
           {MenuSidebarCategories.map((mc) => (
             <SidebarGroup className="" key={mc.id}>
-              <SidebarGroupLabel className="text-4xl font-semibold py-5">
+              <SidebarGroupLabel className="text-3xl font-semibold py-5">
                 {mc.title}
               </SidebarGroupLabel>
               <SidebarGroupContent>
@@ -75,23 +84,25 @@ export default function MenuPage() {
                   {mc.items.map((item) => (
                     <SidebarMenuItem key={item.name}>
                       <SidebarMenuButton
-                        asChild
-                        isActive={item.name === selectedCategory}
+                        // asChild
+                        isActive={item.name === searchParams.get("category")}
                         onClick={() =>
-                          setSelectedCategory(
-                            item.name as MockProductCategoryEnum
-                          )
+                          // setSelectedCategory(
+                          //   item.name as MockProductCategoryEnum
+                          // )
+                          setSearchParams({ category: item.name, page: "1" })
                         }
                         className={cn(
                           `hover:text-golden-brown text-lg ${
-                            item.name == selectedCategory &&
+                            item.name == searchParams.get("category") &&
                             "!text-golden-brown"
                           }`
                         )}
                       >
-                        <Link to={`/menu?category=${item.name}`}>
+                        {/* <Link to={`/menu?category=${item.name}`}>
                           {capitalizeFirstLetter(item.name)}
-                        </Link>
+                        </Link> */}
+                        {capitalizeFirstLetter(item.name)}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -101,7 +112,7 @@ export default function MenuPage() {
           ))}
           <Separator />
           <SidebarGroup>
-            <SidebarGroupLabel className="text-4xl font-semibold py-5">
+            <SidebarGroupLabel className="text-3xl font-semibold py-5">
               Highlights
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -149,7 +160,7 @@ export default function MenuPage() {
         <div className="grid grid-cols-3 gap-6 p-5">
           {MenuItemsMockData.map((product) => (
             <Card
-              key={product.product_id}
+              key={product.id}
               className="relative overflow-hidden h-fit pt-0"
             >
               <div className="w-full h-full">
@@ -165,7 +176,7 @@ export default function MenuPage() {
                   {/* <Heart className="size-5" /> */}
                   <FavoriteButton
                     handleToggle={handleToggleFavorite}
-                    product_id={product.product_id}
+                    product_id={product.id}
                     price={product.price}
                   />
                 </div>

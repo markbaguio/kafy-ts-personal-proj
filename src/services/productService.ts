@@ -7,13 +7,13 @@ import axios, { isAxiosError } from "axios";
 import { ZodError } from "zod";
 
 type GetProductPayload = {
-  page?: number;
+  page?: string;
   category?: string;
 };
 
 export async function getAllProducts({
   category = MockProductCategoryEnum.hot,
-  page = 1,
+  page = "1",
 }: GetProductPayload): Promise<ApiResponse<Product[]>> {
   try {
     const response = await axios.get<ApiResponse<Product[]>>(
@@ -35,6 +35,10 @@ export async function getAllProducts({
       data: parsedProducts.data,
     };
   } catch (error) {
+    // if (error instanceof ZodError) {
+    //   console.log("zod error bilat");
+    //   console.log(error);
+    // }
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
       if (error.code === AxiosErrorCode.NetworkError) {

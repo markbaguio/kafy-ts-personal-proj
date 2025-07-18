@@ -1,7 +1,7 @@
 import z from "zod";
 
 export const ProductSchema = z.object({
-  product_id: z.number(),
+  id: z.number(),
   category: z.enum(["hot", "cold"]),
   created_at: z.string(),
   description: z.string(),
