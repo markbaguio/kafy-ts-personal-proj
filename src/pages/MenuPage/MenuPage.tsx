@@ -46,6 +46,7 @@ export default function MenuPage() {
       {
         retry: 1,
         refetchOnWindowFocus: true,
+        throwOnError: true,
       }
     )
   );
