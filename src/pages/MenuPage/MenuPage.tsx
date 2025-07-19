@@ -27,31 +27,22 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
 import { Suspense } from "react";
 import Loading from "@/components/ui/loading";
 
 export default function MenuPage() {
-  return (
-    <Suspense fallback={<Loading text="Loading Menu..." />}>
-      <MenuPageContent />
-    </Suspense>
-  );
-}
-
-function MenuPageContent() {
   const [searchParams, setSearchParams] = useSearchParams({
     category: "hot",
     page: "1",
   });
 
-  const { data } = useSuspenseQuery(
+  const { data, isLoading } = useQuery(
     createGetProductQueryOptions(
       {
         page: searchParams.get("page") ?? "1",
@@ -93,12 +84,8 @@ function MenuPageContent() {
                   {mc.items.map((item) => (
                     <SidebarMenuItem key={item.name}>
                       <SidebarMenuButton
-                        // asChild
                         isActive={item.name === searchParams.get("category")}
                         onClick={() =>
-                          // setSelectedCategory(
-                          //   item.name as MockProductCategoryEnum
-                          // )
                           setSearchParams({ category: item.name, page: "1" })
                         }
                         className={cn(
@@ -166,54 +153,60 @@ function MenuPageContent() {
           </Breadcrumb> */}
           <span className="text-lg font-light">Kafy Coffee Selection</span>
         </header>
-        <div className="grid grid-cols-3 gap-6 p-5">
-          {MenuItemsMockData.map((product) => (
-            <Card
-              key={product.id}
-              className="relative overflow-hidden h-fit pt-0"
-            >
-              <div className="w-full h-full">
-                <img
-                  src={product.image_url}
-                  alt={product.name}
-                  className="w-full h-120 object-cover"
-                />
-              </div>
-              <CardHeader className="">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">{product.name}</CardTitle>
-                  {/* <Heart className="size-5" /> */}
-                  <FavoriteButton
-                    handleToggle={handleToggleFavorite}
-                    product_id={product.id}
-                    price={product.price}
+        {isLoading ? (
+          <div className="flex items-center justify-center h-screen">
+            <Loading text="Loading Products..." />
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-6 p-5">
+            {data?.data?.map((product) => (
+              <Card
+                key={product.id}
+                className="relative overflow-hidden h-fit pt-0"
+              >
+                <div className="w-full h-full">
+                  <img
+                    src={product.image_url}
+                    alt={product.name}
+                    className="w-full h-120 object-cover"
                   />
                 </div>
-                <CardDescription>
+                <CardHeader className="">
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="text-lg">{product.name}</CardTitle>
+                    {/* <Heart className="size-5" /> */}
+                    <FavoriteButton
+                      handleToggle={handleToggleFavorite}
+                      product_id={product.id}
+                      price={product.price}
+                    />
+                  </div>
+                  {/* <CardDescription>
                   <p className="w-full">{product.description}</p>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex justify-between">
-                  <span className="font-bold text-xl">
-                    {PESOSIGN}
-                    {product.price}
-                  </span>
-                  {product.price > 120 && (
-                    <Badge className="bg-success-green/20 text-success-green-accent rounded-lg">
-                      Best seller
-                    </Badge>
-                  )}
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button asChild variant="main" className="w-full rounded-lg">
-                  <Link to="/">Buy now</Link>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
+                </CardDescription> */}
+                </CardHeader>
+                <CardContent>
+                  <div className="flex justify-between">
+                    <span className="font-bold text-xl">
+                      {PESOSIGN}
+                      {product.price}
+                    </span>
+                    {product.price > 120 && (
+                      <Badge className="bg-success-green/20 text-success-green-accent rounded-lg">
+                        Best seller
+                      </Badge>
+                    )}
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button asChild variant="main" className="w-full rounded-lg">
+                    <Link to="/">Buy now</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
       </SidebarInset>
     </SidebarProvider>
   );
