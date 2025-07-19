@@ -32,18 +32,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
+import { Suspense } from "react";
+import Loading from "@/components/ui/loading";
 
 export default function MenuPage() {
-  // const [selectedCategory, setSelectedCategory] =
-  //   useState<MockProductCategoryEnum>(MockProductCategoryEnum.hot);
+  return (
+    <Suspense fallback={<Loading text="Loading Menu..." />}>
+      <MenuPageContent />
+    </Suspense>
+  );
+}
+
+function MenuPageContent() {
   const [searchParams, setSearchParams] = useSearchParams({
     category: "hot",
     page: "1",
   });
 
-  const { data } = useQuery(
+  const { data } = useSuspenseQuery(
     createGetProductQueryOptions(
       {
         page: searchParams.get("page") ?? "1",
@@ -51,6 +59,7 @@ export default function MenuPage() {
       },
       {
         retry: 1,
+        refetchOnWindowFocus: true,
       }
     )
   );
