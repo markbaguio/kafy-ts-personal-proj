@@ -65,7 +65,7 @@ export default function MenuPage() {
     <SidebarProvider>
       <Sidebar className="relative h-full">
         <SidebarHeader className="pb-5">
-          <div className="flex flex-row gap-3 justify-start items-center">
+          <div className="flex flex-row gap-3 justify-start items-center px-2 w-full ">
             <Coffee size={30} className="text-raisin-black" />
             <div className="flex flex-col">
               <h3 className="text-lg/tight font-bold">Kafy</h3>
@@ -73,7 +73,7 @@ export default function MenuPage() {
             </div>
           </div>
         </SidebarHeader>
-        <SidebarContent>
+        <SidebarContent className="">
           {MenuSidebarCategories.map((mc) => (
             <SidebarGroup className="" key={mc.id}>
               <SidebarGroupLabel className="text-3xl font-semibold py-5">
