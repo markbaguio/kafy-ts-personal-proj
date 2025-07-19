@@ -1,9 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  MenuItemsMockData,
-  MenuSidebarCategories,
-  PESOSIGN,
-} from "@/constants";
+import { MenuSidebarCategories, PESOSIGN } from "@/constants";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
 import { Coffee, Heart } from "lucide-react";
 import { Link, useSearchParams } from "react-router";
@@ -33,7 +29,6 @@ import {
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
-import { Suspense } from "react";
 import Loading from "@/components/ui/loading";
 
 export default function MenuPage() {
