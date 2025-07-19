@@ -1,5 +1,5 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
-import { Product } from "./models/types";
+import { Product, MockProductCategoryEnum } from "./models/types";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
 
@@ -174,7 +174,7 @@ export const AUTH_SIGN_IN = "/auth/signin";
 export const AUTH_SIGN_UP = "/auth/signup";
 export const AUTH_SIGN_OUT = "/auth/signout";
 export const AUTH_ME = "/auth/me";
-export const MENU = "/menu";
+export const MENU = "/api/menu";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {
@@ -194,6 +194,39 @@ export enum CustomErrorMessage {
   NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }
 // ? MOCK
+export type MenuSidebarCategoryItemsType = {
+  name: string;
+  active: boolean;
+};
+export type MenuSidebarCategoriesType = {
+  id: number;
+  title: string;
+  items: MenuSidebarCategoryItemsType[];
+};
+export const MenuSidebarCategories: MenuSidebarCategoriesType[] = [
+  {
+    id: 1,
+    title: "Drinks",
+    items: [
+      { name: "hot", active: false },
+      {
+        name: "cold",
+        active: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Food",
+    items: [
+      { name: "pastries", active: false },
+      { name: "snacks", active: false },
+      { name: "lunch", active: false },
+      { name: "treats", active: false },
+    ],
+  },
+];
+
 export type MenuDrinkCategoriesType = {
   id: number;
   category: string;
@@ -245,7 +278,7 @@ export const MenuFoodCategories: MenuFoodCategoriesType[] = [
 
 export const MenuItemsMockData: Product[] = [
   {
-    product_id: 1,
+    id: 1,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Black Coffee",
@@ -257,7 +290,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=800",
   },
   {
-    product_id: 2,
+    id: 2,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Latte",
@@ -269,7 +302,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1561882468-9110e03e0f78?auto=format&fit=crop&q=80&w=800",
   },
   {
-    product_id: 3,
+    id: 3,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Caramel Latte",
@@ -281,7 +314,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1599398054066-846f28917f38?auto=format&fit=crop&q=80&w=800",
   },
   {
-    product_id: 4,
+    id: 4,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Cappuccino",
@@ -293,7 +326,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1557006021-b85faa2bc5e2?auto=format&fit=crop&q=80&w=800",
   },
   {
-    product_id: 5,
+    id: 5,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Americano",
@@ -305,7 +338,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1532004491497-ba35c367d634?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    product_id: 6,
+    id: 6,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Espresso",
@@ -317,7 +350,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    product_id: 7,
+    id: 7,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Macchiato",
@@ -329,7 +362,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1557772611-722dabe20327?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    product_id: 8,
+    id: 8,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Mocha",
@@ -341,7 +374,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1607260550778-aa9d29444ce1?auto=format&fit=crop&q=80&w=1887",
   },
   {
-    product_id: 9,
+    id: 9,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Hot Chocolate",
@@ -353,7 +386,7 @@ export const MenuItemsMockData: Product[] = [
       "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&q=60&w=800",
   },
   {
-    product_id: 10,
+    id: 10,
     created_at: "2025-07-01T05:31:56.115117+00:00",
     updated_at: null,
     name: "Chai Latte",
