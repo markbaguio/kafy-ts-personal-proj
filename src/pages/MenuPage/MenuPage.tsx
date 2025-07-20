@@ -155,7 +155,7 @@ export default function MenuPage() {
           </div>
         ) : (
           <div className="grid grid-cols-3 gap-6 p-5">
-            {data?.data?.map((product) => (
+            {data?.data?.products.map((product) => (
               <Card
                 key={product.id}
                 className="relative overflow-hidden h-fit pt-0"
