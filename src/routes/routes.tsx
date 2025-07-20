@@ -4,7 +4,7 @@ import AboutUs from "@/pages/AboutUs";
 import GiftCards from "@/pages/GiftCards";
 import Homepage from "@/pages/Homepage";
 import MenuPage from "@/pages/MenuPage/MenuPage";
-import NotFoundPage from "@/pages/NotFoundPage";
+import ErrorBoundary from "@/pages/ErrorBoundary";
 import Rewards from "@/pages/Rewards";
 import { SignInPage } from "@/pages/SignInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
@@ -14,7 +14,7 @@ export const routes: RouteObject[] = [
   {
     path: "/",
     element: <MainLayout />,
-    errorElement: <NotFoundPage />,
+    errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <Homepage /> },
       { path: "/api/menu", element: <MenuPage /> },
@@ -29,7 +29,7 @@ export const routes: RouteObject[] = [
   {
     path: "/auth",
     element: <AuthLayout />,
-    errorElement: <NotFoundPage />,
+    errorElement: <ErrorBoundary />,
     children: [
       { path: "signin", element: <SignInPage /> },
       { path: "signup", element: <SignUpPage /> },

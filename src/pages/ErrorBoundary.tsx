@@ -1,8 +1,26 @@
 import Logo from "@/components/common/Logo";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { Link, useRouteError } from "react-router";
+import { NoInternetPage } from "./NoInternetPage";
+import { AxiosErrorCode } from "@/constants";
 
-export default function NotFoundPage() {
+// This is a fallback UI for when the route is not found
+// or when an error occurs in the route.
+//! Check why there is still pagination in the ApiResponse type when you remove it in the ApiResponse.ts file.
+
+export default function ErrorBoundary() {
+  const error = useRouteError();
+  if (error instanceof Error) {
+    console.log("NotFoundPage error:", error.name);
+    if (error.name === AxiosErrorCode.NetworkError) {
+      return <NoInternetPage />;
+    } else if (error.name === "ZodError") {
+      //? Add something went wrong error page. para sa lahat ng error??
+      return <div>Something went wrong.</div>;
+    }
+  }
+
+  //? If page is missing, show a custom 404 page.
   return (
     <div className='bg-[url("/img/rizky-subagja-1k7TnX5GAww-unsplash.jpg")] p-5 md:p-20 h-screen bg-cover flex flex-col gap-10 items-center justify-center'>
       <Link to="/">
