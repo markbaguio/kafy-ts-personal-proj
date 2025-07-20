@@ -1,8 +1,8 @@
 import { AxiosErrorCode, BASE_URL, MENU } from "@/constants";
 import { isApiErrorResponse } from "@/lib/utils";
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
-import { Product, MockProductCategoryEnum } from "@/models/types";
-import { ProductArraySchema } from "@/schemas/Menu/MenuSchema";
+import { MockProductCategoryEnum, PaginatedProducts } from "@/models/types";
+import { PaginatedProductsSchema } from "@/schemas/Menu/ProductSchema";
 import axios, { isAxiosError } from "axios";
 import { ZodError } from "zod";
 
@@ -14,9 +14,9 @@ type GetProductPayload = {
 export async function getAllProducts({
   category = MockProductCategoryEnum.hot,
   page = "1",
-}: GetProductPayload): Promise<ApiResponse<Product[]>> {
+}: GetProductPayload): Promise<ApiResponse<PaginatedProducts>> {
   try {
-    const response = await axios.get<ApiResponse<Product[]>>(
+    const response = await axios.get<ApiResponse<PaginatedProducts>>(
       `${BASE_URL}${MENU}`,
       {
         params: {
@@ -25,14 +25,17 @@ export async function getAllProducts({
         },
       }
     );
-    const parsedProducts = ProductArraySchema.safeParse(response.data.data);
-    if (!parsedProducts.success) {
-      throw new ZodError(parsedProducts.error.errors);
+
+    const parsedPaginatedProducts = PaginatedProductsSchema.safeParse(
+      response.data.data
+    );
+    if (!parsedPaginatedProducts.success) {
+      throw new ZodError(parsedPaginatedProducts.error.errors);
     }
 
     return {
       ...response.data,
-      data: parsedProducts.data,
+      data: parsedPaginatedProducts.data,
     };
   } catch (error) {
     if (isAxiosError(error)) {

@@ -1,10 +1,12 @@
 export type ApiResponse<T> = {
+  // pagination?: Pagination;
   statusCode: number;
   data: T | null;
   message?: string;
   error?: unknown;
   errorName?: string;
 };
+
 export class ApiErrorResponse<TErrorDetails = unknown> extends Error {
   constructor(
     public statusCode: number,

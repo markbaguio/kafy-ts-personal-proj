@@ -12,4 +12,15 @@ export const ProductSchema = z.object({
   updated_at: z.string().nullable(),
 });
 
-export const ProductArraySchema = z.array(ProductSchema);
+const PaginationSchema = z.object({
+  currentPage: z.number(),
+  totalPages: z.number(),
+  totalItems: z.number(),
+  itemsPerPage: z.number(),
+  hasNextPage: z.boolean(),
+});
+
+export const PaginatedProductsSchema = z.object({
+  pagination: PaginationSchema,
+  products: z.array(ProductSchema),
+});
