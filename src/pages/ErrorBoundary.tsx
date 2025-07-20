@@ -6,7 +6,6 @@ import { AxiosErrorCode } from "@/constants";
 
 // This is a fallback UI for when the route is not found
 // or when an error occurs in the route.
-//! Check why there is still pagination in the ApiResponse type when you remove it in the ApiResponse.ts file.
 
 export default function ErrorBoundary() {
   const error = useRouteError();
