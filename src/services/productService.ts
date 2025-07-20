@@ -35,10 +35,6 @@ export async function getAllProducts({
       data: parsedProducts.data,
     };
   } catch (error) {
-    // if (error instanceof ZodError) {
-    //   console.log("zod error bilat");
-    //   console.log(error);
-    // }
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
       if (error.code === AxiosErrorCode.NetworkError) {
