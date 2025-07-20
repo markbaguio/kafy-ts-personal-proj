@@ -1,9 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 import noInternetSvg from "@/assets/NoInternetPage/undraw_server-down_lxs9.svg"; // Adjust the path as necessary
+import { useOnlineStatus } from "@/hooks/useOnlineStatus";
+import { toast } from "sonner";
+import { CustomErrorMessage } from "@/constants";
 
 export function NoInternetPage() {
   const navigate = useNavigate();
+
+  const isOnline = useOnlineStatus();
 
   return (
     <div className="flex flex-col gap-5 items-center justify-center h-screen bg-milky-white">
@@ -21,10 +26,33 @@ export function NoInternetPage() {
         </p>
       </div>
       <div className="flex gap-3">
-        <Button variant="main" onClick={() => window.location.reload()}>
+        <Button
+          variant="main"
+          onClick={() => {
+            if (isOnline) {
+              navigate(0); // Reload the page
+              return;
+            } else {
+              toast.warning(
+                `${CustomErrorMessage.NoInternetConnectionMessage}`
+              );
+            }
+          }}
+        >
           Retry
         </Button>
-        <Button variant="outline2" onClick={() => navigate("/")}>
+        <Button
+          variant="outline2"
+          onClick={() => {
+            if (isOnline) {
+              navigate("/");
+            } else {
+              toast.warning(
+                `${CustomErrorMessage.NoInternetConnectionMessage}`
+              );
+            }
+          }}
+        >
           Home
         </Button>
       </div>
