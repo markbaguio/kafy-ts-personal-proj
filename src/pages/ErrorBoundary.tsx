@@ -1,4 +1,4 @@
-import { Link, useRouteError } from "react-router";
+import { useRouteError } from "react-router";
 import { NoInternetPage } from "./NoInternetPage";
 import { AxiosErrorCode } from "@/constants";
 import SomethingWentWrongPage from "./SomethingWentWrongPage";
