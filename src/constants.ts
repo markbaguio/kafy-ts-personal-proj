@@ -193,6 +193,13 @@ export enum ApiErrorName {
 export enum CustomErrorMessage {
   NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }
+
+export const SomethingWenWrongText = {
+  header: "Whoops! Something went wrong.",
+  description:
+    "Please try again later or contact support if the issue persists.",
+};
+
 // ? MOCK
 export type MenuSidebarCategoryItemsType = {
   name: string;
