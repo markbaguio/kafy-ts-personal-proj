@@ -113,7 +113,7 @@ export default function MenuPage() {
                   <SidebarMenuButton
                     className={"hover:text-golden-brown text-lg"}
                   >
-                    <Link to="/menu/favorites">Favorites</Link>
+                    <Link to="/">Favorites</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
@@ -217,7 +217,7 @@ export function MenuCardItem({
       </CardContent>
       <CardFooter>
         <Button asChild variant="main" className="w-full rounded-lg">
-          <Link to="/">Buy now</Link>
+          <Link to={`/menu/${product.id}`}>Buy now</Link>
         </Button>
       </CardFooter>
     </Card>

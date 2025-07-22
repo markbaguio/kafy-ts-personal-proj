@@ -9,6 +9,7 @@ import Rewards from "@/pages/Rewards";
 import { SignInPage } from "@/pages/SignInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
 import { RouteObject } from "react-router";
+import MenuProductDetailPage from "@/pages/MenuProductDetailPage/MenuProductDetailPage";
 
 export const routes: RouteObject[] = [
   {
@@ -17,7 +18,8 @@ export const routes: RouteObject[] = [
     errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <Homepage /> },
-      { path: "/api/menu", element: <MenuPage /> },
+      { path: "/menu", element: <MenuPage /> },
+      { path: "/menu/:product_id", element: <MenuProductDetailPage /> },
       { path: "/rewards", element: <Rewards /> },
       {
         path: "/gift",
