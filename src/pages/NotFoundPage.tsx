@@ -4,7 +4,7 @@ import { Link } from "react-router";
 
 export function NotFoundPage() {
   return (
-    <div className='bg-[url("/img/rizky-subagja-1k7TnX5GAww-unsplash.jpg")] p-5 md:p-20 h-screen bg-cover flex flex-col gap-10 items-center justify-center'>
+    <div className='w-full bg-[url("/img/rizky-subagja-1k7TnX5GAww-unsplash.jpg")] p-5 md:p-20 h-screen bg-cover flex flex-col gap-10 items-center justify-center'>
       <Link to="/">
         <Logo darkBg classname="text-9xl" />
       </Link>
