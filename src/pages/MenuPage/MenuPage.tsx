@@ -28,8 +28,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
-import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
 import Loading from "@/components/ui/loading";
+import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
 
 export default function MenuPage() {
   const [searchParams, setSearchParams] = useSearchParams({
