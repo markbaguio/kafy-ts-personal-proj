@@ -10,6 +10,7 @@ import { SignInPage } from "@/pages/SignInPage/SignInPage";
 import SignUpPage from "@/pages/SignUpPage/SignUpPage";
 import { RouteObject } from "react-router";
 import MenuProductDetailPage from "@/pages/MenuProductDetailPage/MenuProductDetailPage";
+import PageUnderConstruction from "@/pages/PageUnderConstruction";
 
 export const routes: RouteObject[] = [
   {
@@ -26,6 +27,7 @@ export const routes: RouteObject[] = [
         element: <GiftCards />,
       },
       { path: "/about-us", element: <AboutUs /> },
+      { path: "/menu/favorites", element: <PageUnderConstruction /> },
     ],
   },
   {
