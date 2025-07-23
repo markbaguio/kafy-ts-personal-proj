@@ -2,7 +2,7 @@ import { useRouteError } from "react-router";
 import { NoInternetPage } from "./NoInternetPage";
 import { AxiosErrorCode } from "@/constants";
 import SomethingWentWrongPage from "./SomethingWentWrongPage";
-import { NotFoundPage } from "./NotFoundPage";
+import { PageNotFound } from "./PageNotFound";
 
 // This is a fallback UI for when the route is not found
 // or when an error occurs in the route.
@@ -18,5 +18,5 @@ export default function ErrorBoundary() {
     }
   }
   //? If page is missing, show a custom 404 page.
-  return <NotFoundPage />;
+  return <PageNotFound />;
 }

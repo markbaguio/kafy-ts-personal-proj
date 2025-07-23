@@ -113,14 +113,14 @@ export default function MenuPage() {
                   <SidebarMenuButton
                     className={"hover:text-golden-brown text-lg"}
                   >
-                    <Link to="/">Favorites</Link>
+                    <Link to="/menu/favorites">Favorites</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton
                     className={"hover:text-golden-brown text-lg"}
                   >
-                    <Link to="/">Featured</Link>
+                    <Link to="/test">Featured</Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>

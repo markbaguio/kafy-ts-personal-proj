@@ -2,7 +2,7 @@ import Logo from "@/components/common/Logo";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 
-export function NotFoundPage() {
+export default function PageUnderConstruction() {
   return (
     <div className='w-full bg-[url("/img/rizky-subagja-1k7TnX5GAww-unsplash.jpg")] p-5 md:p-20 h-screen bg-cover flex flex-col gap-10 items-center justify-center'>
       <Link to="/">
@@ -10,7 +10,7 @@ export function NotFoundPage() {
       </Link>
       <div className="border border-off-white w-full max-w-[850px] h-fit py-15 px-6 gap-5 md:gap-8 bg-off-white/10 backdrop-blur-md bg-linear-to-br from-off-white/10 to-[#666666]/10  rounded-[50px] flex items-center justify-center flex-col">
         <h1 className="text-off-white text-2xl md:text-4xl lg:text-6xl text-center md:leading-[57px] tracking-tighter">
-          Hold Tight-We're Building Something Cool!
+          Hold Tight! We're Building Something Cool!
         </h1>
         <p className="text-off-white text-center font-light text-sm md:text-xl lg:text-2xl leading-tight ">
           This page is currently under construction, but we’re working hard to
@@ -18,7 +18,7 @@ export function NotFoundPage() {
         </p>
         <Button
           asChild
-          variant="outline"
+          variant="outline2"
           className="w-[150px] text-off-white border-off-white hover:bg-off-white/20"
         >
           <Link to="/">Home</Link>
