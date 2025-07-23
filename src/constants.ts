@@ -200,6 +200,11 @@ export const SomethingWenWrongText = {
     "Please try again later or contact support if the issue persists.",
 };
 
+export const PageNotFoundText = {
+  header: "Looks like this page doesn't exist!",
+  description: "Please check the URL or return to the homepage.",
+};
+
 // ? MOCK
 export type MenuSidebarCategoryItemsType = {
   name: string;
