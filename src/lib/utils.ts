@@ -6,6 +6,7 @@ import {
   UnexpectedErrorDetails,
   ZodErrorDetails,
 } from "@/models/ApiResponse";
+import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
 import { FieldValues, Path, UseFormSetError } from "react-hook-form";
@@ -93,4 +94,8 @@ export function handleZodApiFieldErrors<T extends FieldValues>(
 
 export function capitalizeFirstLetter(value: string) {
   return value.charAt(0).toUpperCase() + String(value).slice(1);
+}
+
+export function isValidProductSize(size: string): size is ProductSize {
+  return ["S", "M", "L"].includes(size);
 }
