@@ -32,6 +32,12 @@ export default function MenuProductDetailPage() {
     quantity: "1",
   });
 
+  //? Derived/Computed value
+  const rawSize: string = searchParams.get("size") ?? "S";
+  const size: ProductSize = isValidProductSize(rawSize) ? rawSize : "S";
+  const quantity = Math.max(parseInt(searchParams.get("quantity") ?? "1"), 1);
+  const parsedQuantity = isNaN(quantity) ? 1 : quantity;
+
   function handleSizeChange(size: ProductSize) {
     searchParams.set("size", size);
     setSearchParams(searchParams);
@@ -42,11 +48,6 @@ export default function MenuProductDetailPage() {
     searchParams.set("quantity", sanitizedQuantity.toString());
     setSearchParams(searchParams);
   }
-
-  //? Derived/Computed value
-  const rawSize: string = searchParams.get("size") ?? "S";
-  const size: ProductSize = isValidProductSize(rawSize) ? rawSize : "S";
-  const quantity = Math.max(parseInt(searchParams.get("quantity") ?? "1"), 1);
 
   // const { data } = useQuery(
   //   createProductDetailQueryOptions({
@@ -60,10 +61,11 @@ export default function MenuProductDetailPage() {
     quantity,
   }: {
     size: string;
-    quantity: string;
+    quantity: number;
   }) {
     console.log(`size: ${size}`);
-    console.log(`quantity: ${quantity}`);
+    const parsedQuantity = isNaN(quantity) ? "1" : quantity;
+    console.log(`quantity: ${parsedQuantity}`);
   }
 
   const MockProductDetail = {
@@ -114,14 +116,14 @@ export default function MenuProductDetailPage() {
               size={size}
               handleSizeChange={handleSizeChange}
               handleQuantityChange={handleQuantityChange}
-              quantity={quantity}
+              quantity={parsedQuantity}
             />
             <div className="w-1/3">
               <Button
                 className="w-full rounded-lg"
                 variant="main"
                 onClick={() =>
-                  handleAddToCart({ size: size, quantity: quantity.toString() })
+                  handleAddToCart({ size: size, quantity: quantity })
                 }
               >
                 Add to cart
