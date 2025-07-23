@@ -55,6 +55,16 @@ export default function MenuProductDetailPage() {
   // );
 
   // console.log("ProductDetail:", data);
+  function handleAddToCart({
+    size,
+    quantity,
+  }: {
+    size: string;
+    quantity: string;
+  }) {
+    console.log(`size: ${size}`);
+    console.log(`quantity: ${quantity}`);
+  }
 
   const MockProductDetail = {
     id: 10,
@@ -110,12 +120,9 @@ export default function MenuProductDetailPage() {
               <Button
                 className="w-full rounded-lg"
                 variant="main"
-                onClick={() => {
-                  console.log(
-                    searchParams.get("size"),
-                    searchParams.get("quantity")
-                  );
-                }}
+                onClick={() =>
+                  handleAddToCart({ size: size, quantity: quantity.toString() })
+                }
               >
                 Add to cart
               </Button>
