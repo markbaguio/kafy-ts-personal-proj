@@ -51,8 +51,6 @@ export default function MenuPage() {
     )
   );
 
-  console.log("Data from query:", data);
-
   function handleToggleFavorite(product_id: number) {
     console.log(product_id);
   }
