@@ -1,5 +1,5 @@
 import { ApiResponse } from "@/models/ApiResponse";
-import { PaginatedProducts, Product } from "@/models/types";
+import { PaginatedProducts } from "@/models/types";
 import { getAllProducts } from "@/services/productService";
 import { queryOptions, UseQueryOptions } from "@tanstack/react-query";
 
