@@ -11,6 +11,7 @@ import SignUpPage from "@/pages/SignUpPage/SignUpPage";
 import { RouteObject } from "react-router";
 import MenuProductDetailPage from "@/pages/MenuProductDetailPage/MenuProductDetailPage";
 import PageUnderConstruction from "@/pages/PageUnderConstruction";
+import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 
 export const routes: RouteObject[] = [
   {
@@ -27,6 +28,7 @@ export const routes: RouteObject[] = [
         element: <GiftCards />,
       },
       { path: "/about-us", element: <AboutUs /> },
+      { path: "/profile", element: <ProfilePage /> },
       { path: "/menu/favorites", element: <PageUnderConstruction /> },
     ],
   },
