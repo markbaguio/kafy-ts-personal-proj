@@ -202,7 +202,7 @@ export const SomethingWenWrongText = {
 
 export const PageNotFoundText = {
   header: "Looks like this page doesn't exist!",
-  description: "Please check the URL or return to the homepage.",
+  description: "Return to the homepage and continue exploring.",
 };
 
 // ? MOCK
