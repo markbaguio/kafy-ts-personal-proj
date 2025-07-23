@@ -8,7 +8,7 @@ type GetProductQueryOptionsParam = {
   catergory: string;
 };
 
-export function createGetProductQueryOptions(
+export function createGetProductMenuQueryOptions(
   params?: GetProductQueryOptionsParam,
   options?: Omit<
     UseQueryOptions<ApiResponse<PaginatedProducts>>,

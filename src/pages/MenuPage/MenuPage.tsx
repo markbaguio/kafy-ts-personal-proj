@@ -29,7 +29,7 @@ import {
 } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/ui/loading";
-import { createGetProductQueryOptions } from "@/queryOptions/createGetProductQueryOptions";
+import { createGetProductMenuQueryOptions } from "@/queryOptions/createGetProductMenuQueryOptions";
 
 export default function MenuPage() {
   const [searchParams, setSearchParams] = useSearchParams({
@@ -38,7 +38,7 @@ export default function MenuPage() {
   });
 
   const { data, isLoading } = useQuery(
-    createGetProductQueryOptions(
+    createGetProductMenuQueryOptions(
       {
         page: searchParams.get("page") ?? "1",
         catergory: searchParams.get("category") ?? MockProductCategoryEnum.hot,
