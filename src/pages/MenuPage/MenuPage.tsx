@@ -180,30 +180,12 @@ export default function MenuPage() {
           </div>
         )}
         <div className="w-full flex justify-center py-5">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <Button
-                  variant="ghost"
-                  // disabled={data?.data?.pagination.currentPage! <= 1}
-                  disabled={currentPage <= 1}
-                >
-                  <PaginationPrevious
-                    onClick={handlePaginationPreviousPageClick}
-                  />
-                </Button>
-              </PaginationItem>
-              <PaginationItem>
-                <Button
-                  variant="ghost"
-                  // disabled={data?.data?.pagination.hasNextPage === false}
-                  disabled={!hasNextPage}
-                >
-                  <PaginationNext onClick={handlePaginationNextPageClick} />
-                </Button>
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <MenuPagePagination
+            currentPage={currentPage}
+            hasNextPage={hasNextPage}
+            onNextPageClick={handlePaginationNextPageClick}
+            onPreviousPageClick={handlePaginationPreviousPageClick}
+          />
         </div>
       </SidebarInset>
     </SidebarProvider>
@@ -295,5 +277,44 @@ function FavoriteButton({
         color={isFavorited ? "red" : "black"}
       />
     </button>
+  );
+}
+
+type MenuPagePaginationProps = {
+  currentPage: number;
+  hasNextPage: boolean;
+  onPreviousPageClick: () => void;
+  onNextPageClick: () => void;
+};
+
+function MenuPagePagination({
+  currentPage,
+  hasNextPage,
+  onNextPageClick,
+  onPreviousPageClick,
+}: MenuPagePaginationProps) {
+  return (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <Button
+            variant="ghost"
+            // disabled={data?.data?.pagination.currentPage! <= 1}
+            disabled={currentPage <= 1}
+          >
+            <PaginationPrevious onClick={onPreviousPageClick} />
+          </Button>
+        </PaginationItem>
+        <PaginationItem>
+          <Button
+            variant="ghost"
+            // disabled={data?.data?.pagination.hasNextPage === false}
+            disabled={!hasNextPage}
+          >
+            <PaginationNext onClick={onNextPageClick} />
+          </Button>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
   );
 }
