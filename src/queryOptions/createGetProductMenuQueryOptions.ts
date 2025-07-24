@@ -5,7 +5,7 @@ import { queryOptions, UseQueryOptions } from "@tanstack/react-query";
 
 type GetProductQueryOptionsParam = {
   page: string;
-  catergory: string;
+  category: string;
 };
 
 export function createGetProductMenuQueryOptions(
@@ -19,6 +19,6 @@ export function createGetProductMenuQueryOptions(
     ...options,
     queryKey: ["products", params],
     queryFn: () =>
-      getAllProducts({ page: params?.page, category: params?.catergory }),
+      getAllProducts({ page: params?.page, category: params?.category }),
   });
 }
