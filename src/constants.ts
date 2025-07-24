@@ -1,4 +1,5 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
+import { MenuCategoryType } from "./hooks/useMenuPageSearchParams";
 import { Product } from "./models/types";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
@@ -207,7 +208,7 @@ export const PageNotFoundText = {
 
 // ? MOCK
 export type MenuSidebarCategoryItemsType = {
-  name: string;
+  name: MenuCategoryType;
   active: boolean;
 };
 export type MenuSidebarCategoriesType = {
