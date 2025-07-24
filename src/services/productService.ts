@@ -40,7 +40,6 @@ export async function getAllProducts({
     if (!parsedPaginatedProducts.success) {
       throw new ZodError(parsedPaginatedProducts.error.errors);
     }
-
     return {
       ...response.data,
       data: parsedPaginatedProducts.data,
