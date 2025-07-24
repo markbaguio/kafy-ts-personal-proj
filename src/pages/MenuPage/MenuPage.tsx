@@ -2,10 +2,9 @@ import { Button } from "@/components/ui/button";
 import { MenuSidebarCategories, PESOSIGN } from "@/constants";
 import { capitalizeFirstLetter, cn } from "@/lib/utils";
 import { Coffee, Heart } from "lucide-react";
-import { Link, useSearchParams } from "react-router";
+import { Link } from "react-router";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { MockProductCategoryEnum, Product } from "@/models/types";
 import {
   Sidebar,
   SidebarContent,
@@ -30,18 +29,29 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/ui/loading";
 import { createGetProductMenuQueryOptions } from "@/queryOptions/createGetProductMenuQueryOptions";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import {
+  MenuCategoryType,
+  useMenuPageSearchParams,
+} from "@/hooks/useMenuPageSearchParams";
+import { Product } from "@/models/types";
 
 export default function MenuPage() {
-  const [searchParams, setSearchParams] = useSearchParams({
-    category: "hot",
-    page: "1",
-  });
+  const { page, category, setSearchParams } = useMenuPageSearchParams();
+
+  // console.log(`useMenuSearchParams \n page: ${page} category: ${category}`);
 
   const { data, isLoading } = useQuery(
     createGetProductMenuQueryOptions(
       {
-        page: searchParams.get("page") ?? "1",
-        catergory: searchParams.get("category") ?? MockProductCategoryEnum.hot,
+        page: page,
+        category: category,
       },
       {
         retry: 1,
@@ -51,8 +61,25 @@ export default function MenuPage() {
     )
   );
 
+  const currentPage = data?.data?.pagination.currentPage ?? 1;
+  const hasNextPage = data?.data?.pagination.hasNextPage ?? false;
+
   function handleToggleFavorite(product_id: number) {
     console.log(product_id);
+  }
+
+  function handleCategoryChange(category: MenuCategoryType) {
+    setSearchParams({ category, page: "1" });
+  }
+
+  function handlePaginationNextPageClick() {
+    const nextPage = (data?.data?.pagination.currentPage ?? 1) + 1;
+    setSearchParams({ category: category, page: String(nextPage) });
+  }
+
+  function handlePaginationPreviousPageClick() {
+    const nextPage = (data?.data?.pagination.currentPage ?? 1) - 1;
+    setSearchParams({ category: category, page: String(nextPage) });
   }
 
   return (
@@ -78,20 +105,14 @@ export default function MenuPage() {
                   {mc.items.map((item) => (
                     <SidebarMenuItem key={item.name}>
                       <SidebarMenuButton
-                        isActive={item.name === searchParams.get("category")}
-                        onClick={() =>
-                          setSearchParams({ category: item.name, page: "1" })
-                        }
+                        isActive={item.name === category}
+                        onClick={() => handleCategoryChange(item.name)}
                         className={cn(
                           `hover:text-golden-brown text-lg ${
-                            item.name == searchParams.get("category") &&
-                            "!text-golden-brown"
+                            item.name == category && "!text-golden-brown"
                           }`
                         )}
                       >
-                        {/* <Link to={`/menu?category=${item.name}`}>
-                          {capitalizeFirstLetter(item.name)}
-                        </Link> */}
                         {capitalizeFirstLetter(item.name)}
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -160,6 +181,32 @@ export default function MenuPage() {
             ))}
           </div>
         )}
+        <div className="w-full flex justify-center py-5">
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <Button
+                  variant="ghost"
+                  // disabled={data?.data?.pagination.currentPage! <= 1}
+                  disabled={currentPage <= 1}
+                >
+                  <PaginationPrevious
+                    onClick={handlePaginationPreviousPageClick}
+                  />
+                </Button>
+              </PaginationItem>
+              <PaginationItem>
+                <Button
+                  variant="ghost"
+                  // disabled={data?.data?.pagination.hasNextPage === false}
+                  disabled={!hasNextPage}
+                >
+                  <PaginationNext onClick={handlePaginationNextPageClick} />
+                </Button>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );
