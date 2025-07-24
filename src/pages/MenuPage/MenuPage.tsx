@@ -45,8 +45,6 @@ import { Product } from "@/models/types";
 export default function MenuPage() {
   const { page, category, setSearchParams } = useMenuPageSearchParams();
 
-  // console.log(`useMenuSearchParams \n page: ${page} category: ${category}`);
-
   const { data, isLoading } = useQuery(
     createGetProductMenuQueryOptions(
       {
