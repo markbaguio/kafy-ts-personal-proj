@@ -4,16 +4,24 @@ import {
   ProductSize,
   ProductSizeOptions,
 } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { PageNotFound } from "../PageNotFound";
 import imageSkeleton from "@/assets/rewards/image-skeleton.svg";
 import { Minus, Plus, Star } from "lucide-react";
-import { PESOSIGN } from "@/constants";
+import { MockExtendedDescription, PESOSIGN } from "@/constants";
 import { Button } from "@/components/ui/button";
-import { isValidProductSize } from "@/lib/utils";
+import { capitalizeFirstLetter, isValidProductSize } from "@/lib/utils";
 import useMenuDetailPageSearchParams from "@/hooks/useMenuPageDetailSearchParams";
 import { useQuery } from "@tanstack/react-query";
 import createProductDetailQueryOptions from "@/queryOptions/createGetProductDetailQueryOptions";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 //TODO: Fix quantityStepper change in width when then quantity > 1
 
@@ -85,8 +93,13 @@ export default function MenuProductDetailPage() {
   // };
 
   return (
-    <div className="w-full min-h-full h-full flex flex-col gap-2 px-20 py-5 bg-off-white-2/50">
-      <div className="flex-none h-fit bg-burnt-sienna ">Breadcrumbs</div>
+    <div className="w-full min-h-full h-full flex flex-col gap-2 py-5 px-20 bg-off-white-2/50">
+      <div className="flex-none h-fit py-5">
+        <MenuDetailPageBreadcrumb
+          category={data?.data?.category ?? "hot"}
+          name={data?.data?.name ?? ""}
+        />
+      </div>
       <main className="grow-1 flex flex-col bg-milky-white rounded-xl shadow-lg">
         {/** Product Image and  settings.*/}
         <div className="flex w-full flex-row p-10 gap-10">
@@ -129,11 +142,21 @@ export default function MenuProductDetailPage() {
           </div>
         </div>
       </main>
-      {/** Mock Nutritional values */}
-      <div className="grow-0 flex-auto bg-burnt-sienna">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dignissimos
-        commodi neque nostrum nobis quisquam eum aperiam deserunt ratione,
-        cupiditate vel?
+      {/** Mock extended general description*/}
+      <div className="grow-0 p-10 flex-auto flex gap-5 bg-light-caramel/80 rounded-xl shadow-lg font-light">
+        <div className="w-1/2 flex flex-col gap-5">
+          <p className="text-justify text-black-coffee">
+            {MockExtendedDescription}
+          </p>
+          <Button className="w-fit" variant="outline">
+            <Link to={"/about-us"}>More info</Link>
+          </Button>
+        </div>
+        <div className="mx-auto my-auto">
+          <span className="border-2 p-5 text-2xl rounded-lg border-golden-brown text-golden-brown">
+            {(data?.data?.price ?? 100) / 10} Kafy points item
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -157,6 +180,101 @@ function MockRatingComponent({ rating }: { rating: 1 | 2 | 3 | 4 | 5 }) {
     </div>
   );
 }
+
+type MenuDetailPageBreadcrumbProps = {
+  category: string;
+  name: string;
+};
+
+function MenuDetailPageBreadcrumb({
+  category,
+  name,
+}: MenuDetailPageBreadcrumbProps) {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList className="text-lg text-raisin-black-muted">
+        <BreadcrumbItem>
+          <BreadcrumbLink className="hover:text-golden-brown" href="/">
+            Home
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink className="hover:text-golden-brown" href="/menu">
+            Menu
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        {category && (
+          <>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink className="hover:text-golden-brown" asChild>
+                <Link to={`/menu?category=${category}&page=1`}>
+                  {capitalizeFirstLetter(category)}
+                </Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </>
+        )}
+        {name && (
+          <>
+            {/* <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <span className="font-medium text-golden-brown">{name}</span>
+            </BreadcrumbItem> */}
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{name}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </>
+        )}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
+
+// const MenuDetailPageBreadcrumb = memo(function MenuDetailPageBreadcrumb({
+//   category,
+//   name,
+// }: MenuDetailPageBreadcrumbProps) {
+//   return (
+//     <Breadcrumb>
+//       <BreadcrumbList className="text-lg text-raisin-black-muted">
+//         <BreadcrumbItem>
+//           <BreadcrumbLink className="hover:text-golden-brown" href="/">
+//             Home
+//           </BreadcrumbLink>
+//         </BreadcrumbItem>
+//         <BreadcrumbSeparator />
+//         <BreadcrumbItem>
+//           <BreadcrumbLink className="hover:text-golden-brown" href="/menu">
+//             Menu
+//           </BreadcrumbLink>
+//         </BreadcrumbItem>
+//         {category && (
+//           <>
+//             <BreadcrumbSeparator />
+//             <BreadcrumbItem>
+//               <BreadcrumbLink className="hover:text-golden-brown" asChild>
+//                 <Link to={`/menu?category=${category}&page=1`}>
+//                   {capitalizeFirstLetter(category)}
+//                 </Link>
+//               </BreadcrumbLink>
+//             </BreadcrumbItem>
+//           </>
+//         )}
+//         {name && (
+//           <>
+//             <BreadcrumbSeparator />
+//             <BreadcrumbItem>
+//               <span className="font-medium text-golden-brown">{name}</span>
+//             </BreadcrumbItem>
+//           </>
+//         )}
+//       </BreadcrumbList>
+//     </Breadcrumb>
+//   );
+// });
 
 type ProductOptionsProps = {
   size: ProductSize;
