@@ -23,6 +23,9 @@ export async function getAllProducts({
   category = MockProductCategoryEnum.hot,
   page = "1",
 }: GetProductPayload): Promise<ApiResponse<PaginatedProducts>> {
+  //? simulated network latency to show edge case (loading state)
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   try {
     const response = await axios.get<ApiResponse<PaginatedProducts>>(
       `${BASE_URL}${MENU}`,
@@ -74,6 +77,9 @@ export async function getAllProducts({
 export async function getProductDetail(
   params: MenuProductDetailPageParams
 ): Promise<ApiResponse<Product>> {
+  //? simulated network latency to show edge case (loading state)
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   try {
     const response = await axios.get<ApiResponse<Product>>(
       `${BASE_URL}${MENU}/${params.product_id}`
