@@ -22,8 +22,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Skeleton } from "@/components/ui/skeleton";
 
 //TODO: Fix quantityStepper change in width when then quantity > 1
+//TODO: Implement skeleton loading.
 
 export default function MenuProductDetailPage() {
   const params = useParams<MenuProductDetailPageParams>();
@@ -57,13 +59,37 @@ export default function MenuProductDetailPage() {
     setSearchParams({ size: sizeParam, quantity: sanitizedQuantity });
   }
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     createProductDetailQueryOptions({
       product_id: parsedParams.data.product_id,
     })
   );
 
-  // console.log("ProductDetail:", data);
+  //? MOCK
+  // const mockFetchProductDetail = async (): Promise<Product> => {
+  //   await new Promise((resolve) => setTimeout(resolve, 2000));
+  //   return {
+  //     id: 10,
+  //     category: "hot",
+  //     created_at: "2025-07-01T05:31:56.115117+00:00",
+  //     description:
+  //       "A flavorful chai tea latte. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+  //     image_url:
+  //       "https://images.unsplash.com/photo-1578899952107-9c390f1af1b7?w=900",
+  //     // null,
+  //     is_available: false,
+  //     name: "Chai Latte",
+  //     price: 150,
+  //     updated_at: null,
+  //   };
+  // };
+
+  // const { data, isLoading } = useQuery({
+  //   queryKey: ["productDetail"],
+  //   queryFn: mockFetchProductDetail,
+  // });
+
+  //? ----------------------------------
 
   function handleAddToCart({
     size,
@@ -77,70 +103,64 @@ export default function MenuProductDetailPage() {
     console.log(`quantity: ${parsedQuantity}`);
   }
 
-  // const MockProductDetail = {
-  //   id: 10,
-  //   category: "hot",
-  //   created_at: "2025-07-01T05:31:56.115117+00:00",
-  //   description:
-  //     "A flavorful chai tea latte. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-  //   image_url:
-  //     "https://images.unsplash.com/photo-1578899952107-9c390f1af1b7?w=900",
-  //   // null,
-  //   is_available: false,
-  //   name: "Chai Latte",
-  //   price: 150,
-  //   updated_at: null,
-  // };
-
   return (
     <div className="w-full min-h-full h-full flex flex-col gap-2 py-5 px-20 bg-off-white-2/50">
       <div className="flex-none h-fit py-5">
-        <MenuDetailPageBreadcrumb
-          category={data?.data?.category ?? "hot"}
-          name={data?.data?.name ?? ""}
-        />
+        {isLoading ? (
+          <BreadcrumbSkeleton />
+        ) : (
+          <MenuDetailPageBreadcrumb
+            category={data?.data?.category ?? "hot"}
+            name={data?.data?.name ?? ""}
+          />
+        )}
       </div>
+      {/** Product detail */}
       <main className="grow-1 flex flex-col bg-milky-white rounded-xl shadow-lg">
         {/** Product Image and  settings.*/}
-        <div className="flex w-full flex-row p-10 gap-10">
-          <div className="rounded-lg overflow-hidden">
-            <img
-              src={data?.data?.image_url ?? imageSkeleton}
-              alt="Product img"
-              className="w-[600px] h-[700px] object-cover"
-            />
-          </div>
-          <div className="w-1/2 p-10 flex flex-col gap-5">
-            <div>
-              <h1 className="text-5xl/tight font-bold">{data?.data?.name}</h1>
-              <MockRatingComponent rating={4} />
+        {isLoading ? (
+          <ProductDetailSkeleton />
+        ) : (
+          <div className="flex w-full flex-row p-10 gap-10">
+            <div className="rounded-lg overflow-hidden">
+              <img
+                src={data?.data?.image_url ?? imageSkeleton}
+                alt="Product img"
+                className="w-[600px] h-[700px] object-cover"
+              />
             </div>
-            <span className="text-4xl font-bold">
-              {PESOSIGN}
-              {data?.data?.price}
-            </span>
-            <p className="font-light text-[16px] text-justify">
-              {data?.data?.description}
-            </p>
-            <ProductOptions
-              size={size}
-              handleSizeChange={handleSizeChange}
-              handleQuantityChange={handleQuantityChange}
-              quantity={parsedQuantity}
-            />
-            <div className="w-1/3">
-              <Button
-                className="w-full rounded-lg"
-                variant="main"
-                onClick={() =>
-                  handleAddToCart({ size: size, quantity: quantity })
-                }
-              >
-                Add to cart
-              </Button>
+            <div className="w-1/2 p-10 flex flex-col gap-5">
+              <div>
+                <h1 className="text-5xl font-bold">{data?.data?.name}</h1>
+                <MockRatingComponent rating={4} />
+              </div>
+              <span className="text-4xl font-bold">
+                {PESOSIGN}
+                {data?.data?.price}
+              </span>
+              <p className="font-light text-[16px] text-justify">
+                {data?.data?.description}
+              </p>
+              <ProductOptions
+                size={size}
+                handleSizeChange={handleSizeChange}
+                handleQuantityChange={handleQuantityChange}
+                quantity={parsedQuantity}
+              />
+              <div className="w-1/3">
+                <Button
+                  className="w-full rounded-lg"
+                  variant="main"
+                  onClick={() =>
+                    handleAddToCart({ size: size, quantity: quantity })
+                  }
+                >
+                  Add to cart
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </main>
       {/** Mock extended general description*/}
       <div className="grow-0 p-10 flex-auto flex gap-5 bg-light-caramel/80 rounded-xl shadow-lg font-light">
@@ -152,10 +172,64 @@ export default function MenuProductDetailPage() {
             <Link to={"/about-us"}>More info</Link>
           </Button>
         </div>
-        <div className="mx-auto my-auto">
-          <span className="border-2 p-5 text-2xl rounded-lg border-golden-brown text-golden-brown">
-            {(data?.data?.price ?? 100) / 10} Kafy points item
-          </span>
+        <div className="flex justify-center items-center w-1/2">
+          {isLoading ? (
+            <Skeleton className="p-5 rounded-lg w-[264px] h-19 bg-raisin-black-muted" />
+          ) : (
+            <span className="border-2 p-5 text-2xl rounded-lg border-golden-brown text-golden-brown">
+              {(data?.data?.price ?? 100) / 10} Kafy points item
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BreadcrumbSkeleton() {
+  return (
+    <div className="w-fit h-5 flex gap-3">
+      <Skeleton className="w-[75px] rounded-full bg-raisin-black-muted" />
+      <Skeleton className="w-[75px] rounded-full bg-raisin-black-muted" />
+      <Skeleton className="w-[75px] rounded-full bg-raisin-black-muted" />
+    </div>
+  );
+}
+
+function ProductDetailSkeleton() {
+  return (
+    <div className="flex w-full flex-row p-10 gap-10">
+      <div className="rounded-lg overflow-hidden">
+        <Skeleton className="p-5 w-[600px] h-[700px]">
+          <svg
+            className="w-full h-full text-grey dark:text-gray-600 animate-pulse"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 18"
+          >
+            <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
+          </svg>
+        </Skeleton>
+      </div>
+      <div className="w-1/2 p-10 flex flex-col gap-5">
+        <div className="space-y-1 py-2">
+          <Skeleton className="w-2/3 h-[48px] rounded-full bg-grey" />
+          <Skeleton className="w-1/3 h-[18px] rounded-full bg-grey" />
+        </div>
+        <Skeleton className="h-9 w-1/3 text-4xl rounded-full bg-grey" />
+        <Skeleton className="h-[16px] w-full bg-grey" />
+        <Skeleton className="h-[16px] w-[95%] bg-grey" />
+        <Skeleton className="h-[16px] w-[85%] bg-grey" />
+        {/* Options (sizes + quantity buttons skeletonized as boxes) */}
+        <div className="w-full border-y-1 border-raisin-black/20">
+          <div className="flex gap-10 w-1/2 py-13">
+            <Skeleton className="h-10 w-full rounded-md bg-raisin-black-muted" />
+            <Skeleton className="h-10 w-full rounded-md bg-raisin-black-muted" />
+          </div>
+        </div>
+        <div className="w-1/3">
+          <Skeleton className="h-9 w-full rounded-lg bg-raisin-black-muted" />
         </div>
       </div>
     </div>
