@@ -43,24 +43,38 @@ export const useCartStore = create<CartStore>()(
             //? update the copy of the current cartProducts.
             const updatedCartProducts = [...state.cartProducts];
 
-            //? get the existingProduct
+            //? get the existing Product
             const existingProduct = updatedCartProducts[existingIndex];
 
-            //? update the quantity of the existing product in the cart.
+            //? calculate new product quantity and price_at_purchase
+            const baseProductPriceAtPurchase = cartProduct.price_at_purchase;
+            const newProductQuantity =
+              existingProduct.quantity + cartProduct.quantity;
+            const newProductPriceAtPurchase =
+              baseProductPriceAtPurchase * newProductQuantity;
+
             updatedCartProducts[existingIndex] = {
               ...existingProduct,
               quantity: existingProduct.quantity + cartProduct.quantity,
+              price_at_purchase: newProductPriceAtPurchase,
             };
 
             return {
-              cartProducts: [...updatedCartProducts],
+              cartProducts: updatedCartProducts,
             };
           }
 
           //? if the product to be added is unique, simply append it to the current
           //? cartProducts, in the state.cartProducts
           return {
-            cartProducts: [...state.cartProducts, cartProduct],
+            cartProducts: [
+              ...state.cartProducts,
+              {
+                ...cartProduct,
+                price_at_purchase:
+                  cartProduct.price_at_purchase * cartProduct.quantity,
+              },
+            ],
           };
         }),
 
