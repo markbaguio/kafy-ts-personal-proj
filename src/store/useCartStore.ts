@@ -1,5 +1,5 @@
-import { CartProduct, OrderItem } from "@/models/types";
-import { create, createStore } from "zustand";
+import { CartProduct } from "@/models/types";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface CartState {
