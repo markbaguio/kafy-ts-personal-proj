@@ -11,4 +11,5 @@ export const CartProductSchema = z.object({
   price_at_purchase: z.number().nonnegative(),
   quantity: z.number().int().nonnegative().min(1),
   product_size: ProductSizeSchema,
+  img_url: z.string(),
 });
