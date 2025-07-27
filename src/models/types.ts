@@ -1,3 +1,4 @@
+import { OrderItemSchema } from "@/schemas/CartSchema/OrderItemSchema";
 import {
   PaginatedProductsSchema,
   ProductSchema,
@@ -21,3 +22,5 @@ export enum MockProductCategoryEnum {
   lunch = "lunch",
   treats = "treats",
 }
+
+export type OrderItem = z.infer<typeof OrderItemSchema>;
