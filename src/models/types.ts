@@ -1,3 +1,4 @@
+import { CartProductSchema } from "@/schemas/CartSchema/CartProductSchema";
 import { OrderItemSchema } from "@/schemas/CartSchema/OrderItemSchema";
 import {
   PaginatedProductsSchema,
@@ -24,3 +25,5 @@ export enum MockProductCategoryEnum {
 }
 
 export type OrderItem = z.infer<typeof OrderItemSchema>;
+
+export type CartProduct = z.infer<typeof CartProductSchema>;
