@@ -51,6 +51,10 @@ export const useCartStore = create<CartStore>()(
               ...existingProduct,
               quantity: existingProduct.quantity + cartProduct.quantity,
             };
+
+            return {
+              cartProducts: [...updatedCartProducts],
+            };
           }
 
           //? if the product to be added is unique, simply append it to the current
@@ -59,32 +63,6 @@ export const useCartStore = create<CartStore>()(
             cartProducts: [...state.cartProducts, cartProduct],
           };
         }),
-      // addProductToCart: (cartProduct) =>
-      //   set((state) => {
-      //     const existingIndex = state.cartProducts.findIndex(
-      //       (product) =>
-      //         product.product_id === cartProduct.product_id &&
-      //         product.product_size === cartProduct.product_size
-      //     );
-
-      //     // If product already exists, increase quantity
-      //     if (existingIndex !== -1) {
-      //       const updatedProducts = [...state.cartProducts];
-      //       const existingProduct = updatedProducts[existingIndex];
-
-      //       updatedProducts[existingIndex] = {
-      //         ...existingProduct,
-      //         quantity: existingProduct.quantity + cartProduct.quantity,
-      //       };
-
-      //       return { cartProducts: updatedProducts };
-      //     }
-
-      //     // Otherwise, add as new
-      //     return {
-      //       cartProducts: [...state.cartProducts, cartProduct],
-      //     };
-      //   }),
 
       removeProductFromCart: (productID) =>
         set((state) => ({
@@ -93,7 +71,9 @@ export const useCartStore = create<CartStore>()(
           ),
         })),
 
-      clearCart: () => set({ cartProducts: [] }),
+      clearCart: () => {
+        set({ cartProducts: [] });
+      },
     }),
     { name: "cart" }
   )
