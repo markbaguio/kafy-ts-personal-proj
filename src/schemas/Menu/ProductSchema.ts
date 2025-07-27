@@ -1,5 +1,7 @@
 import z from "zod";
 
+export const ProductSizeSchema = z.enum(["S", "M", "L"]).default("S");
+
 export const ProductSchema = z.object({
   id: z.number(),
   category: z.enum(["hot", "cold"]),

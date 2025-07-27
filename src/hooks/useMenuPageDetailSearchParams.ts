@@ -1,7 +1,6 @@
+import { ProductSizeSchema } from "@/schemas/Menu/ProductSchema";
 import { useSearchParams } from "react-router";
 import { z } from "zod";
-
-const ProductSizeSchema = z.enum(["S", "M", "L"]).default("S");
 
 const MenuPageDetailSchema = z.object({
   size: ProductSizeSchema,
