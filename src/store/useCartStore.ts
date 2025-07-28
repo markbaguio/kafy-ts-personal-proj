@@ -1,4 +1,5 @@
 import { CartProduct } from "@/models/types";
+import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -9,6 +10,11 @@ interface CartState {
 interface CartActions {
   addProductToCart: (cartProduct: CartProduct) => void;
   removeProductFromCart: (productID: number) => void;
+  updateCartProductQuantity: (
+    productID: number,
+    productSize: ProductSize,
+    newQty: number
+  ) => void;
   clearCart: () => void;
 }
 
@@ -71,8 +77,8 @@ export const useCartStore = create<CartStore>()(
               ...state.cartProducts,
               {
                 ...cartProduct,
-                price_at_purchase:
-                  cartProduct.price_at_purchase * cartProduct.quantity,
+                // price_at_purchase:
+                //   cartProduct.price_at_purchase * cartProduct.quantity,
               },
             ],
           };
@@ -84,6 +90,44 @@ export const useCartStore = create<CartStore>()(
             (product) => product.product_id !== productID
           ),
         })),
+
+      updateCartProductQuantity: (productID, productSize, newQty) =>
+        set((state) => {
+          //? shallow copy the cartProducts array.
+          /**
+           * ? This is important because react is Immutable. React won't react to the change if you
+           * ? directly mutate the original array.
+           */
+
+          const updatedCartProducts = [...state.cartProducts];
+
+          //? get the matching cartProduct index.
+          const matchingProductIndex = state.cartProducts.findIndex(
+            (cartProduct) =>
+              cartProduct.product_id === productID &&
+              cartProduct.product_size === productSize
+          );
+
+          if (matchingProductIndex !== -1) {
+            //? Get the matching product
+            const matchingProduct: CartProduct =
+              updatedCartProducts[matchingProductIndex];
+
+            //? Update the quantity of the matching cart product
+            updatedCartProducts[matchingProductIndex] = {
+              ...matchingProduct,
+              quantity: newQty,
+            };
+
+            return {
+              cartProducts: [...updatedCartProducts],
+            };
+          }
+
+          return {
+            cartProducts: [...state.cartProducts],
+          };
+        }),
 
       clearCart: () => {
         set({ cartProducts: [] });
