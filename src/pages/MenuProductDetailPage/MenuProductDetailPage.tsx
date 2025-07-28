@@ -7,7 +7,7 @@ import {
 import { Link, useParams } from "react-router";
 import { PageNotFound } from "../PageNotFound";
 import imageSkeleton from "@/assets/rewards/image-skeleton.svg";
-import { Minus, Plus, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { MockExtendedDescription, PESOSIGN } from "@/constants";
 import { Button } from "@/components/ui/button";
 import { capitalizeFirstLetter, isValidProductSize } from "@/lib/utils";
