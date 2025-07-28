@@ -23,6 +23,9 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useCartStore } from "@/store/useCartStore";
+import { CartProduct } from "@/models/types";
+import { toast } from "sonner";
 
 //TODO: Fix quantityStepper change in width when then quantity > 1
 //TODO: Implement skeleton loading.
@@ -31,6 +34,9 @@ export default function MenuProductDetailPage() {
   const params = useParams<MenuProductDetailPageParams>();
 
   const parsedParams = MenuProductDetailPageParamsSchema.safeParse(params);
+
+  const addProductToCart = useCartStore((state) => state.addProductToCart);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   if (parsedParams.error) {
     return <PageNotFound />;
@@ -92,15 +98,31 @@ export default function MenuProductDetailPage() {
   //? ----------------------------------
 
   function handleAddToCart({
-    size,
+    product_id,
+    product_name,
+    product_size,
+    product_category,
+    price_at_purchase,
     quantity,
-  }: {
-    size: string;
-    quantity: number;
-  }) {
-    console.log(`size: ${size}`);
-    const parsedQuantity = isNaN(quantity) ? "1" : quantity;
-    console.log(`quantity: ${parsedQuantity}`);
+    img_url,
+  }: CartProduct) {
+    // console.log(`size: ${product_size}`);
+    // const parsedQuantity = isNaN(quantity) ? "1" : quantity;
+    // console.log(`quantity: ${parsedQuantity}`);
+    // console.log(`product_name: ${product_name}`);
+    // console.log(`product_id: ${product_id}`);
+    // console.log(`price_at_purchase: ${price_at_purchase}`);
+    // console.log(`img_url: ${img_url}`);
+    addProductToCart({
+      product_id: product_id,
+      product_name: product_name,
+      product_size: product_size,
+      product_category: product_category,
+      quantity: quantity,
+      price_at_purchase: price_at_purchase,
+      img_url: img_url,
+    });
+    toast.success(`${product_name} Added to cart!`);
   }
 
   return (
@@ -152,10 +174,22 @@ export default function MenuProductDetailPage() {
                   className="w-full rounded-lg"
                   variant="main"
                   onClick={() =>
-                    handleAddToCart({ size: size, quantity: quantity })
+                    handleAddToCart({
+                      product_id: data?.data?.id!,
+                      product_name: data?.data?.name!,
+                      product_size: size,
+                      product_category: data?.data?.category!,
+                      quantity: quantity,
+                      price_at_purchase: data?.data?.price!,
+                      img_url: data?.data?.image_url!,
+                    })
                   }
                 >
                   Add to cart
+                </Button>
+                {/** for testing */}
+                <Button variant="outline" onClick={clearCart}>
+                  clear cart
                 </Button>
               </div>
             </div>
