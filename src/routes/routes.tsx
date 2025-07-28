@@ -12,6 +12,7 @@ import { RouteObject } from "react-router";
 import MenuProductDetailPage from "@/pages/MenuProductDetailPage/MenuProductDetailPage";
 import PageUnderConstruction from "@/pages/PageUnderConstruction";
 import ProfilePage from "@/pages/ProfilePage/ProfilePage";
+import CartPage from "@/pages/CartPage/CartPage";
 
 export const routes: RouteObject[] = [
   {
@@ -30,6 +31,7 @@ export const routes: RouteObject[] = [
       { path: "/about-us", element: <AboutUs /> },
       { path: "/profile", element: <ProfilePage /> },
       { path: "/menu/favorites", element: <PageUnderConstruction /> },
+      { path: "/cart", element: <CartPage /> },
     ],
   },
   {
