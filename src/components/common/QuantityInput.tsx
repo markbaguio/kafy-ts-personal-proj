@@ -41,10 +41,7 @@ export function QuantityInput({
       >
         <Button
           variant="outline2"
-          className={cn(
-            "border-none rounded-lg bg-success-green/20",
-            classNames.button
-          )}
+          className={cn("border-none rounded-lg", classNames.button)}
           disabled={quantity <= 1}
           onClick={() => onQuantityChange(quantity - 1)}
         >
@@ -60,10 +57,7 @@ export function QuantityInput({
         </span>
         <Button
           variant="outline2"
-          className={cn(
-            "border-none rounded-lg bg-success-green/20",
-            classNames.button
-          )}
+          className={cn("border-none rounded-lg", classNames.button)}
           onClick={() => onQuantityChange(quantity + 1)}
         >
           <Plus />
