@@ -40,12 +40,13 @@ export function QuantityStepper({
         )}
       >
         <Button
+          asChild
           variant="outline2"
-          className={cn("border-none rounded-lg", classNames.button)}
+          className={cn("border-none rounded-lg w-11 h-11", classNames.button)}
           disabled={quantity <= 1}
           onClick={() => onQuantityChange(quantity - 1)}
         >
-          <Minus width={50} />
+          <Minus />
         </Button>
         <span
           className={cn(
@@ -56,11 +57,12 @@ export function QuantityStepper({
           {quantity}
         </span>
         <Button
+          asChild
           variant="outline2"
-          className={cn("border-none rounded-lg", classNames.button)}
+          className={cn("border-none rounded-lg w-11 h-11", classNames.button)}
           onClick={() => onQuantityChange(quantity + 1)}
         >
-          <Plus width={50} />
+          <Plus />
         </Button>
       </div>
     </div>
