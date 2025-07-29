@@ -20,9 +20,6 @@ import {
 } from "@/components/ui/hover-card";
 import { ReactNode } from "react";
 
-//! FIX: restructure cart product card to support mobile friendly layout
-//! FIX: QuantityStepper negative value.
-
 type InfoIconProps = {
   message: string;
   icon?: ReactNode;
