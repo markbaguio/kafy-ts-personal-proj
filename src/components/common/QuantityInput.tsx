@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 
 export type QuantityInputProps = {
   quantity: number;
-  onQuantityChange: (quantity: number) => void;
+  onQuantityChange: (newQuantity: number) => void;
   showHeader?: boolean;
   classNames?: {
     wrapperDiv?: string;
@@ -26,6 +26,14 @@ export function QuantityInput({
   showHeader = true,
   classNames = {},
 }: QuantityInputProps) {
+  function handleIncrement(): void {
+    onQuantityChange(quantity + 1);
+  }
+
+  function handleDecrement(): void {
+    onQuantityChange(quantity - 1);
+  }
+
   return (
     <div className={cn("flex flex-col gap-1 w-fit", classNames.wrapperDiv)}>
       {showHeader && (
@@ -43,7 +51,7 @@ export function QuantityInput({
           variant="outline2"
           className={cn("border-none rounded-lg", classNames.button)}
           disabled={quantity <= 1}
-          onClick={() => onQuantityChange(quantity - 1)}
+          onClick={handleDecrement}
         >
           <Minus />
         </Button>
@@ -58,7 +66,7 @@ export function QuantityInput({
         <Button
           variant="outline2"
           className={cn("border-none rounded-lg", classNames.button)}
-          onClick={() => onQuantityChange(quantity + 1)}
+          onClick={handleIncrement}
         >
           <Plus />
         </Button>
