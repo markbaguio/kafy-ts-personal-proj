@@ -72,6 +72,9 @@ export const useCartStore = create<CartStore>()(
 
           //? if the product to be added is unique, simply append it to the current
           //? cartProducts, in the state.cartProducts
+
+          //? just send the unit price
+          //TODO: change price_at_purchase to unit price.
           return {
             cartProducts: [
               ...state.cartProducts,
