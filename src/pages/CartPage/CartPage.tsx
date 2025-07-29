@@ -23,6 +23,28 @@ import { ReactNode } from "react";
 //! FIX: restructure cart product card to support mobile friendly layout
 //! FIX: QuantityStepper negative value.
 
+type InfoIconProps = {
+  message: string;
+  icon?: ReactNode;
+  className?: string;
+};
+
+type CartProductCardProps = {
+  cartProduct: CartProduct;
+  onCartProductClick: () => void;
+  onDeleteCartProduct: (productID: number) => void;
+  onCartProductQuantityChange: (
+    productID: number,
+    productSize: ProductSize,
+    newQty: number
+  ) => void;
+};
+
+type OrderSummaryProps = {
+  calculatedSubtotal: number;
+  calculatedOrderTotal: number;
+};
+
 function CartPage() {
   const navigate = useNavigate();
 
@@ -155,12 +177,6 @@ function CartPage() {
 
 export default CartPage;
 
-type InfoIconProps = {
-  message: string;
-  icon?: ReactNode;
-  className?: string;
-};
-
 export function InfoIcon({ message, icon, className }: InfoIconProps) {
   return (
     <HoverCard>
@@ -182,17 +198,6 @@ export function InfoIcon({ message, icon, className }: InfoIconProps) {
     </HoverCard>
   );
 }
-
-type CartProductCardProps = {
-  cartProduct: CartProduct;
-  onCartProductClick: () => void;
-  onDeleteCartProduct: (productID: number) => void;
-  onCartProductQuantityChange: (
-    productID: number,
-    productSize: ProductSize,
-    newQty: number
-  ) => void;
-};
 
 function CartProductCard({
   cartProduct,
@@ -269,11 +274,6 @@ function CartProductCard({
     </div>
   );
 }
-
-type OrderSummaryProps = {
-  calculatedSubtotal: number;
-  calculatedOrderTotal: number;
-};
 
 function OrderSummary({
   calculatedOrderTotal,
