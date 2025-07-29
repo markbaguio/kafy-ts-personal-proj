@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
  * ? This component is reusable design wise.
  */
 
-export type QuantityStepperProps = {
+export type QuantityInputProps = {
   quantity: number;
   onQuantityChange: (quantity: number) => void;
   showHeader?: boolean;
@@ -20,12 +20,12 @@ export type QuantityStepperProps = {
   };
 };
 
-export function QuantityStepper({
-  quantity = 1,
+export function QuantityInput({
+  quantity,
   onQuantityChange,
   showHeader = true,
   classNames = {},
-}: QuantityStepperProps) {
+}: QuantityInputProps) {
   return (
     <div className={cn("flex flex-col gap-1 w-fit", classNames.wrapperDiv)}>
       {showHeader && (
