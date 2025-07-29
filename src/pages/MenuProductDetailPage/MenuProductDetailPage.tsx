@@ -342,49 +342,6 @@ function MenuDetailPageBreadcrumb({
   );
 }
 
-// const MenuDetailPageBreadcrumb = memo(function MenuDetailPageBreadcrumb({
-//   category,
-//   name,
-// }: MenuDetailPageBreadcrumbProps) {
-//   return (
-//     <Breadcrumb>
-//       <BreadcrumbList className="text-lg text-raisin-black-muted">
-//         <BreadcrumbItem>
-//           <BreadcrumbLink className="hover:text-golden-brown" href="/">
-//             Home
-//           </BreadcrumbLink>
-//         </BreadcrumbItem>
-//         <BreadcrumbSeparator />
-//         <BreadcrumbItem>
-//           <BreadcrumbLink className="hover:text-golden-brown" href="/menu">
-//             Menu
-//           </BreadcrumbLink>
-//         </BreadcrumbItem>
-//         {category && (
-//           <>
-//             <BreadcrumbSeparator />
-//             <BreadcrumbItem>
-//               <BreadcrumbLink className="hover:text-golden-brown" asChild>
-//                 <Link to={`/menu?category=${category}&page=1`}>
-//                   {capitalizeFirstLetter(category)}
-//                 </Link>
-//               </BreadcrumbLink>
-//             </BreadcrumbItem>
-//           </>
-//         )}
-//         {name && (
-//           <>
-//             <BreadcrumbSeparator />
-//             <BreadcrumbItem>
-//               <span className="font-medium text-golden-brown">{name}</span>
-//             </BreadcrumbItem>
-//           </>
-//         )}
-//       </BreadcrumbList>
-//     </Breadcrumb>
-//   );
-// });
-
 type ProductOptionsProps = {
   size: ProductSize;
   handleSizeChange: (size: ProductSize) => void;
