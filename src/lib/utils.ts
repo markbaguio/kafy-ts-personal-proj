@@ -99,3 +99,14 @@ export function capitalizeFirstLetter(value: string) {
 export function isValidProductSize(size: string): size is ProductSize {
   return ["S", "M", "L"].includes(size);
 }
+
+export function formattedCurrency(
+  amount: number,
+  currency = "PHP",
+  locale = "en-PH"
+) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+  }).format(amount);
+}
