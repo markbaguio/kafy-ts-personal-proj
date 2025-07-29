@@ -1,34 +1,63 @@
 import { Minus, Plus } from "lucide-react";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
+
+/**
+ * ? Elements of this QuantityStepper Component can be modified.
+ * ? This component is reusable design wise.
+ */
 
 export type QuantityStepperProps = {
   quantity: number;
   onQuantityChange: (quantity: number) => void;
+  showHeader?: boolean;
+  classNames?: {
+    wrapperDiv?: string;
+    header?: string;
+    buttonContainer?: string;
+    button?: string;
+    quantityText?: string;
+  };
 };
 
 export function QuantityStepper({
   quantity = 1,
   onQuantityChange,
+  showHeader = true,
+  classNames = {},
 }: QuantityStepperProps) {
   return (
-    <div className="flex flex-col gap-1 w-fit">
-      <span className="text-lg/tight font-light">Quantity</span>
+    <div className={cn("flex flex-col gap-1 w-fit", classNames.wrapperDiv)}>
+      {showHeader && (
+        <span className={cn("text-lg/tight font-light", classNames.header)}>
+          Quantity
+        </span>
+      )}
       <div
-        className="flex items-center gap-3 border-1
-      border-raisin-black p-2 rounded-lg"
+        className={cn(
+          "flex items-center gap-3 border-1 border-raisin-black p-2 rounded-lg",
+          classNames.buttonContainer
+        )}
       >
         <Button
           variant="outline2"
-          className="border-none rounded-lg"
+          className={cn("border-none rounded-lg", classNames.button)}
           disabled={quantity <= 1}
           onClick={() => onQuantityChange(quantity - 1)}
         >
           <Minus width={50} />
         </Button>
-        <span className="text-2xl">{quantity}</span>
+        <span
+          className={cn(
+            "text-2xl text-center min-w-[3ch] tabular-nums",
+            classNames.quantityText
+          )}
+        >
+          {quantity}
+        </span>
         <Button
           variant="outline2"
-          className="border-none rounded-lg "
+          className={cn("border-none rounded-lg", classNames.button)}
           onClick={() => onQuantityChange(quantity + 1)}
         >
           <Plus width={50} />
