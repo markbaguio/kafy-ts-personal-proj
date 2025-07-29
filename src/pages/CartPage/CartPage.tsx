@@ -244,7 +244,6 @@ function CartProductCard({
             quantity={cartProduct.quantity}
             showHeader={false}
             onQuantityChange={(newQty) => {
-              console.log(newQty);
               onCartProductQuantityChange(
                 cartProduct.product_id,
                 cartProduct.product_size,
@@ -253,7 +252,7 @@ function CartProductCard({
             }}
             classNames={{
               buttonContainer: "p-0 gap-0",
-              button: "w-10 h-10 lg:w-11  lg:h-11",
+              button: "w-5 h-7 lg:w-11 lg:h-12",
               quantityText: "text-xs lg:text-2xl",
             }}
           />
