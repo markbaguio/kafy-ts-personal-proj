@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 /**
- * ? Elements of this QuantityStepper Component can be modified.
+ * ? Elements of this QuantityInput Component can be modified.
  * ? This component is reusable design wise.
  */
 
@@ -40,9 +40,11 @@ export function QuantityInput({
         )}
       >
         <Button
-          asChild
           variant="outline2"
-          className={cn("border-none rounded-lg w-11 h-11", classNames.button)}
+          className={cn(
+            "border-none rounded-lg bg-success-green/20",
+            classNames.button
+          )}
           disabled={quantity <= 1}
           onClick={() => onQuantityChange(quantity - 1)}
         >
@@ -57,9 +59,11 @@ export function QuantityInput({
           {quantity}
         </span>
         <Button
-          asChild
           variant="outline2"
-          className={cn("border-none rounded-lg w-11 h-11", classNames.button)}
+          className={cn(
+            "border-none rounded-lg bg-success-green/20",
+            classNames.button
+          )}
           onClick={() => onQuantityChange(quantity + 1)}
         >
           <Plus />
