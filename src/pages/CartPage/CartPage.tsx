@@ -1,4 +1,4 @@
-import { QuantityStepper } from "@/components/common/QuantityStepper";
+import { QuantityInput } from "@/components/common/QuantityInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -130,6 +130,25 @@ function CartPage() {
           calculatedSubtotal={calculatedSubtotal}
         />
       </section>
+      <section className="min-h-fit h-fit w-full relative z-0">
+        {/* Background */}
+        <div
+          className="absolute inset-0 z-0 rounded-lg"
+          style={{
+            background:
+              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000",
+          }}
+        />
+        {/* <div className="absolute inset-0 z-0 rounded-lg bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,_rgba(249,_115,_22,_0.25),_transparent_70%),_#000000]" /> */}
+
+        {/* Content */}
+        <div className="relative z-10 p-10">
+          <p className="text-milky-white">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
+            animi...
+          </p>
+        </div>
+      </section>
     </main>
   );
 }
@@ -221,16 +240,17 @@ function CartProductCard({
         </div>
         {/** cart product actions */}
         <div className="flex justify-between items-center">
-          <QuantityStepper
+          <QuantityInput
             quantity={cartProduct.quantity}
             showHeader={false}
-            onQuantityChange={(newQty) =>
+            onQuantityChange={(newQty) => {
+              console.log(newQty);
               onCartProductQuantityChange(
                 cartProduct.product_id,
                 cartProduct.product_size,
                 newQty
-              )
-            }
+              );
+            }}
             classNames={{
               buttonContainer: "p-0 gap-0",
               button: "w-10 h-10 lg:w-11  lg:h-11",

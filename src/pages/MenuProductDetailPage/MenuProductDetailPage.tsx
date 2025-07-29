@@ -26,7 +26,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCartStore } from "@/store/useCartStore";
 import { CartProduct } from "@/models/types";
 import { toast } from "sonner";
-import { QuantityStepper } from "@/components/common/QuantityStepper";
+import { QuantityInput } from "@/components/common/QuantityInput";
 
 //TODO: Fix quantityStepper change in width when then quantity > 1
 //TODO: Implement skeleton loading.
@@ -359,7 +359,7 @@ function ProductOptions({
     <div className="w-full border-y-1 border-raisin-black/20">
       <div className="flex gap-10 w-1/2 justify-start  py-10">
         <SizeSelector size={size} onSizeChange={handleSizeChange} />
-        <QuantityStepper
+        <QuantityInput
           quantity={quantity}
           onQuantityChange={handleQuantityChange}
         />
