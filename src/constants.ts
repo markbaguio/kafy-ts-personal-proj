@@ -216,6 +216,20 @@ export const MockOrderSummaryValues: MockOrderSummaryValuesType = {
   tax: 55,
 };
 
+type OrderSummaryTextValuesType = {
+  deliveryEstimate: string;
+  tax: string;
+  coupon: string;
+};
+
+export const OrderSummaryTextValues: OrderSummaryTextValuesType = {
+  deliveryEstimate:
+    "This fee covers the estimated cost to deliver your order based on your location and order size. It may vary depending on distance and availability.",
+  tax: "This amount includes applicable local taxes based on your billing address and the items in your order.",
+  coupon:
+    "Enter a valid coupon code to receive discounts or special offers. Only one coupon can be applied per order. Restrictions may apply.",
+};
+
 // ? MOCK
 export const MockExtendedDescription =
   "Each cup begins with handpicked beans grown in the highlands of the Philippines, locally and ethically sourced to ensure quality and sustainability. Roasted to highlight their natural character, our blends are smooth, aromatic, and layered with subtle notes that make every sip a true celebration of Filipino craftsmanship. Carefully crafted for everyday coffee lovers, Kafy's brews offer a comforting balance of richness, flavor, and warmth — made fresh and served with care, just the way Filipinos like it.";
