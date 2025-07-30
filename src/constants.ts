@@ -213,7 +213,7 @@ type MockOrderSummaryValuesType = {
 
 export const MockOrderSummaryValues: MockOrderSummaryValuesType = {
   deliveryEstimate: 45,
-  tax: 55,
+  tax: 15,
 };
 
 type OrderSummaryTextValuesType = {
