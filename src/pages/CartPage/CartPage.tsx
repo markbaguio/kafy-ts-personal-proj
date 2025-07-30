@@ -19,6 +19,10 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { ReactNode } from "react";
+import React from "react";
+
+//! Bug: if there are two identical product_id but with different Product size, if you delete one, both will be deleted from the cart.
+//! Fix this by adding the product_size as an identifier too.
 
 type InfoIconProps = {
   message: string;
@@ -110,8 +114,6 @@ function CartPage() {
     calculatedSubtotal < FREE_SHIPPING_THRESHOLD &&
     calculatedSubtotal !== 0;
 
-  console.log(showFreeShippingNotificationStrip);
-
   return (
     <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-10">
       {/** Header */}
@@ -127,11 +129,12 @@ function CartPage() {
         {/** Cart Product list and header*/}
         <section className="flex flex-col gap-6">
           {cartProducts.length > 0 ? (
-            <div className="w-full bg-milky-white shadow-xl rounded-xl flex flex-col gap-3 p-5 ">
-              {cartProducts.map((cartProduct) => (
-                <>
+            <div className="w-full bg-milky-white shadow-xl rounded-xl flex flex-col gap-2 p-5 ">
+              {cartProducts.map((cartProduct, index) => (
+                <React.Fragment
+                  key={`${cartProduct.product_id}-${cartProduct.product_size}`}
+                >
                   <CartProductCard
-                    key={cartProduct.product_id}
                     onCartProductClick={() =>
                       handleCartProductClick(cartProduct.product_id)
                     }
@@ -141,7 +144,8 @@ function CartPage() {
                     }
                     cartProduct={cartProduct}
                   />
-                </>
+                  {index !== cartProducts.length - 1 && <Separator />}
+                </React.Fragment>
               ))}
             </div>
           ) : (
@@ -167,28 +171,34 @@ function CartPage() {
           )}
         </section>
       </section>
-      <section className="relative flex flex-col gap-5 justify-center items-center w-full rounded-xl p-5 overflow-hidden bg-[url(src/assets/mike-kenneally-TD4DBagg2wE-unsplash.jpg)] bg-center bg-no-repeat bg-cover">
-        <div className="absolute inset-0 bg-royal-brown/50"></div>
-        <div className="h-full w-fit py-15 px-6 rounded-lg gap-5 bg-off-white/10 backdrop-blur-sm bg-linear-to-br from-off-white/10 to-[#666666]/10 flex flex-col justify-center items-center">
-          <div className="flex flex-col justify-center items-center">
-            <h2 className="text-milky-white text-2xl text-center font-semibold">
-              Stay in the loop!
-            </h2>
-            <p className="text-milky-white text-lg font-light text-center">
-              Be the first to know when new drinks drop, rewards launch, or
-              exclusive brews go live.
-            </p>
-          </div>
-          <Button className="hover:text-golden-brown" variant="secondary">
-            Keep me updated
-          </Button>
-        </div>
-      </section>
+      <NewsletterBanner />
     </main>
   );
 }
 
 export default CartPage;
+
+function NewsletterBanner() {
+  return (
+    <section className="relative flex flex-col gap-5 justify-center items-center w-full rounded-xl p-5 overflow-hidden bg-[url(src/assets/mike-kenneally-TD4DBagg2wE-unsplash.jpg)] bg-center bg-no-repeat bg-cover">
+      <div className="absolute inset-0 bg-royal-brown/50"></div>
+      <div className="h-full w-2/3 py-15 px-6 rounded-lg gap-5 bg-off-white/10 backdrop-blur-sm bg-linear-to-br from-off-white/10 to-[#666666]/10 flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
+          <h2 className="text-milky-white text-2xl text-center font-semibold">
+            Stay in the loop!
+          </h2>
+          <p className="text-milky-white text-lg font-light text-center">
+            Be the first to know when new drinks drop, rewards launch, or
+            exclusive brews go live.
+          </p>
+        </div>
+        <Button className="hover:text-golden-brown" variant="secondary">
+          Keep me updated
+        </Button>
+      </div>
+    </section>
+  );
+}
 
 export function InfoIcon({ message, icon, className }: InfoIconProps) {
   return (
@@ -226,7 +236,7 @@ function CartProductCard({
     );
   }
   return (
-    <div className="flex border-1 gap-2 lg:gap-7 rounded-lg border-raisin-black-muted/50 p-1 lg:p-5">
+    <div className="flex gap-2 lg:gap-7 p-1 lg:p-5">
       <img
         onClick={onCartProductClick}
         className="size-25 h-fit lg:size-48 object-cover rounded-lg hover:cursor-pointer"
