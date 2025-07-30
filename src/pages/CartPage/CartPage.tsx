@@ -11,7 +11,7 @@ import { CartProduct } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { useCartStore } from "@/store/useCartStore";
 import { Separator } from "@/components/ui/separator";
-import { Info, X } from "lucide-react";
+import { ArrowLeft, Info, X } from "lucide-react";
 import { useNavigate } from "react-router";
 import {
   HoverCard,
@@ -20,6 +20,16 @@ import {
 } from "@/components/ui/hover-card";
 import { ReactNode } from "react";
 import React from "react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+
+// TODO: add breadcrumbs with back button.
 
 //! Bug: if there are two identical product_id but with different Product size, if you delete one, both will be deleted from the cart.
 //! Fix this by adding the product_size as an identifier too.
@@ -115,7 +125,31 @@ function CartPage() {
     calculatedSubtotal !== 0;
 
   return (
-    <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-10">
+    <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-5">
+      {/** Breadcrumb */}
+      <div className="w-full hidden lg:flex">
+        <Breadcrumb>
+          <BreadcrumbList className="text-lg text-raisin-black-muted">
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/">Home</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/cart">Cart</BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      <div className="flex lg:hidden">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="hover:no-underline
+        "
+        >
+          <ArrowLeft /> Back
+        </Button>
+      </div>
       {/** Header */}
       <div className="text-start w-full">
         <h1 className="text-4xl">Your Cart</h1>
@@ -164,7 +198,7 @@ function CartPage() {
           />
           {/** Free shipping notification strip */}
           {showFreeShippingNotificationStrip && (
-            <div className="animate-vibrate bg-golden-brown/80 text-milky-white h-fit w-full p-2 rounded-lg flex flex-col justify-center items-center">
+            <div className="animate-vibrate bg-golden-brown/80 text-milky-white h-fit w-full p-2 rounded-lg flex flex-col justify-center items-center text-center text-sm lg:text-lg">
               Spend at least {formattedCurrency(FREE_SHIPPING_THRESHOLD)} to
               unlock free shipping!
             </div>
@@ -182,17 +216,20 @@ function NewsletterBanner() {
   return (
     <section className="relative flex flex-col gap-5 justify-center items-center w-full rounded-xl p-5 overflow-hidden bg-[url(src/assets/mike-kenneally-TD4DBagg2wE-unsplash.jpg)] bg-center bg-no-repeat bg-cover">
       <div className="absolute inset-0 bg-royal-brown/50"></div>
-      <div className="h-full w-2/3 py-15 px-6 rounded-lg gap-5 bg-off-white/10 backdrop-blur-sm bg-linear-to-br from-off-white/10 to-[#666666]/10 flex flex-col justify-center items-center">
+      <div className="h-full w-full lg:w-2/3 py-15 px-6 rounded-lg gap-5 bg-off-white/10 backdrop-blur-sm bg-linear-to-br from-off-white/10 to-[#666666]/10 flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center">
-          <h2 className="text-milky-white text-2xl text-center font-semibold">
+          <h2 className="text-milky-white text-lg lg:text-2xl text-center font-semibold">
             Stay in the loop!
           </h2>
-          <p className="text-milky-white text-lg font-light text-center">
+          <p className="text-milky-white text-sm lg:text-lg font-light text-center">
             Be the first to know when new drinks drop, rewards launch, or
             exclusive brews go live.
           </p>
         </div>
-        <Button className="hover:text-golden-brown" variant="secondary">
+        <Button
+          className="hover:text-golden-brown text-xs lg:text-lg"
+          variant="secondary"
+        >
           Keep me updated
         </Button>
       </div>
@@ -308,7 +345,7 @@ function OrderSummary({
   calculatedOrderTotal,
   calculatedSubtotal,
 }: OrderSummaryProps) {
-  const setLineThrough = calculatedSubtotal > FREE_SHIPPING_THRESHOLD;
+  const setLineThrough = calculatedSubtotal >= FREE_SHIPPING_THRESHOLD;
 
   return (
     <div className="flex flex-col gap-5 bg-milky-white p-5 rounded-xl h-fit min-h-1/2 w-full shadow-xl">
