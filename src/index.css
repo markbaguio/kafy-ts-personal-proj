@@ -31,6 +31,27 @@
   --color-raisin-black-muted: oklch(0.6068 0.0079 4.04);
 
   --default-font-family: "Montserrat", "sans-serif";
+
+  --animate-vibrate: vibrate 2s ease-in-out infinite;
+  @keyframes vibrate {
+    0%,
+    90% {
+      transform: translateY(0px);
+    }
+    20%,
+    80% {
+      transform: translateY(0px);
+    }
+    40%,
+    60% {
+      transform: translateY(1.5px);
+    }
+    30%,
+    50%,
+    70% {
+      transform: translateY(-1.5px);
+    }
+  }
 }
 
 :root {
