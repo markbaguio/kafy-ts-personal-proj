@@ -90,9 +90,8 @@ function CartPage() {
     subtotal: number;
     tax: number;
     deliveryEstimate: number;
-    test: string;
   }): number {
-    return subtotal - (tax + deliveryEstimate);
+    return subtotal + (tax + deliveryEstimate);
   }
 
   const [highlightedText, text] = formatCartHeaderSummary(cartProducts.length);
@@ -102,11 +101,11 @@ function CartPage() {
     subtotal: calculatedSubtotal,
     deliveryEstimate: MockOrderSummaryValues.deliveryEstimate,
     tax: MockOrderSummaryValues.tax,
-    test: "test",
   });
 
   return (
     <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-5">
+      {/** Header */}
       <div className="text-start w-full">
         <h1 className="text-4xl">Your Cart</h1>
         <span className="text-xl">
@@ -114,6 +113,7 @@ function CartPage() {
           {text}
         </span>
       </div>
+
       <section className="mx-auto w-full grid grid-cols-1 xl:grid-cols-[3fr_2fr] gap-6 h-full">
         {/** Cart Product list and header*/}
         <section className="flex flex-col gap-6">
@@ -149,23 +149,21 @@ function CartPage() {
           calculatedSubtotal={calculatedSubtotal}
         />
       </section>
-      <section className="min-h-fit h-fit w-full relative z-0">
-        {/* Background */}
-        <div
-          className="absolute inset-0 z-0 rounded-lg"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249, 115, 22, 0.25), transparent 70%), #000000",
-          }}
-        />
-        {/* <div className="absolute inset-0 z-0 rounded-lg bg-[radial-gradient(ellipse_80%_60%_at_50%_0%,_rgba(249,_115,_22,_0.25),_transparent_70%),_#000000]" /> */}
-
-        {/* Content */}
-        <div className="relative z-10 p-10">
-          <p className="text-milky-white">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis
-            animi...
-          </p>
+      <section className="relative flex flex-col gap-5 justify-center items-center w-full rounded-xl p-5 overflow-hidden bg-[url(src/assets/mike-kenneally-TD4DBagg2wE-unsplash.jpg)] bg-center bg-no-repeat bg-cover">
+        <div className="absolute inset-0 bg-royal-brown/50"></div>
+        <div className="h-full w-fit py-15 px-6 rounded-lg gap-5 bg-off-white/10 backdrop-blur-sm bg-linear-to-br from-off-white/10 to-[#666666]/10 flex flex-col justify-center items-center">
+          <div className="flex flex-col justify-center items-center">
+            <h2 className="text-milky-white text-2xl text-center font-semibold">
+              Stay in the loop!
+            </h2>
+            <p className="text-milky-white text-lg font-light text-center">
+              Be the first to know when new drinks drop, rewards launch, or
+              exclusive brews go live.
+            </p>
+          </div>
+          <Button className="hover:text-golden-brown" variant="secondary">
+            Keep me updated
+          </Button>
         </div>
       </section>
     </main>
@@ -343,7 +341,9 @@ function OrderSummary({
             <span className="text-xl font-semibold">
               {/* {PESOSIGN}
                   {(100).toFixed(2)} */}
-              {formattedCurrency(calculatedOrderTotal)}
+              {calculatedSubtotal !== 0
+                ? formattedCurrency(calculatedOrderTotal)
+                : formattedCurrency(0)}
             </span>
           </div>
           <Button variant="main">Checkout</Button>
