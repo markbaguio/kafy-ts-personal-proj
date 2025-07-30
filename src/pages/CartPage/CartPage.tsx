@@ -2,9 +2,9 @@ import { QuantityInput } from "@/components/common/QuantityInput";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+  FREE_SHIPPING_THRESHOLD,
   MockOrderSummaryValues,
   OrderSummaryTextValues,
-  PESOSIGN,
 } from "@/constants";
 import { capitalizeFirstLetter, cn, formattedCurrency } from "@/lib/utils";
 import { CartProduct } from "@/models/types";
@@ -91,6 +91,8 @@ function CartPage() {
     tax: number;
     deliveryEstimate: number;
   }): number {
+    if (subtotal > FREE_SHIPPING_THRESHOLD) return subtotal + tax;
+
     return subtotal + (tax + deliveryEstimate);
   }
 
@@ -99,12 +101,19 @@ function CartPage() {
   const calculatedSubtotal = calculateSubtotal(cartProducts);
   const calculatedOrderTotal = calculateOrderTotal({
     subtotal: calculatedSubtotal,
-    deliveryEstimate: MockOrderSummaryValues.deliveryEstimate,
+    deliveryEstimate: MockOrderSummaryValues.delivery,
     tax: MockOrderSummaryValues.tax,
   });
 
+  const showFreeShippingNotificationStrip =
+    cartProducts.length > 0 &&
+    calculatedSubtotal < FREE_SHIPPING_THRESHOLD &&
+    calculatedSubtotal !== 0;
+
+  console.log(showFreeShippingNotificationStrip);
+
   return (
-    <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-5">
+    <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-10">
       {/** Header */}
       <div className="text-start w-full">
         <h1 className="text-4xl">Your Cart</h1>
@@ -144,10 +153,19 @@ function CartPage() {
           )}
         </section>
         {/** Order Summary */}
-        <OrderSummary
-          calculatedOrderTotal={calculatedOrderTotal}
-          calculatedSubtotal={calculatedSubtotal}
-        />
+        <section className="flex flex-col gap-5">
+          <OrderSummary
+            calculatedOrderTotal={calculatedOrderTotal}
+            calculatedSubtotal={calculatedSubtotal}
+          />
+          {/** Free shipping notification strip */}
+          {showFreeShippingNotificationStrip && (
+            <div className="animate-vibrate bg-golden-brown/80 text-milky-white h-fit w-full p-2 rounded-lg flex flex-col justify-center items-center">
+              Spend at least {formattedCurrency(FREE_SHIPPING_THRESHOLD)} to
+              unlock free shipping!
+            </div>
+          )}
+        </section>
       </section>
       <section className="relative flex flex-col gap-5 justify-center items-center w-full rounded-xl p-5 overflow-hidden bg-[url(src/assets/mike-kenneally-TD4DBagg2wE-unsplash.jpg)] bg-center bg-no-repeat bg-cover">
         <div className="absolute inset-0 bg-royal-brown/50"></div>
@@ -280,8 +298,10 @@ function OrderSummary({
   calculatedOrderTotal,
   calculatedSubtotal,
 }: OrderSummaryProps) {
+  const setLineThrough = calculatedSubtotal > FREE_SHIPPING_THRESHOLD;
+
   return (
-    <section className="flex flex-col gap-5 bg-milky-white p-5 rounded-xl h-fit min-h-1/2 w-full shadow-xl">
+    <div className="flex flex-col gap-5 bg-milky-white p-5 rounded-xl h-fit min-h-1/2 w-full shadow-xl">
       {/** Coupon */}
       <div className="flex flex-col items-center gap-5 w-full">
         <div>
@@ -317,11 +337,12 @@ function OrderSummary({
           <div className="flex flex-row justify-between">
             <div className="flex gap-2">
               <span className="text-raisin-black-muted">Delivery estimate</span>
-              <InfoIcon message={OrderSummaryTextValues.deliveryEstimate} />
+              <InfoIcon message={OrderSummaryTextValues.delivery} />
             </div>
-            <span>
-              {PESOSIGN}
-              {MockOrderSummaryValues.deliveryEstimate.toFixed(2)}
+            <span
+              className={`${setLineThrough && "line-through text-destructive"}`}
+            >
+              {formattedCurrency(MockOrderSummaryValues.delivery)}
             </span>
           </div>
           <Separator />
@@ -330,10 +351,7 @@ function OrderSummary({
               <span className="text-raisin-black-muted">Tax</span>
               <InfoIcon message={OrderSummaryTextValues.tax} />
             </div>
-            <span>
-              {PESOSIGN}
-              {MockOrderSummaryValues.tax.toFixed(2)}
-            </span>
+            <span>{formattedCurrency(MockOrderSummaryValues.tax)}</span>
           </div>
           <Separator />
           <div className="flex flex-row justify-between">
@@ -349,6 +367,6 @@ function OrderSummary({
           <Button variant="main">Checkout</Button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
