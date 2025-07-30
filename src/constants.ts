@@ -206,6 +206,8 @@ export const PageNotFoundText = {
   description: "Return to the homepage and continue exploring.",
 };
 
+export const FREE_SHIPPING_THRESHOLD = 450;
+
 type MockOrderSummaryValuesType = {
   delivery: number;
   tax: number;
