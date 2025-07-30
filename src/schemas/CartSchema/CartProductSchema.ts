@@ -5,6 +5,8 @@ import { ProductSizeSchema } from "../Menu/ProductSchema";
 //? will be sent to the backend. It is derived from the order_items minus the order_items.id,
 //? order_items.created_at, and order_items.order_id
 //? order_items.id, order_items.created_at, and order_items.order_id will be handled in the backend.
+
+//? price_at_purchase will be calculated using unit_price * quantity
 export const CartProductSchema = z.object({
   product_id: z.number().int(),
   product_name: z.string(),
