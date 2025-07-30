@@ -9,7 +9,7 @@ export const CartProductSchema = z.object({
   product_id: z.number().int(),
   product_name: z.string(),
   product_category: z.string(),
-  price_at_purchase: z.number().nonnegative(),
+  unit_price: z.number().nonnegative(),
   quantity: z.number().int().nonnegative().min(1),
   product_size: ProductSizeSchema,
   img_url: z.string(),

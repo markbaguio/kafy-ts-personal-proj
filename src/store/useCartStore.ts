@@ -53,7 +53,7 @@ export const useCartStore = create<CartStore>()(
             const existingProduct = updatedCartProducts[existingIndex];
 
             //? calculate new product quantity and price_at_purchase
-            const baseProductPriceAtPurchase = cartProduct.price_at_purchase;
+            const baseProductPriceAtPurchase = cartProduct.unit_price;
             const newProductQuantity =
               existingProduct.quantity + cartProduct.quantity;
             const newProductPriceAtPurchase =
@@ -62,7 +62,7 @@ export const useCartStore = create<CartStore>()(
             updatedCartProducts[existingIndex] = {
               ...existingProduct,
               quantity: existingProduct.quantity + cartProduct.quantity,
-              price_at_purchase: newProductPriceAtPurchase,
+              unit_price: newProductPriceAtPurchase,
             };
 
             return {

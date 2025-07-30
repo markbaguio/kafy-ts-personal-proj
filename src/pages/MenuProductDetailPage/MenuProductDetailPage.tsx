@@ -103,7 +103,7 @@ export default function MenuProductDetailPage() {
     product_name,
     product_size,
     product_category,
-    price_at_purchase,
+    unit_price: price_at_purchase,
     quantity,
     img_url,
   }: CartProduct) {
@@ -120,7 +120,7 @@ export default function MenuProductDetailPage() {
       product_size: product_size,
       product_category: product_category,
       quantity: quantity,
-      price_at_purchase: price_at_purchase,
+      unit_price: price_at_purchase,
       img_url: img_url,
     });
     toast.success(`${product_name} Added to cart!`);
@@ -181,7 +181,7 @@ export default function MenuProductDetailPage() {
                       product_size: size,
                       product_category: data?.data?.category!,
                       quantity: quantity,
-                      price_at_purchase: data?.data?.price!,
+                      unit_price: data?.data?.price!,
                       img_url: data?.data?.image_url!,
                     })
                   }

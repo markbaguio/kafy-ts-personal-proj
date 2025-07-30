@@ -77,7 +77,7 @@ function CartPage() {
 
   function calculateSubtotal(cartProducts: CartProduct[]): number {
     return cartProducts.reduce(
-      (total, product) => total + product.price_at_purchase * product.quantity,
+      (total, product) => total + product.unit_price * product.quantity,
       0
     );
   }
@@ -202,6 +202,13 @@ function CartProductCard({
   onCartProductQuantityChange,
   onDeleteCartProduct,
 }: CartProductCardProps) {
+  function handleCartProductQuantityChange(newQty: number): void {
+    onCartProductQuantityChange(
+      cartProduct.product_id,
+      cartProduct.product_size,
+      newQty
+    );
+  }
   return (
     <div className="flex border-1 gap-2 lg:gap-7 rounded-lg border-raisin-black-muted/50 p-1 lg:p-5">
       <img
@@ -222,9 +229,7 @@ function CartProductCard({
           </h2>
           <span className="text-blackhole font-semibold text-lg md:text-2xl lg:text-3xl w-fit text-end">
             {/* {PESOSIGN} */}
-            {formattedCurrency(
-              cartProduct.price_at_purchase * cartProduct.quantity
-            )}
+            {formattedCurrency(cartProduct.unit_price * cartProduct.quantity)}
           </span>
         </div>
         {/** product size and category */}
@@ -245,13 +250,14 @@ function CartProductCard({
           <QuantityInput
             quantity={cartProduct.quantity}
             showHeader={false}
-            onQuantityChange={(newQty) => {
-              onCartProductQuantityChange(
-                cartProduct.product_id,
-                cartProduct.product_size,
-                newQty
-              );
-            }}
+            // onQuantityChange={(newQty) => {
+            //   onCartProductQuantityChange(
+            //     cartProduct.product_id,
+            //     cartProduct.product_size,
+            //     newQty
+            //   );
+            // }}
+            onQuantityChange={handleCartProductQuantityChange}
             classNames={{
               buttonContainer: "p-0 gap-0",
               button: "w-5 h-7 lg:w-11 lg:h-12",
