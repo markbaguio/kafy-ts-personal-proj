@@ -207,23 +207,23 @@ export const PageNotFoundText = {
 };
 
 type MockOrderSummaryValuesType = {
-  deliveryEstimate: number;
+  delivery: number;
   tax: number;
 };
 
 export const MockOrderSummaryValues: MockOrderSummaryValuesType = {
-  deliveryEstimate: 45,
+  delivery: 45,
   tax: 15,
 };
 
 type OrderSummaryTextValuesType = {
-  deliveryEstimate: string;
+  delivery: string;
   tax: string;
   coupon: string;
 };
 
 export const OrderSummaryTextValues: OrderSummaryTextValuesType = {
-  deliveryEstimate:
+  delivery:
     "This fee covers the estimated cost to deliver your order based on your location and order size. It may vary depending on distance and availability.",
   tax: "This amount includes applicable local taxes based on your billing address and the items in your order.",
   coupon:
