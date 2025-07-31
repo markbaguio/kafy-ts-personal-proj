@@ -14,7 +14,7 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   setProfile: (profile) => set({ profile }),
   isSignedIn: false,
   signOut: () => {
-    set({ profile: null, isSignedIn: false });
+    set({ profile: null, isSignedIn: false, isLoading: true });
   },
   isLoading: true,
 }));
