@@ -7,7 +7,7 @@ import {
   OrderSummaryTextValues,
 } from "@/constants";
 import { capitalizeFirstLetter, cn, formattedCurrency } from "@/lib/utils";
-import { CartProduct } from "@/models/types";
+import { CartProduct, CreateOrderType } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { useCartStore } from "@/store/useCartStore";
 import { Separator } from "@/components/ui/separator";
@@ -27,6 +27,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useAuthStore } from "@/store/useAuthStore";
+import { toast } from "sonner";
 
 // TODO: add breadcrumbs with back button.
 
@@ -58,6 +60,7 @@ type OrderSummaryProps = {
 
 function CartPage() {
   const navigate = useNavigate();
+  const { isSignedIn } = useAuthStore();
 
   const cartProducts = useCartStore((state) => state.cartProducts);
   const updateCartProductQuantity = useCartStore(
@@ -97,6 +100,11 @@ function CartPage() {
   }
 
   function handleCheckout() {
+    if (!isSignedIn) navigate("/auth/signin?redirect=/checkout"); //? isSignedIn is replace with true for development
+    //     const rawOrder: CreateOrderType = {
+    // profile_id: 'fce5023b-4a71-41fb-b2c0-ced50f9e0e6f',
+    // total_amount
+    //     }
     console.log(cartProducts);
   }
 
