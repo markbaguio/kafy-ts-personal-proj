@@ -52,7 +52,7 @@ type CartProductCardProps = {
   ) => void;
 };
 
-type OrderSummaryProps = {
+type CartPageOrderSummaryProps = {
   calculatedSubtotal: number;
   calculatedOrderTotal: number;
   onCheckoutClick: () => void;
@@ -99,13 +99,12 @@ function CartPage() {
     );
   }
 
-  function handleCheckout() {
-    if (!isSignedIn) navigate("/auth/signin?redirect=/checkout"); //? isSignedIn is replace with true for development
-    //     const rawOrder: CreateOrderType = {
-    // profile_id: 'fce5023b-4a71-41fb-b2c0-ced50f9e0e6f',
-    // total_amount
-    //     }
-    console.log(cartProducts);
+  function handleCheckout(): void {
+    if (!isSignedIn) {
+      navigate("/auth/signin?redirect=/checkout"); //? isSignedIn is replace with true for development
+      return;
+    }
+    navigate("/checkout");
   }
 
   function calculateOrderTotal({
@@ -204,7 +203,7 @@ function CartPage() {
         </section>
         {/** Order Summary */}
         <section className="flex flex-col gap-5">
-          <OrderSummary
+          <CartPageOrderSummary
             calculatedOrderTotal={calculatedOrderTotal}
             calculatedSubtotal={calculatedSubtotal}
             onCheckoutClick={handleCheckout}
@@ -354,11 +353,11 @@ function CartProductCard({
   );
 }
 
-function OrderSummary({
+function CartPageOrderSummary({
   calculatedOrderTotal,
   calculatedSubtotal,
   onCheckoutClick,
-}: OrderSummaryProps) {
+}: CartPageOrderSummaryProps) {
   const setLineThrough = calculatedSubtotal >= FREE_SHIPPING_THRESHOLD;
 
   return (
