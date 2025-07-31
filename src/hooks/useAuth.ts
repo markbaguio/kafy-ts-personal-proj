@@ -27,18 +27,24 @@ export function useAuth() {
       if (failureCount >= 1) {
         return false;
       }
-
       return true;
     },
     refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
-    // console.log("query.data change, executing...");
+    console.log("useEffect dependencies changed. Updating authStore . . .");
+    useAuthStore.setState({ isLoading: true }); // <- Start loading
 
     if (query.data?.data) {
-      useAuthStore.setState({ profile: query.data?.data });
-      useAuthStore.setState({ isSignedIn: !!query.data?.data });
+      useAuthStore.setState({
+        profile: query.data?.data,
+        isSignedIn: true,
+      });
     }
-  }, [query.data]);
+
+    if (query.isFetched) {
+      useAuthStore.setState({ isLoading: false }); // <- End loading
+    }
+  }, [query.data, query.isFetched]);
 }

@@ -6,6 +6,7 @@ export type AuthStore = {
   setProfile: (profile: Profile) => void;
   isSignedIn: boolean;
   signOut: () => void;
+  isLoading: boolean;
 };
 
 export const useAuthStore = create<AuthStore>()((set) => ({
@@ -15,4 +16,5 @@ export const useAuthStore = create<AuthStore>()((set) => ({
   signOut: () => {
     set({ profile: null, isSignedIn: false });
   },
+  isLoading: true,
 }));
