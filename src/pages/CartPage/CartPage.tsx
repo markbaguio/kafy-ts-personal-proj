@@ -7,7 +7,7 @@ import {
   OrderSummaryTextValues,
 } from "@/constants";
 import { capitalizeFirstLetter, cn, formattedCurrency } from "@/lib/utils";
-import { CartProduct, CreateOrderType } from "@/models/types";
+import { CartProduct } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { useCartStore } from "@/store/useCartStore";
 import { Separator } from "@/components/ui/separator";
@@ -28,7 +28,6 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { useAuthStore } from "@/store/useAuthStore";
-import { toast } from "sonner";
 
 // TODO: add breadcrumbs with back button.
 
