@@ -33,3 +33,8 @@ export type CartProduct = z.infer<typeof CartProductSchema>;
 export type CreateOrderType = z.infer<typeof CreateOrderSchema>;
 
 export type CreateOrderItemType = z.infer<typeof CreateOrderItemSchema>;
+
+export type PlceOrderPayload = {
+  order: CreateOrderType;
+  order_item: CreateOrderItemType[];
+};
