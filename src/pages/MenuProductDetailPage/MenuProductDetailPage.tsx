@@ -107,13 +107,6 @@ export default function MenuProductDetailPage() {
     quantity,
     img_url,
   }: CartProduct) {
-    // console.log(`size: ${product_size}`);
-    // const parsedQuantity = isNaN(quantity) ? "1" : quantity;
-    // console.log(`quantity: ${parsedQuantity}`);
-    // console.log(`product_name: ${product_name}`);
-    // console.log(`product_id: ${product_id}`);
-    // console.log(`price_at_purchase: ${price_at_purchase}`);
-    // console.log(`img_url: ${img_url}`);
     addProductToCart({
       product_id: product_id,
       product_name: product_name,
