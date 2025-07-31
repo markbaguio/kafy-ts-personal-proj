@@ -25,7 +25,6 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 
@@ -54,6 +53,7 @@ type CartProductCardProps = {
 type OrderSummaryProps = {
   calculatedSubtotal: number;
   calculatedOrderTotal: number;
+  onCheckoutClick: () => void;
 };
 
 function CartPage() {
@@ -94,6 +94,10 @@ function CartPage() {
       (total, product) => total + product.unit_price * product.quantity,
       0
     );
+  }
+
+  function handleCheckout() {
+    console.log(cartProducts);
   }
 
   function calculateOrderTotal({
@@ -195,6 +199,7 @@ function CartPage() {
           <OrderSummary
             calculatedOrderTotal={calculatedOrderTotal}
             calculatedSubtotal={calculatedSubtotal}
+            onCheckoutClick={handleCheckout}
           />
           {/** Free shipping notification strip */}
           {showFreeShippingNotificationStrip && (
@@ -344,6 +349,7 @@ function CartProductCard({
 function OrderSummary({
   calculatedOrderTotal,
   calculatedSubtotal,
+  onCheckoutClick,
 }: OrderSummaryProps) {
   const setLineThrough = calculatedSubtotal >= FREE_SHIPPING_THRESHOLD;
 
@@ -411,7 +417,9 @@ function OrderSummary({
                 : formattedCurrency(0)}
             </span>
           </div>
-          <Button variant="main">Checkout</Button>
+          <Button onClick={onCheckoutClick} variant="main">
+            Checkout
+          </Button>
         </div>
       </div>
     </div>
