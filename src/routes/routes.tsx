@@ -13,6 +13,8 @@ import MenuProductDetailPage from "@/pages/MenuProductDetailPage/MenuProductDeta
 import PageUnderConstruction from "@/pages/PageUnderConstruction";
 import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import CartPage from "@/pages/CartPage/CartPage";
+import CheckoutPage from "@/pages/CheckoutPage/CheckoutPage";
+import ProtectedRoute from "@/components/common/ProtectedRoute/ProtectedRoute";
 
 export const routes: RouteObject[] = [
   {
@@ -32,6 +34,14 @@ export const routes: RouteObject[] = [
       { path: "/profile", element: <ProfilePage /> },
       { path: "/menu/favorites", element: <PageUnderConstruction /> },
       { path: "/cart", element: <CartPage /> },
+      {
+        path: "/checkout",
+        element: (
+          <ProtectedRoute>
+            <CheckoutPage />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
   {
