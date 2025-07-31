@@ -27,7 +27,6 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useAuthStore } from "@/store/useAuthStore";
 
 // TODO: add breadcrumbs with back button.
 
@@ -59,7 +58,6 @@ type CartPageOrderSummaryProps = {
 
 function CartPage() {
   const navigate = useNavigate();
-  const { isSignedIn } = useAuthStore();
 
   const cartProducts = useCartStore((state) => state.cartProducts);
   const updateCartProductQuantity = useCartStore(
@@ -99,10 +97,6 @@ function CartPage() {
   }
 
   function handleCheckout(): void {
-    if (!isSignedIn) {
-      navigate("/auth/signin?redirect=/checkout"); //? isSignedIn is replace with true for development
-      return;
-    }
     navigate("/checkout");
   }
 
