@@ -4,6 +4,8 @@ import {
   PaginatedProductsSchema,
   ProductSchema,
 } from "@/schemas/Menu/ProductSchema";
+import { CreateOrderItemSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
+import { CreateOrderSchema } from "@/schemas/OrderSchema/CreateOrderSchema/CreateOrderSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
 import { z } from "zod";
 
@@ -27,3 +29,7 @@ export enum MockProductCategoryEnum {
 export type OrderItem = z.infer<typeof OrderItemSchema>;
 
 export type CartProduct = z.infer<typeof CartProductSchema>;
+
+export type CreateOrderType = z.infer<typeof CreateOrderSchema>;
+
+export type CreateOrderItemType = z.infer<typeof CreateOrderItemSchema>;
