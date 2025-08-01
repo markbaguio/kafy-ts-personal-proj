@@ -6,19 +6,13 @@ import {
   MockOrderSummaryValues,
   OrderSummaryTextValues,
 } from "@/constants";
-import { capitalizeFirstLetter, cn, formattedCurrency } from "@/lib/utils";
+import { capitalizeFirstLetter, formattedCurrency } from "@/lib/utils";
 import { CartProduct } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { useCartStore } from "@/store/useCartStore";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Info, X } from "lucide-react";
+import { ArrowLeft, X } from "lucide-react";
 import { useNavigate } from "react-router";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { ReactNode } from "react";
 import React from "react";
 import {
   Breadcrumb,
@@ -27,17 +21,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-
-// TODO: add breadcrumbs with back button.
-
-//! Bug: if there are two identical product_id but with different Product size, if you delete one, both will be deleted from the cart.
-//! Fix this by adding the product_size as an identifier too.
-
-type InfoIconProps = {
-  message: string;
-  icon?: ReactNode;
-  className?: string;
-};
+import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
 
 type CartProductCardProps = {
   cartProduct: CartProduct;
@@ -242,28 +226,6 @@ function NewsletterBanner() {
   );
 }
 
-export function InfoIcon({ message, icon, className }: InfoIconProps) {
-  return (
-    <HoverCard>
-      <HoverCardTrigger asChild>
-        <span
-          role="button"
-          tabIndex={0}
-          className={cn(
-            "inline-flex items-center justify-center cursor-help",
-            className
-          )}
-        >
-          {icon ?? <Info className="h-4 w-4 text-muted-foreground" />}
-        </span>
-      </HoverCardTrigger>
-      <HoverCardContent className="text-sm max-w-xs">
-        {message}
-      </HoverCardContent>
-    </HoverCard>
-  );
-}
-
 function CartProductCard({
   cartProduct,
   onCartProductClick,
@@ -390,7 +352,9 @@ function CartPageOrderSummary({
           <div className="flex flex-row justify-between">
             <div className="flex gap-2">
               <span className="text-raisin-black-muted">Delivery estimate</span>
-              <InfoIcon message={OrderSummaryTextValues.delivery} />
+              <CustomHoverCardInfoIcon
+                message={OrderSummaryTextValues.delivery}
+              />
             </div>
             <span
               className={`${setLineThrough && "line-through text-destructive"}`}
@@ -402,7 +366,7 @@ function CartPageOrderSummary({
           <div className="flex flex-row justify-between">
             <div className="flex gap-2">
               <span className="text-raisin-black-muted">Tax</span>
-              <InfoIcon message={OrderSummaryTextValues.tax} />
+              <CustomHoverCardInfoIcon message={OrderSummaryTextValues.tax} />
             </div>
             <span>{formattedCurrency(MockOrderSummaryValues.tax)}</span>
           </div>
