@@ -1,3 +1,4 @@
+import { S } from "vitest/dist/chunks/config.d.UqE-KR0o.js";
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { MenuCategoryType } from "./hooks/useMenuPageSearchParams";
 import { Product } from "./models/types";
@@ -199,6 +200,11 @@ export const SomethingWenWrongText = {
   header: "Whoops! Something went wrong.",
   description:
     "Please try again later or contact support if the issue persists.",
+};
+
+export const ActiveSaleText: { info: string; activeSale: string } = {
+  info: "This discount is automatically applied during ongoing promotional periods. No code needed. joust add items to your cart and enjoy exclusive savings while the sale lasts!",
+  activeSale: "No deals at the moment, but stay tuned!",
 };
 
 export const PageNotFoundText = {
