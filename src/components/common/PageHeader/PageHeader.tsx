@@ -35,7 +35,7 @@ const navItems: navItemType[] = [
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
-  const cartProdductCount = useCartStore((state) => state.cartProducts.length);
+  const cartProductCount = useCartStore((state) => state.cartProducts.length);
 
   const queryClient = useQueryClient();
 
@@ -187,9 +187,9 @@ export default function PageHeader() {
               }}
             >
               <ShoppingCart />
-              {cartProdductCount > 0 && (
+              {cartProductCount > 0 && (
                 <span className="absolute flex justify-center items-center -top-2 -right-1 text-sm rounded-full w-7 h-5 bg-golden-brown text-milky-white">
-                  {cartProdductCount}
+                  {cartProductCount}
                 </span>
               )}
             </Button>
