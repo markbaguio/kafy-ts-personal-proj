@@ -202,7 +202,7 @@ export const SomethingWenWrongText = {
 };
 
 export const ActiveSaleText: { info: string; activeSale: string } = {
-  info: "This discount is automatically applied during ongoing promotional periods. No code needed. just add items to your cart and enjoy exclusive savings while the sale lasts!",
+  info: "This discount is automatically applied during ongoing promotional periods. No promo/discount code needed. just add items to your cart and enjoy exclusive savings while the sale lasts!",
   activeSale: "No deals at the moment, but stay tuned!",
 };
 
