@@ -11,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 type PriceSummaryProps = {
   calculatedSubtotal: number;
   calculatedOrderTotal: number;
+  headerText?: string;
   showHeader?: boolean;
   buttonLabel: string;
   onButtonClick: () => void;
@@ -19,13 +20,14 @@ type PriceSummaryProps = {
 function PriceSummary({
   calculatedOrderTotal,
   calculatedSubtotal,
+  headerText,
   showHeader = false,
   buttonLabel,
   onButtonClick,
 }: PriceSummaryProps) {
   return (
     <div className="flex flex-col gap-5">
-      {showHeader && <h2 className="text-2xl font-semibold">Order Summary</h2>}
+      {showHeader && <h2 className="text-2xl font-semibold">{headerText}</h2>}
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between">
           <span className="text-raisin-black-muted">Subtotal</span>

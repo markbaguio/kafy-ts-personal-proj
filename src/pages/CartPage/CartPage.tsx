@@ -320,6 +320,7 @@ function CartPageOrderSummary({
       <Separator />
       {/** Order Summary */}
       <PriceSummary
+        headerText="Order Summary"
         buttonLabel="Checkout"
         onButtonClick={onCheckoutClick}
         calculatedSubtotal={calculatedSubtotal}
