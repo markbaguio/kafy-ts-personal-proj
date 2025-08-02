@@ -21,7 +21,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
+import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
 
 type CartProductCardProps = {
   cartProduct: CartProduct;
@@ -313,8 +313,6 @@ function CartPageOrderSummary({
   calculatedSubtotal,
   onCheckoutClick,
 }: CartPageOrderSummaryProps) {
-  const setLineThrough = calculatedSubtotal >= FREE_SHIPPING_THRESHOLD;
-
   return (
     <div className="flex flex-col gap-5 bg-milky-white p-5 rounded-xl h-fit min-h-1/2 w-full shadow-xl">
       {/** Coupon */}
@@ -337,55 +335,13 @@ function CartPageOrderSummary({
       </div>
       <Separator />
       {/** Order Summary */}
-      <div className="flex flex-col gap-5">
-        <h2 className="text-2xl font-semibold">Order Summary</h2>
-        <div className="flex flex-col gap-5">
-          <div className="flex flex-row justify-between">
-            <span className="text-raisin-black-muted">Subtotal</span>
-            <span>
-              {/* {PESOSIGN}
-                  {(100).toFixed(2)} */}
-              {formattedCurrency(calculatedSubtotal)}
-            </span>
-          </div>
-          <Separator />
-          <div className="flex flex-row justify-between">
-            <div className="flex gap-2">
-              <span className="text-raisin-black-muted">Delivery estimate</span>
-              <CustomHoverCardInfoIcon
-                message={OrderSummaryTextValues.delivery}
-              />
-            </div>
-            <span
-              className={`${setLineThrough && "line-through text-destructive"}`}
-            >
-              {formattedCurrency(MockOrderSummaryValues.delivery)}
-            </span>
-          </div>
-          <Separator />
-          <div className="flex flex-row justify-between">
-            <div className="flex gap-2">
-              <span className="text-raisin-black-muted">Tax</span>
-              <CustomHoverCardInfoIcon message={OrderSummaryTextValues.tax} />
-            </div>
-            <span>{formattedCurrency(MockOrderSummaryValues.tax)}</span>
-          </div>
-          <Separator />
-          <div className="flex flex-row justify-between">
-            <span className="text-xl font-semibold">Order total</span>
-            <span className="text-xl font-semibold">
-              {/* {PESOSIGN}
-                  {(100).toFixed(2)} */}
-              {calculatedSubtotal !== 0
-                ? formattedCurrency(calculatedOrderTotal)
-                : formattedCurrency(0)}
-            </span>
-          </div>
-          <Button onClick={onCheckoutClick} variant="main">
-            Checkout
-          </Button>
-        </div>
-      </div>
+      <PriceSummary
+        buttonLabel="Checkout"
+        onButtonClick={onCheckoutClick}
+        calculatedSubtotal={calculatedSubtotal}
+        calculatedOrderTotal={calculatedOrderTotal}
+        showHeader
+      />
     </div>
   );
 }
