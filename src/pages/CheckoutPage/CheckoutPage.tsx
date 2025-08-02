@@ -1,14 +1,26 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { capitalizeFirstLetter, formattedCurrency } from "@/lib/utils";
+import {
+  calculateOrderTotal,
+  calculateSubtotal,
+  capitalizeFirstLetter,
+  formattedCurrency,
+} from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { useState } from "react";
 import { CartProduct } from "@/models/types";
-import { CircleX, TicketPercent } from "lucide-react";
+import { TicketPercent } from "lucide-react";
 import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
-import { ActiveSaleText } from "@/constants";
-import { Separator } from "@/components/ui/separator";
+import { ActiveSaleText, MockOrderSummaryValues } from "@/constants";
+import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
 
 function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState<string>("delivery");
@@ -16,6 +28,10 @@ function CheckoutPage() {
 
   function handleShippingMethodChange(newShippingMethod: string) {
     setShippingMethod(newShippingMethod);
+  }
+
+  function handlePlaceOrder() {
+    console.log(calculatedOrderTotal);
   }
 
   const options = [
@@ -34,96 +50,105 @@ function CheckoutPage() {
     },
   ];
 
+  const calculatedSubtotal = calculateSubtotal(cartProducts);
+  const calculatedOrderTotal = calculateOrderTotal({
+    subtotal: calculatedSubtotal,
+    tax: MockOrderSummaryValues.tax,
+    deliveryEstimate: MockOrderSummaryValues.delivery,
+  });
+
   return (
     <main className="flex flex-col min-h-screen w-full bg-off-white-2/50 divide-y-1">
       <section
-        className="bg-milky-white min-h-fit w-full flex flex-col gap-3 px-10 py-5 xl:px-30 lg:py-10
+        className="bg-milky-white min-h-fit w-full flex flex-col gap-5 px-10 py-5 xl:px-30 lg:py-10
       "
       >
-        <p>breadcrumb</p>
+        <CheckoutBreadcrumb />
         <h1 className="text-blackhole text-4xl font-bold">Checkout</h1>
       </section>
-      <section className="divide-x-1 grid grid-cols-1 xl:grid-cols-2 w-full">
+      <section className="divide-x-1 h-screen grid grid-cols-1 xl:grid-cols-2 w-full">
         {/** Shipping Information*/}
-        <div className="bg-milky-white min-h-[450px] px-10 xl:px-30 py-5">
-          <form className="flex flex-col gap-5">
-            <h2 className="text-2xl font-semibold">Shipping Information</h2>
-            {/** First name */}
-            <div className="space-y-1">
-              <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                First name
-              </Label>
-              <Input placeholder="First name" />
-            </div>
-            {/** Last name */}
-            <div className="space-y-1">
-              <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                Last name
-              </Label>
-              <Input placeholder="Last name" />
-            </div>
-            {/** Email Address */}
-            <div className="space-y-1">
-              <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                Email Address
-              </Label>
-              <Input placeholder="Email Address" />
-            </div>
-            {/** Email Address */}
-            <div className="space-y-1">
-              <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                Phone number
-              </Label>
-              <Input placeholder="Phone number" />
-            </div>
-            {/** Email Address */}
-            <div className="space-y-1">
-              <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                Address
-              </Label>
-              <Input placeholder="Address" />
-            </div>
-            {/** Shipping method */}
-            <div className="flex flex-col gap-5">
-              <span className="text-2xl font-semibold">Shipping Method</span>
-              <RadioGroup
-                defaultValue={shippingMethod}
-                className="flex justify-start"
-              >
-                <div
-                  className={`flex items-center space-x-2 w-full min-h-fit p-5 rounded-xl border-1 border-raisin-black hover:bg-raisin-black-muted/10 hover:text-golden-brown hover:cursor-pointer ${
-                    shippingMethod === "delivery" ? "bg-golden-brown" : null
-                  }`}
-                  onClick={() => handleShippingMethodChange("delivery")}
+        <div className="bg-milky-white px-10 xl:px-30 py-5">
+          <div className=" min-h-[450px] h-fit">
+            <form className="flex flex-col gap-5">
+              <h2 className="text-2xl font-semibold">Shipping Information</h2>
+              {/** First name */}
+              <div className="space-y-1">
+                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                  First name
+                </Label>
+                <Input placeholder="First name" />
+              </div>
+              {/** Last name */}
+              <div className="space-y-1">
+                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                  Last name
+                </Label>
+                <Input placeholder="Last name" />
+              </div>
+              {/** Email Address */}
+              <div className="space-y-1">
+                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                  Email Address
+                </Label>
+                <Input placeholder="Email Address" />
+              </div>
+              {/** Email Address */}
+              <div className="space-y-1">
+                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                  Phone number
+                </Label>
+                <Input placeholder="Phone number" />
+              </div>
+              {/** Email Address */}
+              <div className="space-y-1">
+                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                  Address
+                </Label>
+                <Input placeholder="Address" />
+              </div>
+              {/** Shipping method */}
+              <div className="flex flex-col gap-5">
+                <span className="text-2xl font-semibold">Shipping Method</span>
+                <RadioGroup
+                  defaultValue={shippingMethod}
+                  className="flex justify-start"
                 >
-                  <RadioGroupItem
-                    value="delivery"
-                    id="delivery"
-                    className=" hover:cursor-pointer"
-                  />
-                  <Label htmlFor="delivery" className="hover:cursor-pointer">
-                    Delivery
-                  </Label>
-                </div>
-                <div
-                  className="flex items-center space-x-2 w-full min-h-fit p-5 rounded-xl border-1 border-raisin-black hover:bg-raisin-black-muted/10 hover:text-golden-brown hover:cursor-pointer"
-                  onClick={() => handleShippingMethodChange("pickup")}
-                >
-                  <RadioGroupItem
-                    value="pickup"
-                    id="pickup"
-                    className=" hover:cursor-pointer"
-                  />
-                  <Label htmlFor="pickup" className="hover:cursor-pointer">
-                    Pick up
-                  </Label>
-                </div>
-              </RadioGroup>
-            </div>
-          </form>
+                  <div
+                    className={`flex items-center space-x-2 w-full min-h-fit p-5 rounded-xl border-1 border-raisin-black hover:bg-raisin-black-muted/10 hover:text-golden-brown hover:cursor-pointer ${
+                      shippingMethod === "delivery" ? "bg-golden-brown" : null
+                    }`}
+                    onClick={() => handleShippingMethodChange("delivery")}
+                  >
+                    <RadioGroupItem
+                      value="delivery"
+                      id="delivery"
+                      className=" hover:cursor-pointer"
+                    />
+                    <Label htmlFor="delivery" className="hover:cursor-pointer">
+                      Delivery
+                    </Label>
+                  </div>
+                  <div
+                    className="flex items-center space-x-2 w-full min-h-fit p-5 rounded-xl border-1 border-raisin-black hover:bg-raisin-black-muted/10 hover:text-golden-brown hover:cursor-pointer"
+                    onClick={() => handleShippingMethodChange("pickup")}
+                  >
+                    <RadioGroupItem
+                      value="pickup"
+                      id="pickup"
+                      className=" hover:cursor-pointer"
+                    />
+                    <Label htmlFor="pickup" className="hover:cursor-pointer">
+                      Pick up
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+            </form>
+          </div>
         </div>
         {/** Checkout Page Order Summary */}
-        <div className="bg-off-white2 min-h-screen px-10 xl:px-30 py-5 flex flex-col gap-5">
+        <div className="bg-milky-white/50 min-h-screen px-10 xl:px-30 py-5 flex flex-col gap-5">
           <span className="text-2xl font-semibold">Cart Summary</span>
           {/** Products */}
           <div className="flex flex-col gap-1">
@@ -150,18 +175,12 @@ function CheckoutPage() {
             </span>
           </div>
           {/** Calculations */}
-          <div className="flex flex-col gap-2">
-            {/** Subtotal */}
-            <div className="flex justify-between">
-              <span className="text-raisin-black-muted">Subtotal</span>
-              <span>{formattedCurrency(100)}</span>
-            </div>
-            <Separator />
-            <div className="flex justify-between">
-              <span className="text-raisin-black-muted">Delivery Estimate</span>
-              <span>{formattedCurrency(45)}</span>
-            </div>
-          </div>
+          <PriceSummary
+            buttonLabel="Place Order"
+            calculatedOrderTotal={calculatedOrderTotal}
+            calculatedSubtotal={calculatedSubtotal}
+            onButtonClick={handlePlaceOrder}
+          />
         </div>
       </section>
     </main>
@@ -169,6 +188,26 @@ function CheckoutPage() {
 }
 
 export default CheckoutPage;
+
+function CheckoutBreadcrumb() {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList className="text-lg text-raisin-black-muted">
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/">Home</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/cart">Cart</BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink href="/checkout">Checkout</BreadcrumbLink>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+}
 
 type CheckoutProductSummaryCardProps = {
   cartProduct: CartProduct;
