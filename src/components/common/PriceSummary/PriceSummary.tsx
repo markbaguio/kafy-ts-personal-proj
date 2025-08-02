@@ -1,5 +1,4 @@
 import { formattedCurrency } from "@/lib/utils";
-import { Separator } from "@radix-ui/react-separator";
 import CustomHoverCardInfoIcon from "../CustomHoverCardInfoIcon";
 import {
   FREE_SHIPPING_THRESHOLD,
@@ -7,6 +6,7 @@ import {
   OrderSummaryTextValues,
 } from "@/constants";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 
 type PriceSummaryProps = {
   calculatedSubtotal: number;
