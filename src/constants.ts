@@ -1,4 +1,3 @@
-import { S } from "vitest/dist/chunks/config.d.UqE-KR0o.js";
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { MenuCategoryType } from "./hooks/useMenuPageSearchParams";
 import { Product } from "./models/types";
