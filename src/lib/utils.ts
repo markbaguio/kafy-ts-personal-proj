@@ -1,4 +1,4 @@
-import { ApiErrorName } from "@/constants";
+import { ApiErrorName, FREE_SHIPPING_THRESHOLD } from "@/constants";
 import {
   ApiErrorResponse,
   AuthApiErrorDetails,
@@ -6,6 +6,7 @@ import {
   UnexpectedErrorDetails,
   ZodErrorDetails,
 } from "@/models/ApiResponse";
+import { CartProduct } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
@@ -109,4 +110,25 @@ export function formattedCurrency(
     style: "currency",
     currency,
   }).format(amount);
+}
+
+export function calculateSubtotal(cartProducts: CartProduct[]): number {
+  return cartProducts.reduce(
+    (total, product) => total + product.unit_price * product.quantity,
+    0
+  );
+}
+
+export function calculateOrderTotal({
+  subtotal,
+  tax,
+  deliveryEstimate,
+}: {
+  subtotal: number;
+  tax: number;
+  deliveryEstimate: number;
+}): number {
+  if (subtotal > FREE_SHIPPING_THRESHOLD) return subtotal + tax;
+
+  return subtotal + (tax + deliveryEstimate);
 }

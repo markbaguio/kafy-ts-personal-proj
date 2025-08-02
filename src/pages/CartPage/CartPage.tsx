@@ -6,7 +6,12 @@ import {
   MockOrderSummaryValues,
   OrderSummaryTextValues,
 } from "@/constants";
-import { capitalizeFirstLetter, formattedCurrency } from "@/lib/utils";
+import {
+  calculateOrderTotal,
+  calculateSubtotal,
+  capitalizeFirstLetter,
+  formattedCurrency,
+} from "@/lib/utils";
 import { CartProduct } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { useCartStore } from "@/store/useCartStore";
@@ -73,29 +78,8 @@ function CartPage() {
     deleteCartProduct(productID);
   }
 
-  function calculateSubtotal(cartProducts: CartProduct[]): number {
-    return cartProducts.reduce(
-      (total, product) => total + product.unit_price * product.quantity,
-      0
-    );
-  }
-
   function handleCheckout(): void {
     navigate("/checkout");
-  }
-
-  function calculateOrderTotal({
-    subtotal,
-    tax,
-    deliveryEstimate,
-  }: {
-    subtotal: number;
-    tax: number;
-    deliveryEstimate: number;
-  }): number {
-    if (subtotal > FREE_SHIPPING_THRESHOLD) return subtotal + tax;
-
-    return subtotal + (tax + deliveryEstimate);
   }
 
   const [highlightedText, text] = formatCartHeaderSummary(cartProducts.length);
