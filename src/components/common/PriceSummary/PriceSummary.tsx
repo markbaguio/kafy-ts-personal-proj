@@ -24,7 +24,7 @@ function PriceSummary({
   onButtonClick,
 }: PriceSummaryProps) {
   return (
-    <div className=" bg-success-green/20 flex flex-col gap-5">
+    <div className="flex flex-col gap-5">
       {showHeader && <h2 className="text-2xl font-semibold">Order Summary</h2>}
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between">
