@@ -17,10 +17,12 @@ import {
 } from "@/components/ui/breadcrumb";
 import { useState } from "react";
 import { CartProduct } from "@/models/types";
-import { TicketPercent } from "lucide-react";
+import { ArrowLeft, TicketPercent } from "lucide-react";
 import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
 import { ActiveSaleText, MockOrderSummaryValues } from "@/constants";
 import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
+import { Button } from "@/components/ui/button";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState<string>("delivery");
@@ -50,6 +52,8 @@ function CheckoutPage() {
     },
   ];
 
+  const isMobile = useIsMobile();
+
   const calculatedSubtotal = calculateSubtotal(cartProducts);
   const calculatedOrderTotal = calculateOrderTotal({
     subtotal: calculatedSubtotal,
@@ -63,10 +67,21 @@ function CheckoutPage() {
         className="bg-milky-white min-h-fit w-full flex flex-col gap-5 px-10 py-5 xl:px-30 lg:py-10
       "
       >
-        <CheckoutBreadcrumb />
+        {isMobile ? (
+          <Button
+            size="icon"
+            variant="ghost"
+            className="hover:no-underline
+                "
+          >
+            <ArrowLeft /> Back
+          </Button>
+        ) : (
+          <CheckoutBreadcrumb />
+        )}
         <h1 className="text-blackhole text-4xl font-bold">Checkout</h1>
       </section>
-      <section className="divide-x-1 h-screen grid grid-cols-1 xl:grid-cols-2 w-full">
+      <section className="divide-x-1 min-h-screen grid grid-cols-1 xl:grid-cols-2 w-full">
         {/** Shipping Information*/}
         <div className="bg-milky-white px-10 xl:px-30 py-5">
           <div className=" min-h-[450px] h-fit">
@@ -150,7 +165,7 @@ function CheckoutPage() {
           </div>
         </div>
         {/** Checkout Page Order Summary */}
-        <div className="bg-milky-white/50 min-h-screen px-10 xl:px-30 py-5 flex flex-col gap-5">
+        <div className="bg-milky-white/50 h-full px-10 xl:px-30 py-5 flex flex-col gap-5">
           <span className="text-2xl font-semibold">Cart Summary</span>
           {/** Products */}
           <div className="flex flex-col gap-1">
@@ -165,14 +180,14 @@ function CheckoutPage() {
           <div className="flex items-center justify-between bg-milky-white text-sm font-semibold shadow-lg rounded-xl p-5">
             <div className="flex gap-2 items-center w-full">
               <span className="bg-success-green-accent/20 rounded-full p-2">
-                <TicketPercent className="text-success-green" />
+                <TicketPercent className="text-success-green size-5" />
               </span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1 text-xs">
                 Active Sale{" "}
                 <CustomHoverCardInfoIcon message={ActiveSaleText.info} />
               </span>
             </div>
-            <span className="text-xs text-end text-raisin-black-muted w-full">
+            <span className="text-[10px] text-end text-raisin-black-muted w-full">
               {ActiveSaleText.activeSale}
             </span>
           </div>
