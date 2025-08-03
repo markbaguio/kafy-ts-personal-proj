@@ -73,18 +73,20 @@ function CheckoutPage() {
             <form className="flex flex-col gap-5">
               <h2 className="text-2xl font-semibold">Shipping Information</h2>
               {/** First name */}
-              <div className="space-y-1">
-                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                  First name
-                </Label>
-                <Input placeholder="First name" />
-              </div>
-              {/** Last name */}
-              <div className="space-y-1">
-                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                  Last name
-                </Label>
-                <Input placeholder="Last name" />
+              <div className="flex flex-col lg:flex-row justify-evenly gap-2">
+                <div className="space-y-1 w-full">
+                  <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                    First name
+                  </Label>
+                  <Input placeholder="First name" />
+                </div>
+                {/** Last name */}
+                <div className="space-y-1 w-full">
+                  <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+                    Last name
+                  </Label>
+                  <Input placeholder="Last name" />
+                </div>
               </div>
               {/** Email Address */}
               <div className="space-y-1">
