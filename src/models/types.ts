@@ -7,6 +7,7 @@ import {
 import { CreateOrderItemSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { CreateOrderSchema } from "@/schemas/OrderSchema/CreateOrderSchema/CreateOrderSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
+import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
 import { z } from "zod";
 
 export type Profile = z.infer<typeof ProfileSchema>;
@@ -38,3 +39,5 @@ export type PlceOrderPayload = {
   order: CreateOrderType;
   order_item: CreateOrderItemType[];
 };
+
+export type ShippingInformationType = z.infer<typeof ShippingInformationSchema>;
