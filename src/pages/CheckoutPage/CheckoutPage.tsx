@@ -15,42 +15,45 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { useState } from "react";
-import { CartProduct } from "@/models/types";
-import { ArrowLeft, TicketPercent } from "lucide-react";
+import { CartProduct, ShippingInformationType } from "@/models/types";
+import { ArrowLeft, Box, TicketPercent, Truck } from "lucide-react";
 import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
 import { ActiveSaleText, MockOrderSummaryValues } from "@/constants";
 import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Controller,
+  useForm,
+  useFormContext,
+  FormProvider,
+} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
+
+type ShippingFormFieldProps = {
+  label: string;
+  name: keyof ShippingInformationType;
+  placeholder: string;
+};
 
 function CheckoutPage() {
-  const [shippingMethod, setShippingMethod] = useState<string>("delivery");
   const cartProducts = useCartStore((state) => state.cartProducts);
+  const methods = useForm<ShippingInformationType>({
+    resolver: zodResolver(ShippingInformationSchema),
+    mode: "onChange",
+    defaultValues: {
+      shippingMethod: "delivery",
+    },
+  });
 
-  function handleShippingMethodChange(newShippingMethod: string) {
-    setShippingMethod(newShippingMethod);
+  async function onSubmit(data: ShippingInformationType) {
+    console.log(data);
   }
 
   function handlePlaceOrder() {
     console.log(calculatedOrderTotal);
   }
-
-  const options = [
-    {
-      value: "delivery",
-      id: "delivery",
-      htmlFor: "delivery",
-      labelName: "Delivery",
-    },
-
-    {
-      value: "pickup",
-      id: "pickup",
-      htmlFor: "pickup",
-      labelName: "Pick up",
-    },
-  ];
 
   const isMobile = useIsMobile();
 
@@ -60,6 +63,23 @@ function CheckoutPage() {
     tax: MockOrderSummaryValues.tax,
     deliveryEstimate: MockOrderSummaryValues.delivery,
   });
+
+  const shipping = [
+    {
+      name: "Delivery",
+      value: "delivery",
+      description: "test",
+      icon: <Truck />,
+    },
+    {
+      name: "Pickup",
+      value: "pickup",
+      description: "test",
+      icon: <Box />,
+    },
+  ];
+
+  console.log(methods.watch("shippingMethod"));
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-off-white-2/50 divide-y-1">
@@ -85,83 +105,82 @@ function CheckoutPage() {
         {/** Shipping Information*/}
         <div className="bg-milky-white px-10 xl:px-30 py-5">
           <div className=" min-h-[450px] h-fit">
-            <form className="flex flex-col gap-5">
-              <h2 className="text-2xl font-semibold">Shipping Information</h2>
-              {/** First name */}
-              <div className="flex flex-col lg:flex-row justify-evenly gap-2">
-                <div className="space-y-1 w-full">
-                  <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                    First name
-                  </Label>
-                  <Input placeholder="First name" />
+            <FormProvider {...methods}>
+              <form
+                className="flex flex-col gap-5"
+                onSubmit={methods.handleSubmit(onSubmit)}
+              >
+                {/** Form inputs */}
+                <h2 className="text-2xl font-semibold">Shipping Information</h2>
+                <div className="flex flex-col lg:flex-row justify-evenly gap-2">
+                  <ShippingFormField
+                    label="First name"
+                    name="firstName"
+                    placeholder="First name"
+                  />
+                  <ShippingFormField
+                    label="Last name"
+                    name="lastName"
+                    placeholder="Last name"
+                  />
                 </div>
-                {/** Last name */}
-                <div className="space-y-1 w-full">
-                  <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                    Last name
-                  </Label>
-                  <Input placeholder="Last name" />
+
+                <ShippingFormField
+                  label="Email"
+                  name="email"
+                  placeholder="Email"
+                />
+                <ShippingFormField
+                  label="Phone number"
+                  name="phoneNumber"
+                  placeholder="Phone number"
+                />
+                <ShippingFormField
+                  label="address"
+                  name="address"
+                  placeholder="Address"
+                />
+
+                {/** Shipping method */}
+                <div className="flex flex-col gap-5">
+                  <span className="text-2xl font-semibold">
+                    Shipping Method
+                  </span>
+                  <Controller
+                    control={methods.control}
+                    name="shippingMethod"
+                    render={({ field }) => (
+                      <RadioGroup className="flex flex-row gap-2">
+                        {shipping.map((method) => (
+                          <div
+                            key={method.name}
+                            onClick={() => field.onChange(method.value)}
+                            className={`cursor-pointer p-5 rounded-xl border-2 w-full transition-all duration-500 ${
+                              field.value === method.value
+                                ? " bg-raisin-black text-milky-white"
+                                : "border-gray-300"
+                            } hover:bg-raisin-black/70 hover:text-milky-white`}
+                          >
+                            <RadioGroupItem
+                              value={method.value}
+                              id={method.name}
+                              className="hidden"
+                            />
+                            <Label
+                              htmlFor={method.name}
+                              className="cursor-pointer capitalize"
+                            >
+                              {method.icon}
+                              <span>{method.name}</span>
+                            </Label>
+                          </div>
+                        ))}
+                      </RadioGroup>
+                    )}
+                  />
                 </div>
-              </div>
-              {/** Email Address */}
-              <div className="space-y-1">
-                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                  Email Address
-                </Label>
-                <Input placeholder="Email Address" />
-              </div>
-              {/** Phone number*/}
-              <div className="space-y-1">
-                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                  Phone number
-                </Label>
-                <Input placeholder="Phone number" />
-              </div>
-              {/** Address */}
-              <div className="space-y-1">
-                <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
-                  Address
-                </Label>
-                <Input placeholder="Address" />
-              </div>
-              {/** Shipping method */}
-              <div className="flex flex-col gap-5">
-                <span className="text-2xl font-semibold">Shipping Method</span>
-                <RadioGroup
-                  defaultValue={shippingMethod}
-                  className="flex justify-start"
-                >
-                  <div
-                    className={`flex items-center space-x-2 w-full min-h-fit p-5 rounded-xl border-1 border-raisin-black hover:bg-raisin-black-muted/10 hover:text-golden-brown hover:cursor-pointer ${
-                      shippingMethod === "delivery" ? "bg-golden-brown" : null
-                    }`}
-                    onClick={() => handleShippingMethodChange("delivery")}
-                  >
-                    <RadioGroupItem
-                      value="delivery"
-                      id="delivery"
-                      className=" hover:cursor-pointer"
-                    />
-                    <Label htmlFor="delivery" className="hover:cursor-pointer">
-                      Delivery
-                    </Label>
-                  </div>
-                  <div
-                    className="flex items-center space-x-2 w-full min-h-fit p-5 rounded-xl border-1 border-raisin-black hover:bg-raisin-black-muted/10 hover:text-golden-brown hover:cursor-pointer"
-                    onClick={() => handleShippingMethodChange("pickup")}
-                  >
-                    <RadioGroupItem
-                      value="pickup"
-                      id="pickup"
-                      className=" hover:cursor-pointer"
-                    />
-                    <Label htmlFor="pickup" className="hover:cursor-pointer">
-                      Pick up
-                    </Label>
-                  </div>
-                </RadioGroup>
-              </div>
-            </form>
+              </form>
+            </FormProvider>
           </div>
         </div>
         {/** Checkout Page Order Summary */}
@@ -205,6 +224,41 @@ function CheckoutPage() {
 }
 
 export default CheckoutPage;
+
+function ShippingFormField({
+  label,
+  name,
+  placeholder,
+}: ShippingFormFieldProps) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  const error = errors[name];
+
+  return (
+    <div className="space-y-1 w-full">
+      <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
+        {label}
+      </Label>
+      <Input
+        placeholder={placeholder}
+        {...register(name)}
+        className={`${
+          error
+            ? "focus-visible:border-destructive focus-visible:ring-destructive placeholder:text-destructive border-destructive"
+            : "focus-visible:border-success-green focus-visible:ring-success-green"
+        }`}
+      />
+      {typeof error?.message === "string" && (
+        <span className="text-destructive text-[12px] text-start">
+          {error.message}
+        </span>
+      )}
+    </div>
+  );
+}
 
 function CheckoutBreadcrumb() {
   return (
