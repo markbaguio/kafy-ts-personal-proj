@@ -124,7 +124,7 @@ function CartPage() {
       </div>
       {/** Header */}
       <div className="text-start w-full">
-        <h1 className="text-4xl">Your Cart</h1>
+        <h1 className="text-4xl font-bold">Your Cart</h1>
         <span className="text-xl">
           <span className="font-bold">{highlightedText}</span>
           {text}
