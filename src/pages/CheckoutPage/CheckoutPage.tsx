@@ -110,14 +110,14 @@ function CheckoutPage() {
                 </Label>
                 <Input placeholder="Email Address" />
               </div>
-              {/** Email Address */}
+              {/** Phone number*/}
               <div className="space-y-1">
                 <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
                   Phone number
                 </Label>
                 <Input placeholder="Phone number" />
               </div>
-              {/** Email Address */}
+              {/** Address */}
               <div className="space-y-1">
                 <Label className="relative w-fit font-semibold before:content-['*'] before:absolute before:-top-1 before:-right-2 before:text-destructive">
                   Address
