@@ -27,6 +27,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 type CartProductCardProps = {
   cartProduct: CartProduct;
@@ -55,6 +56,8 @@ function CartPage() {
   const deleteCartProduct = useCartStore(
     (state) => state.removeProductFromCart
   );
+
+  const isMobile = useIsMobile();
 
   function formatCartHeaderSummary(length: number): [string, string] {
     const itemText = `${length} item${length <= 1 ? "" : "s"}`;
@@ -99,7 +102,16 @@ function CartPage() {
   return (
     <main className="w-full bg-off-white-2/50 p-5 lg:px-30 lg:py-10 flex flex-col gap-5">
       {/** Breadcrumb */}
-      <div className="w-full hidden lg:flex">
+      {isMobile ? (
+        <Button
+          size="icon"
+          variant="ghost"
+          className="hover:no-underline
+        "
+        >
+          <ArrowLeft /> Back
+        </Button>
+      ) : (
         <Breadcrumb>
           <BreadcrumbList className="text-lg text-raisin-black-muted">
             <BreadcrumbItem>
@@ -111,17 +123,7 @@ function CartPage() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-      </div>
-      <div className="flex lg:hidden">
-        <Button
-          size="icon"
-          variant="ghost"
-          className="hover:no-underline
-        "
-        >
-          <ArrowLeft /> Back
-        </Button>
-      </div>
+      )}
       {/** Header */}
       <div className="text-start w-full">
         <h1 className="text-4xl font-bold">Your Cart</h1>
