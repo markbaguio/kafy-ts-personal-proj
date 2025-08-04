@@ -164,7 +164,7 @@ function CheckoutPage() {
                             />
                             <Label
                               htmlFor={method.value}
-                              className="flex items-center gap-2 justify-start border rounded-xl px-6 py-4 cursor-pointer w-full peer-data-[state=checked]:bg-raisin-black peer-data-[state=checked]:text-milky-white  transition-all duration-500 hover:bg-raisin-black/50 hover:text-milky-white
+                              className="flex items-center gap-2 justify-start border rounded-xl px-6 py-4 cursor-pointer w-full peer-data-[state=checked]:bg-raisin-black peer-data-[state=checked]:text-milky-white  transition-all duration-500 hover:bg-raisin-black/80 hover:text-milky-white
                               peer-focus-visible:ring-2 peer-focus-visible:ring-raisin-black-muted"
                             >
                               <div className="flex items-center gap-3">
@@ -215,7 +215,15 @@ function CheckoutPage() {
             calculatedOrderTotal={calculatedOrderTotal}
             calculatedSubtotal={calculatedSubtotal}
           />
-          <Button variant="main" type="submit" form={shippingInformationFormID}>
+          <Button
+            disabled={methods.formState.isSubmitting}
+            variant="main"
+            type="submit"
+            form={shippingInformationFormID}
+            className={`${
+              methods.formState.isSubmitting ?? "bg-success-green"
+            }`}
+          >
             Place Order
           </Button>
         </div>
