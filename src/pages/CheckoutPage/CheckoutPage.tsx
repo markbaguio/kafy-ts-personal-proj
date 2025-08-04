@@ -31,8 +31,6 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
 
-//TODO: Remove the action button from the PriceSummary since PriceSummary is only a Presentational Component. Place the Action button on the parent.
-
 type ShippingFormFieldProps = {
   label: string;
   name: keyof ShippingInformationType;
