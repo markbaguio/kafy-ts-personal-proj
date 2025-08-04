@@ -1,4 +1,4 @@
-import { ProductSchema } from "@/schemas/Menu/ProductSchema";
+import { ProductSchema, ProductSizeSchema } from "@/schemas/Menu/ProductSchema";
 import z from "zod";
 
 // create table public.order_items (
@@ -19,6 +19,8 @@ export const CreateOrderItemSchema = z.object({
   product_id: z.number().nonnegative(),
   product_name: z.string(),
   price_at_purchase: z.number().nonnegative(),
-  quanity: z.number(),
-  product_size: ProductSchema,
+  quantity: z.number(),
+  product_size: ProductSizeSchema,
 });
+
+export const CreateOrderItemsSchema = z.array(CreateOrderItemSchema);
