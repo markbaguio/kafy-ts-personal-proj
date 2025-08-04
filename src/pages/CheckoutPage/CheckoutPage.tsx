@@ -16,7 +16,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { CartProduct, ShippingInformationType } from "@/models/types";
-import { ArrowLeft, Box, TicketPercent, Truck } from "lucide-react";
+import { ArrowLeft, Box, CheckIcon, TicketPercent, Truck } from "lucide-react";
 import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
 import { ActiveSaleText, MockOrderSummaryValues } from "@/constants";
 import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
@@ -147,29 +147,32 @@ function CheckoutPage() {
                     control={methods.control}
                     name="shippingMethod"
                     render={({ field }) => (
-                      <RadioGroup className="flex flex-row gap-2">
+                      <RadioGroup
+                        className="flex flex-row gap-2"
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
                         {shipping.map((method) => (
                           <div
                             key={method.name}
-                            onClick={() => field.onChange(method.value)}
-                            className={`cursor-pointer p-5 rounded-xl border-2 w-full transition-all duration-500 ${
-                              field.value === method.value
-                                ? " bg-raisin-black text-milky-white"
-                                : "border-gray-300"
-                            } hover:bg-raisin-black/70 hover:text-milky-white`}
+                            className="relative flex items-center gap-3 w-full "
                           >
                             <RadioGroupItem
+                              className="peer sr-only"
                               value={method.value}
-                              id={method.name}
-                              className="hidden"
+                              id={method.value}
                             />
                             <Label
-                              htmlFor={method.name}
-                              className="cursor-pointer capitalize"
+                              htmlFor={method.value}
+                              className="flex items-center gap-2 justify-start border rounded-xl px-6 py-4 cursor-pointer w-full peer-data-[state=checked]:bg-raisin-black peer-data-[state=checked]:text-milky-white  transition-all duration-500 hover:bg-raisin-black/50 hover:text-milky-white
+                              peer-focus-visible:ring-2 peer-focus-visible:ring-raisin-black-muted"
                             >
-                              {method.icon}
-                              <span>{method.name}</span>
+                              <div className="flex items-center gap-3">
+                                {method.icon}
+                                <span>{method.name}</span>
+                              </div>
                             </Label>
+                            <CheckIcon className="absolute bg-milky-white rounded-full  right-3 text-raisin-black p-1 opacity-0 peer-data-[state=checked]:opacity-100" />
                           </div>
                         ))}
                       </RadioGroup>
