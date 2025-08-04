@@ -36,8 +36,8 @@ export type CreateOrderType = z.infer<typeof CreateOrderSchema>;
 export type CreateOrderItemType = z.infer<typeof CreateOrderItemSchema>;
 
 export type PlaceOrderPayload = {
-  order: CreateOrderType;
-  order_item: CreateOrderItemType[];
+  // order: CreateOrderType;
+  order_items: CreateOrderItemType[];
 };
 
 export type ShippingInformationType = z.infer<typeof ShippingInformationSchema>;
