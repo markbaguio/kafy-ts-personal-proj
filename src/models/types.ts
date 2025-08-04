@@ -35,7 +35,7 @@ export type CreateOrderType = z.infer<typeof CreateOrderSchema>;
 
 export type CreateOrderItemType = z.infer<typeof CreateOrderItemSchema>;
 
-export type PlceOrderPayload = {
+export type PlaceOrderPayload = {
   order: CreateOrderType;
   order_item: CreateOrderItemType[];
 };
