@@ -31,6 +31,8 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
 
+//TODO: Remove the action button from the PriceSummary since PriceSummary is only a Presentational Component. Place the Action button on the parent.
+
 type ShippingFormFieldProps = {
   label: string;
   name: keyof ShippingInformationType;
@@ -49,10 +51,6 @@ function CheckoutPage() {
 
   async function onSubmit(data: ShippingInformationType) {
     console.log(data);
-  }
-
-  function handlePlaceOrder() {
-    console.log(calculatedOrderTotal);
   }
 
   const isMobile = useIsMobile();
@@ -79,7 +77,7 @@ function CheckoutPage() {
     },
   ];
 
-  console.log(methods.watch("shippingMethod"));
+  const shippingInformationFormID = "shippingInformationForm";
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-off-white-2/50 divide-y-1">
@@ -109,6 +107,7 @@ function CheckoutPage() {
               <form
                 className="flex flex-col gap-5"
                 onSubmit={methods.handleSubmit(onSubmit)}
+                id={shippingInformationFormID}
               >
                 {/** Form inputs */}
                 <h2 className="text-2xl font-semibold">Shipping Information</h2>
@@ -136,7 +135,7 @@ function CheckoutPage() {
                   placeholder="Phone number"
                 />
                 <ShippingFormField
-                  label="address"
+                  label="Address"
                   name="address"
                   placeholder="Address"
                 />
@@ -212,11 +211,12 @@ function CheckoutPage() {
           </div>
           {/** Calculations */}
           <PriceSummary
-            buttonLabel="Place Order"
             calculatedOrderTotal={calculatedOrderTotal}
             calculatedSubtotal={calculatedSubtotal}
-            onButtonClick={handlePlaceOrder}
           />
+          <Button variant="main" type="submit" form={shippingInformationFormID}>
+            Place Order
+          </Button>
         </div>
       </section>
     </main>
