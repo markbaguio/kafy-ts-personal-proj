@@ -5,7 +5,6 @@ import {
   MockOrderSummaryValues,
   OrderSummaryTextValues,
 } from "@/constants";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 type PriceSummaryProps = {
@@ -13,8 +12,6 @@ type PriceSummaryProps = {
   calculatedOrderTotal: number;
   headerText?: string;
   showHeader?: boolean;
-  buttonLabel: string;
-  onButtonClick: () => void;
 };
 
 function PriceSummary({
@@ -22,8 +19,6 @@ function PriceSummary({
   calculatedSubtotal,
   headerText,
   showHeader = false,
-  buttonLabel,
-  onButtonClick,
 }: PriceSummaryProps) {
   return (
     <div className="flex flex-col gap-5">
@@ -69,9 +64,6 @@ function PriceSummary({
               : formattedCurrency(0)}
           </span>
         </div>
-        <Button onClick={onButtonClick} variant="main">
-          {buttonLabel}
-        </Button>
       </div>
     </div>
   );
