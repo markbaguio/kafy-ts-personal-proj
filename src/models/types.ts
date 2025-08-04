@@ -4,7 +4,10 @@ import {
   PaginatedProductsSchema,
   ProductSchema,
 } from "@/schemas/Menu/ProductSchema";
-import { CreateOrderItemSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
+import {
+  CreateOrderItemSchema,
+  CreateOrderItemsSchema,
+} from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { CreateOrderSchema } from "@/schemas/OrderSchema/CreateOrderSchema/CreateOrderSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
 import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
@@ -35,9 +38,12 @@ export type CreateOrderType = z.infer<typeof CreateOrderSchema>;
 
 export type CreateOrderItemType = z.infer<typeof CreateOrderItemSchema>;
 
+export type CreateOrderItemsType = z.infer<typeof CreateOrderItemsSchema>;
+
 export type PlaceOrderPayload = {
   // order: CreateOrderType;
-  order_items: CreateOrderItemType[];
+  // order_items: CreateOrderItemType[];
+  order_items: CreateOrderItemsType;
 };
 
 export type ShippingInformationType = z.infer<typeof ShippingInformationSchema>;
