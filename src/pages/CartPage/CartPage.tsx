@@ -43,7 +43,7 @@ type CartProductCardProps = {
 type CartPageOrderSummaryProps = {
   calculatedSubtotal: number;
   calculatedOrderTotal: number;
-  onCheckoutClick: () => void;
+  // onCheckoutClick: () => void;
 };
 
 function CartPage() {
@@ -169,9 +169,11 @@ function CartPage() {
           <CartPageOrderSummary
             calculatedOrderTotal={calculatedOrderTotal}
             calculatedSubtotal={calculatedSubtotal}
-            onCheckoutClick={handleCheckout}
           />
-          {/** Free shipping notification strip */}
+          <Button variant="main" onClick={handleCheckout}>
+            Checkout
+          </Button>
+          {/** Free shippig notification strip */}
           {showFreeShippingNotificationStrip && (
             <div className="animate-vibrate bg-golden-brown/80 text-milky-white h-fit w-full p-2 rounded-lg flex flex-col justify-center items-center text-center text-sm lg:text-lg">
               Spend at least {formattedCurrency(FREE_SHIPPING_THRESHOLD)} to
@@ -297,8 +299,8 @@ function CartProductCard({
 function CartPageOrderSummary({
   calculatedOrderTotal,
   calculatedSubtotal,
-  onCheckoutClick,
-}: CartPageOrderSummaryProps) {
+}: // onCheckoutClick,
+CartPageOrderSummaryProps) {
   return (
     <div className="flex flex-col gap-5 bg-milky-white p-5 rounded-xl h-fit min-h-1/2 w-full shadow-xl">
       {/** Coupon */}
@@ -323,8 +325,8 @@ function CartPageOrderSummary({
       {/** Order Summary */}
       <PriceSummary
         headerText="Order Summary"
-        buttonLabel="Checkout"
-        onButtonClick={onCheckoutClick}
+        // buttonLabel="Checkout"
+        // onButtonClick={onCheckoutClick}
         calculatedSubtotal={calculatedSubtotal}
         calculatedOrderTotal={calculatedOrderTotal}
         showHeader
