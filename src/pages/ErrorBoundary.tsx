@@ -10,7 +10,6 @@ import { PageNotFound } from "./PageNotFound";
 export default function ErrorBoundary() {
   const error = useRouteError();
   if (error instanceof Error) {
-    console.log("NotFoundPage error:", error.name);
     if (error.name === AxiosErrorCode.NetworkError) {
       return <NoInternetPage />;
     } else {
