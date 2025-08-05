@@ -7,6 +7,7 @@ export const ShippingInformationSchema = z.object({
   phoneNumber: z
     .string()
     .min(1, "Phone number is required")
+    .max(11, "Phone number must not exceed 11 digits")
     .regex(/^\d+$/, "Phone number must be numeric"),
   address: z.string().min(1, "Address is required"),
   shippingMethod: z.enum(["delivery", "pickup"], {
