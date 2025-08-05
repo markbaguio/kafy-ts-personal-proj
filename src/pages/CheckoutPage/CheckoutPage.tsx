@@ -56,6 +56,32 @@ function CheckoutPage() {
     },
   });
 
+  const isMobile = useIsMobile();
+
+  const calculatedSubtotal = calculateSubtotal(cartProducts);
+  const calculatedOrderTotal = calculateOrderTotal({
+    subtotal: calculatedSubtotal,
+    tax: MockOrderSummaryValues.tax,
+    deliveryEstimate: MockOrderSummaryValues.delivery,
+  });
+
+  const shipping = [
+    {
+      name: "Delivery",
+      value: "delivery",
+      description: "test",
+      icon: <Truck />,
+    },
+    {
+      name: "Pickup",
+      value: "pickup",
+      description: "test",
+      icon: <Box />,
+    },
+  ];
+
+  const shippingInformationFormID = "shippingInformationForm";
+
   function onSubmit(data: ShippingInformationType) {
     //? shipping information data is a simulated additional information and is not being sent to the backend.
 
@@ -98,32 +124,6 @@ function CheckoutPage() {
 
     console.log("parsed payload: ", parsedPlaceOrderPayload.data);
   }
-
-  const isMobile = useIsMobile();
-
-  const calculatedSubtotal = calculateSubtotal(cartProducts);
-  const calculatedOrderTotal = calculateOrderTotal({
-    subtotal: calculatedSubtotal,
-    tax: MockOrderSummaryValues.tax,
-    deliveryEstimate: MockOrderSummaryValues.delivery,
-  });
-
-  const shipping = [
-    {
-      name: "Delivery",
-      value: "delivery",
-      description: "test",
-      icon: <Truck />,
-    },
-    {
-      name: "Pickup",
-      value: "pickup",
-      description: "test",
-      icon: <Box />,
-    },
-  ];
-
-  const shippingInformationFormID = "shippingInformationForm";
 
   return (
     <main className="flex flex-col min-h-screen w-full bg-off-white-2/50 divide-y-1">
@@ -264,7 +264,9 @@ function CheckoutPage() {
             calculatedSubtotal={calculatedSubtotal}
           />
           <Button
-            disabled={methods.formState.isSubmitting}
+            disabled={
+              methods.formState.isSubmitting || cartProducts.length <= 0
+            }
             variant="main"
             type="submit"
             form={shippingInformationFormID}
