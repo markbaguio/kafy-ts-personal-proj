@@ -33,7 +33,6 @@ export function useAuth() {
   });
 
   useEffect(() => {
-    console.log("useEffect dependencies changed. Updating authStore . . .");
     useAuthStore.setState({ isLoading: true }); // <- Start loading
 
     if (query.data?.data) {
@@ -46,5 +45,9 @@ export function useAuth() {
     if (query.isFetched) {
       useAuthStore.setState({ isLoading: false }); // <- End loading
     }
+    console.log(
+      "useEffect dependencies changed. Updating authStore . . .",
+      query.data
+    );
   }, [query.data, query.isFetched]);
 }
