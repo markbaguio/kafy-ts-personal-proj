@@ -1,4 +1,4 @@
-import { ProductSchema, ProductSizeSchema } from "@/schemas/Menu/ProductSchema";
+import { ProductSizeSchema } from "@/schemas/Menu/ProductSchema";
 import z from "zod";
 
 // create table public.order_items (
