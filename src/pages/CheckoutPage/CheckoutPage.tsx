@@ -15,7 +15,12 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { CartProduct, ShippingInformationType } from "@/models/types";
+import {
+  CartProduct,
+  CreateOrderItemsType,
+  PlaceOrderPayloadType,
+  ShippingInformationType,
+} from "@/models/types";
 import { ArrowLeft, Box, CheckIcon, TicketPercent, Truck } from "lucide-react";
 import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
 import { ActiveSaleText, MockOrderSummaryValues } from "@/constants";
@@ -30,6 +35,10 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
+import { toast } from "sonner";
+import { CreateOrderItemsSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
+import { ZodError } from "zod";
+import { PlaceOrderPayloadSchema } from "@/schemas/PlaceOrderPayloadSchema/PlaceOrderPayloadSchema";
 
 type ShippingFormFieldProps = {
   label: string;
@@ -47,8 +56,47 @@ function CheckoutPage() {
     },
   });
 
-  async function onSubmit(data: ShippingInformationType) {
+  function onSubmit(data: ShippingInformationType) {
+    //? shipping information data is a simulated additional information and is not being sent to the backend.
+
     console.log(data);
+
+    const rawOrderItems: CreateOrderItemsType = cartProducts.map((product) => ({
+      product_id: product.product_id,
+      product_name: product.product_name,
+      price_at_purchase: product.unit_price,
+      product_size: product.product_size,
+      quantity: product.quantity,
+    }));
+
+    const parsedOrderItems = CreateOrderItemsSchema.safeParse(rawOrderItems);
+
+    if (!parsedOrderItems.success) {
+      const message =
+        parsedOrderItems.error instanceof ZodError
+          ? "Invalid cart contents. Please check the contents of your cart and try again."
+          : "Something went wrong validating your cart.";
+      toast.error(message);
+      return;
+    }
+
+    const placeOrderPayload: PlaceOrderPayloadType = {
+      order_items: parsedOrderItems.data,
+    };
+
+    const parsedPlaceOrderPayload =
+      PlaceOrderPayloadSchema.safeParse(placeOrderPayload);
+
+    if (!parsedPlaceOrderPayload.success) {
+      const message =
+        parsedPlaceOrderPayload.error instanceof ZodError
+          ? "Something went wrong preparing your order. Please try again."
+          : "Encountered an unexpected error while validating order.";
+      toast.error(message);
+      return;
+    }
+
+    console.log("parsed payload: ", parsedPlaceOrderPayload.data);
   }
 
   const isMobile = useIsMobile();
