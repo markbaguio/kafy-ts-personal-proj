@@ -133,7 +133,7 @@ export function LoginForm({
               {...register("email")}
               id="email"
               // type="email"
-              className="border-raisin-black placeholder:text-raisin-black"
+              className="border-raisin-black placeholder:text-raisin-black autofill:shadow-[inset_0_0_0px_1000px_#e6d6c8]"
               placeholder="Email"
               autoComplete="username"
             />
