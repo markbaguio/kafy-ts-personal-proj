@@ -39,12 +39,29 @@ import { toast } from "sonner";
 import { CreateOrderItemsSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { ZodError } from "zod";
 import { PlaceOrderPayloadSchema } from "@/schemas/PlaceOrderPayloadSchema/PlaceOrderPayloadSchema";
+import { useMutation } from "@tanstack/react-query";
+import { placeOrder } from "@/services/placeOrderService";
 
 type ShippingFormFieldProps = {
   label: string;
   name: keyof ShippingInformationType;
   placeholder: string;
 };
+
+const shipping = [
+  {
+    name: "Delivery",
+    value: "delivery",
+    description: "test",
+    icon: <Truck />,
+  },
+  {
+    name: "Pickup",
+    value: "pickup",
+    description: "test",
+    icon: <Box />,
+  },
+];
 
 function CheckoutPage() {
   const cartProducts = useCartStore((state) => state.cartProducts);
@@ -58,6 +75,10 @@ function CheckoutPage() {
 
   const isMobile = useIsMobile();
 
+  const placeOrderMutation = useMutation({
+    mutationFn: placeOrder,
+  });
+
   const calculatedSubtotal = calculateSubtotal(cartProducts);
   const calculatedOrderTotal = calculateOrderTotal({
     subtotal: calculatedSubtotal,
@@ -65,25 +86,11 @@ function CheckoutPage() {
     deliveryEstimate: MockOrderSummaryValues.delivery,
   });
 
-  const shipping = [
-    {
-      name: "Delivery",
-      value: "delivery",
-      description: "test",
-      icon: <Truck />,
-    },
-    {
-      name: "Pickup",
-      value: "pickup",
-      description: "test",
-      icon: <Box />,
-    },
-  ];
-
   const shippingInformationFormID = "shippingInformationForm";
 
   function onSubmit(data: ShippingInformationType) {
     //? shipping information data is a simulated additional information and is not being sent to the backend.
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
 
     console.log(data);
 
@@ -123,6 +130,7 @@ function CheckoutPage() {
     }
 
     console.log("parsed payload: ", parsedPlaceOrderPayload.data);
+    placeOrderMutation.mutate(parsedPlaceOrderPayload.data);
   }
 
   return (
@@ -270,9 +278,6 @@ function CheckoutPage() {
             variant="main"
             type="submit"
             form={shippingInformationFormID}
-            className={`${
-              methods.formState.isSubmitting ?? "bg-success-green"
-            }`}
           >
             Place Order
           </Button>
