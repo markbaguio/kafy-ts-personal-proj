@@ -65,6 +65,7 @@ axiosInstance.interceptors.response.use(
         return axios(originalRequest);
       } catch (refreshError) {
         //? If the above try block fails, redirect user to the sign in page.
+        //TODO: call sign out to remove session.
         console.log("refresh error");
         console.log(refreshError);
         router.navigate("/auth/signin");
