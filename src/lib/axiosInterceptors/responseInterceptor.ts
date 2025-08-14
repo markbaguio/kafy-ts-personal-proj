@@ -64,11 +64,12 @@ axiosInstance.interceptors.response.use(
         await refreshAccessToken();
         return axios(originalRequest);
       } catch (refreshError) {
-        //? If the above try block fails, redirect user to the sign in page.
         //TODO: call sign out to remove session.
         console.log("refresh error");
         console.log(refreshError);
-        router.navigate("/auth/signin");
+        //? If the try block above fails, redirect user to the sign in page.
+        //? If the user successfully signs in they will be brought back to where they were before.
+        router.navigate(`/auth/signin?redirect=${window.location.pathname}`);
       }
     }
     return Promise.reject(error); //? reject the Promise and pass the error so that the error will be handled by the origin of the call/function call.
