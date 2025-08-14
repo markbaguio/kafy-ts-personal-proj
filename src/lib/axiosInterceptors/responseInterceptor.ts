@@ -1,5 +1,6 @@
+import router from "@/routes/router";
 import { refreshAccessToken } from "@/services/authServiceApi";
-import axios, { AxiosError, AxiosRequestConfig, isAxiosError } from "axios";
+import axios, { InternalAxiosRequestConfig, isAxiosError } from "axios";
 
 //! RefreshAccessToken doesn't work it's throwing AuthApiError: Invalid Refresh Token: Already Used
 
@@ -9,31 +10,66 @@ import axios, { AxiosError, AxiosRequestConfig, isAxiosError } from "axios";
 
 export const axiosInstance = axios.create();
 
-//TODO Try this. Use this as baseline if this works then improve.
+//? BASELINE. Improve this.
+// axiosInstance.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   async (error: AxiosError) => {
+//     const originalRequest = error.config;
+
+//     // let _alreadyRefreshedOnce: boolean = originalRequest._alreadyRefreshedOnce;
+//     if (error.status === 403 || error.status === 401) {
+//       // console.log("1: ", _alreadyRefreshedOnce);
+//       // _alreadyRefreshedOnce = true;
+//       // console.log("2: ", _alreadyRefreshedOnce);
+
+//       try {
+//         await refreshAccessToken();
+//         if (originalRequest) {
+//           return axios(originalRequest);
+//         }
+//       } catch (error) {
+//         if (isAxiosError(error)) {
+//           console.error(error);
+//         }
+//       }
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
+//TODO: Handle the scenario where the refresh token is denied.
+
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
-  async (error: AxiosError) => {
-    const originalRequest = error.config;
+  async (error) => {
+    if (!isAxiosError(error)) {
+      return Promise.reject(error);
+    }
 
-    // let _alreadyRefreshedOnce: boolean = originalRequest._alreadyRefreshedOnce;
-    if (error.status === 403 || error.status === 401) {
-      // console.log("1: ", _alreadyRefreshedOnce);
-      // _alreadyRefreshedOnce = true;
-      // console.log("2: ", _alreadyRefreshedOnce);
+    const originalRequest = error.config as InternalAxiosRequestConfig & {
+      _retry: boolean;
+    };
+
+    if (
+      (error.status === 403 || error.status === 401) &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true; //? Set to true if the refresh is already executed once to assure the there will be no infinite loops.
 
       try {
         await refreshAccessToken();
-        if (originalRequest) {
-          return axios(originalRequest);
-        }
-      } catch (error) {
-        if (isAxiosError(error)) {
-          console.error(error);
-        }
+        return axios(originalRequest);
+      } catch (refreshError) {
+        //? If the above try block fails, redirect user to the sign in page.
+        console.log("refresh error");
+        console.log(refreshError);
+        router.navigate("/auth/signin");
       }
     }
-    return Promise.reject(error);
+    return Promise.reject(error); //? reject the Promise and pass the error so that the error will be handled by the origin of the call/function call.
   }
 );
