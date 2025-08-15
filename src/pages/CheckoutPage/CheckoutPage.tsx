@@ -15,15 +15,15 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import {
-  CartProduct,
-  CreateOrderItemsType,
-  PlaceOrderPayloadType,
-  ShippingInformationType,
-} from "@/models/types";
+import { CartProduct, ShippingInformationType } from "@/models/types";
 import { ArrowLeft, Box, CheckIcon, TicketPercent, Truck } from "lucide-react";
 import CustomHoverCardInfoIcon from "@/components/common/CustomHoverCardInfoIcon";
-import { ActiveSaleText, MockOrderSummaryValues } from "@/constants";
+import {
+  ActiveSaleText,
+  AxiosErrorCode,
+  MockOrderSummaryValues,
+  SomethingWenWrongText,
+} from "@/constants";
 import PriceSummary from "@/components/common/PriceSummary/PriceSummary";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -36,11 +36,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
 import { toast } from "sonner";
-import { CreateOrderItemsSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
-import { ZodError } from "zod";
-import { PlaceOrderPayloadSchema } from "@/schemas/PlaceOrderPayloadSchema/PlaceOrderPayloadSchema";
 import { useMutation } from "@tanstack/react-query";
 import { placeOrder } from "@/services/placeOrderService";
+import { createPlaceOrderPayload } from "@/lib/createPlaceOrderPayload";
+import { ApiErrorResponse } from "@/models/ApiResponse";
 
 type ShippingFormFieldProps = {
   label: string;
@@ -77,6 +76,30 @@ function CheckoutPage() {
 
   const placeOrderMutation = useMutation({
     mutationFn: placeOrder,
+    onSuccess: (response) => {
+      console.log(response.data?.id);
+    },
+    onError: (error) => {
+      if (error instanceof ApiErrorResponse) {
+        if (error.errorName === AxiosErrorCode.NetworkError) {
+          toast.warning(`${error.message}`, {
+            style: {
+              color: "#800000",
+            },
+          });
+          return;
+        }
+      }
+
+      toast.warning(
+        `${SomethingWenWrongText.header} ${SomethingWenWrongText.description}`,
+        {
+          style: {
+            color: "#800000",
+          },
+        }
+      );
+    },
   });
 
   const calculatedSubtotal = calculateSubtotal(cartProducts);
@@ -94,43 +117,17 @@ function CheckoutPage() {
 
     console.log(data);
 
-    const rawOrderItems: CreateOrderItemsType = cartProducts.map((product) => ({
-      product_id: product.product_id,
-      product_name: product.product_name,
-      price_at_purchase: product.unit_price,
-      product_size: product.product_size,
-      quantity: product.quantity,
-    }));
+    const result = createPlaceOrderPayload(cartProducts);
 
-    const parsedOrderItems = CreateOrderItemsSchema.safeParse(rawOrderItems);
-
-    if (!parsedOrderItems.success) {
-      const message =
-        parsedOrderItems.error instanceof ZodError
-          ? "Invalid cart contents. Please check the contents of your cart and try again."
-          : "Something went wrong validating your cart.";
-      toast.error(message);
+    if (!result.success) {
+      toast.error(result.message);
       return;
     }
 
-    const placeOrderPayload: PlaceOrderPayloadType = {
-      order_items: parsedOrderItems.data,
-    };
-
-    const parsedPlaceOrderPayload =
-      PlaceOrderPayloadSchema.safeParse(placeOrderPayload);
-
-    if (!parsedPlaceOrderPayload.success) {
-      const message =
-        parsedPlaceOrderPayload.error instanceof ZodError
-          ? "Something went wrong preparing your order. Please try again."
-          : "Encountered an unexpected error while validating order.";
-      toast.error(message);
-      return;
-    }
-
-    console.log("parsed payload: ", parsedPlaceOrderPayload.data);
-    placeOrderMutation.mutate(parsedPlaceOrderPayload.data);
+    console.log("parsed payload: ", result.data);
+    placeOrderMutation.mutate(result.data);
+    // console.log("parsed payload: ", parsedPlaceOrderPayload.data);
+    // placeOrderMutation.mutate(parsedPlaceOrderPayload.data);
   }
 
   return (
