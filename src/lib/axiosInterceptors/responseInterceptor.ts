@@ -1,5 +1,6 @@
 import router from "@/routes/router";
-import { refreshAccessToken } from "@/services/authServiceApi";
+import { refreshAccessToken, signOutUser } from "@/services/authServiceApi";
+import { useAuthStore } from "@/store/useAuthStore";
 import axios, { InternalAxiosRequestConfig, isAxiosError } from "axios";
 
 //! RefreshAccessToken doesn't work it's throwing AuthApiError: Invalid Refresh Token: Already Used
@@ -40,6 +41,11 @@ export const axiosInstance = axios.create();
 // );
 
 //TODO: Handle the scenario where the refresh token is denied.
+/**
+ * ! TECHNICAL DEBT
+ * ! If the await signOutUser fails, the session will still be in the database and the useAuthStore will be cleared.
+ *
+ */
 
 axiosInstance.interceptors.response.use(
   (response) => {
@@ -64,11 +70,13 @@ axiosInstance.interceptors.response.use(
         await refreshAccessToken();
         return axios(originalRequest);
       } catch (refreshError) {
-        //TODO: call sign out to remove session.
+        //TODO: call sign out to remove session and clear zustand state.
         console.log("refresh error");
         console.log(refreshError);
         //? If the try block above fails, redirect user to the sign in page.
         //? If the user successfully signs in they will be brought back to where they were before.
+        useAuthStore.getState().signOut();
+        await signOutUser();
         router.navigate(`/auth/signin?redirect=${window.location.pathname}`);
       }
     }
