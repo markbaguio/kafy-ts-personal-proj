@@ -40,6 +40,7 @@ import { useMutation } from "@tanstack/react-query";
 import { placeOrder } from "@/services/placeOrderService";
 import { createPlaceOrderPayload } from "@/lib/createPlaceOrderPayload";
 import { ApiErrorResponse } from "@/models/ApiResponse";
+import { useState } from "react";
 
 type ShippingFormFieldProps = {
   label: string;
@@ -64,6 +65,7 @@ const shipping = [
 
 function CheckoutPage() {
   const cartProducts = useCartStore((state) => state.cartProducts);
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false); //? state that handles the dialog state.
   const methods = useForm<ShippingInformationType>({
     resolver: zodResolver(ShippingInformationSchema),
     mode: "onChange",
@@ -77,7 +79,11 @@ function CheckoutPage() {
   const placeOrderMutation = useMutation({
     mutationFn: placeOrder,
     onSuccess: (response) => {
-      console.log(response.data?.id);
+      console.log(
+        `Order with OrderID: ${response.data?.id} placed successfully!`
+      );
+      useCartStore.getState().clearCart();
+      setIsSuccessDialogOpen(true);
     },
     onError: (error) => {
       if (error instanceof ApiErrorResponse) {
