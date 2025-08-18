@@ -41,6 +41,7 @@ import { placeOrder } from "@/services/placeOrderService";
 import { createPlaceOrderPayload } from "@/lib/createPlaceOrderPayload";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 type ShippingFormFieldProps = {
   label: string;
@@ -66,6 +67,7 @@ const shipping = [
 function CheckoutPage() {
   const cartProducts = useCartStore((state) => state.cartProducts);
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false); //? state that handles the dialog state.
+  const navigate = useNavigate();
   const methods = useForm<ShippingInformationType>({
     resolver: zodResolver(ShippingInformationSchema),
     mode: "onChange",
@@ -246,14 +248,33 @@ function CheckoutPage() {
         <div className="bg-milky-white/50 h-full px-10 xl:px-30 py-5 flex flex-col gap-5">
           <span className="text-2xl font-semibold">Cart Summary</span>
           {/** Products */}
-          <div className="flex flex-col gap-1">
+          {/* <div className="flex flex-col gap-1">
             {cartProducts.map((cartProduct) => (
               <CheckoutProductSummaryCard
                 key={`${cartProduct.product_id}-${cartProduct.product_size}`}
                 cartProduct={cartProduct}
               />
             ))}
-          </div>
+          </div> */}
+          {cartProducts.length > 0 ? (
+            <div className="flex flex-col gap-1">
+              {cartProducts.map((cartProduct) => (
+                <CheckoutProductSummaryCard
+                  key={`${cartProduct.product_id}-${cartProduct.product_size}`}
+                  cartProduct={cartProduct}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2 items-center justify-center h-full">
+              <span className="text-lg text-raisin-black-muted">
+                Your cart is empty.
+              </span>
+              <Button variant="outline2" onClick={() => navigate("/menu")}>
+                Order now
+              </Button>
+            </div>
+          )}
           {/** Active sale */}
           <div className="flex items-center justify-between bg-milky-white text-sm font-semibold shadow-lg rounded-xl p-5">
             <div className="flex gap-2 items-center w-full">
