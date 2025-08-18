@@ -170,7 +170,11 @@ function CartPage() {
             calculatedOrderTotal={calculatedOrderTotal}
             calculatedSubtotal={calculatedSubtotal}
           />
-          <Button variant="main" onClick={handleCheckout}>
+          <Button
+            variant="main"
+            disabled={cartProducts.length === 0}
+            onClick={handleCheckout}
+          >
             Checkout
           </Button>
           {/** Free shippig notification strip */}
