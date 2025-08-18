@@ -42,6 +42,7 @@ import { createPlaceOrderPayload } from "@/lib/createPlaceOrderPayload";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import OrderSuccessDialog from "@/components/common/Dialog/orderSuccessDialog";
 
 type ShippingFormFieldProps = {
   label: string;
@@ -66,7 +67,7 @@ const shipping = [
 
 function CheckoutPage() {
   const cartProducts = useCartStore((state) => state.cartProducts);
-  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false); //? state that handles the dialog state.
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(true); //? state that handles the dialog state.
   const navigate = useNavigate();
   const methods = useForm<ShippingInformationType>({
     resolver: zodResolver(ShippingInformationSchema),
@@ -138,8 +139,28 @@ function CheckoutPage() {
     // placeOrderMutation.mutate(parsedPlaceOrderPayload.data);
   }
 
+  function handleOpenChange() {
+    setIsSuccessDialogOpen((open) => !open);
+  }
+
+  function handleViewTransactions() {
+    console.log("View Transactions clicked");
+  }
+
+  function handleGrabAnotherCup() {
+    navigate("/menu");
+  }
+
   return (
     <main className="flex flex-col min-h-screen w-full bg-off-white-2/50 divide-y-1">
+      (
+      <OrderSuccessDialog
+        open={isSuccessDialogOpen}
+        onOpenChange={handleOpenChange}
+        onViewTransactions={handleViewTransactions}
+        onGrabAnotherCup={handleGrabAnotherCup}
+      />
+      )
       <section
         className="bg-milky-white min-h-fit w-full flex flex-col gap-5 px-10 py-5 xl:px-30 lg:py-10
       "
@@ -368,7 +389,7 @@ export function CheckoutProductSummaryCard({
   cartProduct,
 }: CheckoutProductSummaryCardProps) {
   return (
-    <div className="w-full bg-milky-white border-2 shadow-lg rounded-xl flex gap-2 p-3">
+    <div className="w-full bg-milky-white border-1 shadow-lg rounded-xl flex gap-2 p-3">
       <div className="relative">
         <img
           className="size-25 object-cover rounded-lg"

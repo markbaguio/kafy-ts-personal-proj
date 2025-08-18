@@ -12,19 +12,19 @@ import { Button } from "@/components/ui/button";
 
 type OrderSuccessDialogProps = {
   open: boolean;
-  handleOpenChange: () => void;
-  handleViewTransactions: () => void;
-  handleGrabAnotherCup: () => void;
+  onOpenChange: () => void;
+  onViewTransactions: () => void;
+  onGrabAnotherCup: () => void;
 };
 
 export default function OrderSuccessDialog({
   open = false,
-  handleOpenChange,
-  handleGrabAnotherCup,
-  handleViewTransactions,
+  onOpenChange,
+  onGrabAnotherCup,
+  onViewTransactions,
 }: OrderSuccessDialogProps) {
   return (
-    <Dialog open={open} onOpenChange={handleOpenChange} modal>
+    <Dialog open={open} onOpenChange={onOpenChange} modal>
       {/* <DialogTrigger>Open</DialogTrigger> */}
       <DialogContent>
         <DialogHeader className=" flex flex-col items-center justify-center gap-4">
@@ -33,17 +33,17 @@ export default function OrderSuccessDialog({
           </div>
 
           <div className="flex flex-col items-center justify-center gap-2">
-            <DialogTitle>Order placed Successfully!</DialogTitle>
+            <DialogTitle>Order placed successfully!</DialogTitle>
             <DialogDescription className="text-center">
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Order confirmed! Keep earning rewards with every sip, your next
+              favorite drink might just be a click away.
             </DialogDescription>
           </div>
         </DialogHeader>
         <DialogFooter className="flex-col gap-4 sm:flex-col sm:justify-center">
-          <Button onClick={handleViewTransactions}>View Transactions</Button>
+          <Button onClick={onViewTransactions}>View Transactions</Button>
           <Button
-            onClick={handleGrabAnotherCup}
+            onClick={onGrabAnotherCup}
             variant="outline2"
             className="w-full"
           >
