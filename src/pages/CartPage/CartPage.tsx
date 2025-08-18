@@ -158,7 +158,7 @@ function CartPage() {
             </div>
           ) : (
             <div className="m-auto">
-              <Button variant="main" onClick={() => navigate("/menu")}>
+              <Button variant="outline2" onClick={() => navigate("/menu")}>
                 Order now
               </Button>
             </div>
