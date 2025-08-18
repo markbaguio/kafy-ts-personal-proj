@@ -266,7 +266,7 @@ function CheckoutPage() {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col gap-2 items-center justify-center h-full">
+            <div className="flex flex-col gap-2 items-center justify-center h-[150px]">
               <span className="text-lg text-raisin-black-muted">
                 Your cart is empty.
               </span>
