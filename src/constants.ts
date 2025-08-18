@@ -1,6 +1,10 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
+import { MenuCategoryType } from "./hooks/useMenuPageSearchParams";
+import { Product } from "./models/types";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
+
+export const PESOSIGN: string = "₱";
 
 export const TESTIMONIALS: TestimonyCardProps[] = [
   {
@@ -171,6 +175,8 @@ export const AUTH_SIGN_IN = "/auth/signin";
 export const AUTH_SIGN_UP = "/auth/signup";
 export const AUTH_SIGN_OUT = "/auth/signout";
 export const AUTH_ME = "/auth/me";
+export const MENU = "/api/menu";
+export const PLACE_ORDER = "/api/order";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {
@@ -189,3 +195,254 @@ export enum ApiErrorName {
 export enum CustomErrorMessage {
   NoInternetConnectionMessage = "You are offline. Check your internet connection.",
 }
+
+export const SomethingWenWrongText = {
+  header: "Whoops! Something went wrong.",
+  description:
+    "Please try again later or contact support if the issue persists.",
+};
+
+export const ActiveSaleText: { info: string; activeSale: string } = {
+  info: "This discount is automatically applied during ongoing promotional periods. No promo/discount code needed. just add items to your cart and enjoy exclusive savings while the sale lasts!",
+  activeSale: "No deals at the moment, but stay tuned!",
+};
+
+export const PageNotFoundText = {
+  header: "Looks like this page doesn't exist!",
+  description: "Return to the homepage and continue exploring.",
+};
+
+export const FREE_SHIPPING_THRESHOLD = 450;
+
+type MockOrderSummaryValuesType = {
+  delivery: number;
+  tax: number;
+};
+
+export const MockOrderSummaryValues: MockOrderSummaryValuesType = {
+  delivery: 45,
+  tax: 15,
+};
+
+type OrderSummaryTextValuesType = {
+  delivery: string;
+  tax: string;
+  coupon: string;
+};
+
+export const OrderSummaryTextValues: OrderSummaryTextValuesType = {
+  delivery:
+    "This fee covers the estimated cost to deliver your order based on your location and order size. It may vary depending on distance and availability.",
+  tax: "This amount includes applicable local taxes based on your billing address and the items in your order.",
+  coupon:
+    "Enter a valid coupon code to receive discounts or special offers. Only one coupon can be applied per order. Restrictions may apply.",
+};
+
+// ? MOCK
+export const MockExtendedDescription =
+  "Each cup begins with handpicked beans grown in the highlands of the Philippines, locally and ethically sourced to ensure quality and sustainability. Roasted to highlight their natural character, our blends are smooth, aromatic, and layered with subtle notes that make every sip a true celebration of Filipino craftsmanship. Carefully crafted for everyday coffee lovers, Kafy's brews offer a comforting balance of richness, flavor, and warmth — made fresh and served with care, just the way Filipinos like it.";
+
+export type MenuSidebarCategoryItemsType = {
+  name: MenuCategoryType;
+  active: boolean;
+};
+export type MenuSidebarCategoriesType = {
+  id: number;
+  title: string;
+  items: MenuSidebarCategoryItemsType[];
+};
+export const MenuSidebarCategories: MenuSidebarCategoriesType[] = [
+  {
+    id: 1,
+    title: "Drinks",
+    items: [
+      { name: "hot", active: false },
+      {
+        name: "cold",
+        active: false,
+      },
+    ],
+  },
+  {
+    id: 2,
+    title: "Food",
+    items: [
+      { name: "pastries", active: false },
+      { name: "snacks", active: false },
+      { name: "lunch", active: false },
+      { name: "treats", active: false },
+    ],
+  },
+];
+
+export type MenuDrinkCategoriesType = {
+  id: number;
+  category: string;
+  img_url: string;
+};
+
+export const MenuDrinkCategories: MenuDrinkCategoriesType[] = [
+  {
+    id: 1,
+    category: "Hot Coffee",
+    img_url:
+      "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 2,
+    category: "Cold Coffee",
+    img_url:
+      "https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+
+export type MenuFoodCategoriesType = {
+  id: number;
+  category: string;
+  img_url: string;
+};
+
+export const MenuFoodCategories: MenuFoodCategoriesType[] = [
+  {
+    id: 3,
+    category: "Pastries",
+    img_url:
+      "https://images.unsplash.com/photo-1609590981063-d495e2914ce4?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    id: 4,
+    category: "Lunch",
+    img_url:
+      "https://plus.unsplash.com/premium_photo-1672242676674-f4349cc6470e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+  {
+    id: 5,
+    category: "Treats",
+    img_url:
+      "https://images.unsplash.com/photo-1700649405390-574054e0d190?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  },
+];
+//?
+
+export const MenuItemsMockData: Product[] = [
+  {
+    id: 1,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Black Coffee",
+    description: "Classic hot black coffee.",
+    is_available: true,
+    category: "hot",
+    price: 90,
+    image_url:
+      "https://images.unsplash.com/photo-1494314671902-399b18174975?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 2,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Latte",
+    description: "Espresso with steamed milk.",
+    is_available: true,
+    category: "hot",
+    price: 140,
+    image_url:
+      "https://images.unsplash.com/photo-1561882468-9110e03e0f78?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 3,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Caramel Latte",
+    description: "A sweet latte with caramel syrup.",
+    is_available: true,
+    category: "hot",
+    price: 170,
+    image_url:
+      "https://images.unsplash.com/photo-1599398054066-846f28917f38?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 4,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Cappuccino",
+    description: "Espresso with steamed milk and foam.",
+    is_available: true,
+    category: "hot",
+    price: 150,
+    image_url:
+      "https://images.unsplash.com/photo-1557006021-b85faa2bc5e2?auto=format&fit=crop&q=80&w=800",
+  },
+  {
+    id: 5,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Americano",
+    description: "Espresso diluted with hot water.",
+    is_available: true,
+    category: "hot",
+    price: 120,
+    image_url:
+      "https://images.unsplash.com/photo-1532004491497-ba35c367d634?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 6,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Espresso",
+    description: "A single espresso shot.",
+    is_available: true,
+    category: "hot",
+    price: 100,
+    image_url:
+      "https://images.unsplash.com/photo-1579992357154-faf4bde95b3d?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 7,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Macchiato",
+    description: "Espresso with a small amount of foam.",
+    is_available: true,
+    category: "hot",
+    price: 120,
+    image_url:
+      "https://images.unsplash.com/photo-1557772611-722dabe20327?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 8,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Mocha",
+    description: "Chocolate espresso drink with steamed milk and foam.",
+    is_available: true,
+    category: "hot",
+    price: 170,
+    image_url:
+      "https://images.unsplash.com/photo-1607260550778-aa9d29444ce1?auto=format&fit=crop&q=80&w=1887",
+  },
+  {
+    id: 9,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Hot Chocolate",
+    description: "Hot chocolate with milk.",
+    is_available: true,
+    category: "hot",
+    price: 140,
+    image_url:
+      "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?auto=format&fit=crop&q=60&w=800",
+  },
+  {
+    id: 10,
+    created_at: "2025-07-01T05:31:56.115117+00:00",
+    updated_at: null,
+    name: "Chai Latte",
+    description: "A flavorful chai tea latte.",
+    is_available: false,
+    category: "hot",
+    price: 150,
+    image_url:
+      "https://images.unsplash.com/photo-1578899952107-9c390f1af1b7?w=900",
+  },
+];

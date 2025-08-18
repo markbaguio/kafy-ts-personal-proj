@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { AxiosErrorCode } from "@/constants";
 import { useErrorBoundary } from "react-error-boundary";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 import Loading from "./loading";
 
@@ -37,6 +37,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"form">) {
+  const [searchParams] = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -52,10 +53,14 @@ export function LoginForm({
     mutationFn: signInUser,
     onSuccess: (response) => {
       const profile = response.data; // Assuming ApiResponse has a 'data' property containing the Profile
-      // useProfileStore.getState().updateProfile(profile!);
-      useAuthStore.setState({ profile });
+      useAuthStore.setState({
+        profile,
+        isSignedIn: profile !== null ? true : false,
+      });
       //? on successful login; redirect to homepage.
-      navigate("/");
+      const redirectTo = searchParams.get("redirect") ?? "/";
+
+      navigate(`${redirectTo}`, { replace: true });
     },
     onError: (error) => {
       if (error instanceof ApiErrorResponse) {
@@ -128,7 +133,7 @@ export function LoginForm({
               {...register("email")}
               id="email"
               // type="email"
-              className="border-raisin-black placeholder:text-raisin-black"
+              className="border-raisin-black placeholder:text-raisin-black autofill:shadow-[inset_0_0_0px_1000px_#e6d6c8]"
               placeholder="Email"
               autoComplete="username"
             />

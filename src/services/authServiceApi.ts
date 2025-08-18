@@ -14,6 +14,7 @@ import { z, ZodError } from "zod";
 import { UserSignInSchema } from "@/schemas/auth/UserSignInFormSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
 import { UserSignUpFormSchema } from "@/schemas/auth/UserSignUpFormSchema";
+import { axiosInstance } from "@/lib/axiosInterceptors/responseInterceptor";
 
 // export type SignInPayload = UserSignInFormType;
 export type SignInPayload = z.infer<typeof UserSignInSchema>;
@@ -150,7 +151,7 @@ export async function signUpUser(
 
 export async function getRefreshProfile(): Promise<ApiResponse<Profile>> {
   try {
-    const response = await axios.get<ApiResponse<Profile>>(
+    const response = await axiosInstance.get<ApiResponse<Profile>>(
       `${BASE_URL}${AUTH_ME}`,
       {
         withCredentials: true,
@@ -162,6 +163,50 @@ export async function getRefreshProfile(): Promise<ApiResponse<Profile>> {
     };
   } catch (error) {
     // console.log(error);
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data;
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          CustomErrorMessage.NoInternetConnectionMessage
+        );
+      }
+      // if (isAuthApiError(responseErrorData)) {
+      //   throw new ApiErrorResponse(
+      //     error.status ?? 500,
+      //     error.name ?? "AUTH_API_ERROR",
+      //     error.message ?? "Authentication API error"
+      //   );
+      // }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
+    }
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export async function refreshAccessToken(): Promise<ApiResponse<null>> {
+  try {
+    const response = await axios.post(
+      `${BASE_URL}/auth/refresh-token`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return {
+      statusCode: response.status,
+      data: response.data,
+    };
+  } catch (error) {
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data;
       if (error.code === AxiosErrorCode.NetworkError) {

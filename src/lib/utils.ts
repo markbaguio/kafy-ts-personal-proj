@@ -1,4 +1,4 @@
-import { ApiErrorName } from "@/constants";
+import { ApiErrorName, FREE_SHIPPING_THRESHOLD } from "@/constants";
 import {
   ApiErrorResponse,
   AuthApiErrorDetails,
@@ -6,6 +6,8 @@ import {
   UnexpectedErrorDetails,
   ZodErrorDetails,
 } from "@/models/ApiResponse";
+import { CartProduct } from "@/models/types";
+import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
 import { FieldValues, Path, UseFormSetError } from "react-hook-form";
@@ -89,4 +91,44 @@ export function handleZodApiFieldErrors<T extends FieldValues>(
       });
     }
   });
+}
+
+export function capitalizeFirstLetter(value: string) {
+  return value.charAt(0).toUpperCase() + String(value).slice(1);
+}
+
+export function isValidProductSize(size: string): size is ProductSize {
+  return ["S", "M", "L"].includes(size);
+}
+
+export function formattedCurrency(
+  amount: number,
+  currency = "PHP",
+  locale = "en-PH"
+) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+  }).format(amount);
+}
+
+export function calculateSubtotal(cartProducts: CartProduct[]): number {
+  return cartProducts.reduce(
+    (total, product) => total + product.unit_price * product.quantity,
+    0
+  );
+}
+
+export function calculateOrderTotal({
+  subtotal,
+  tax,
+  deliveryEstimate,
+}: {
+  subtotal: number;
+  tax: number;
+  deliveryEstimate: number;
+}): number {
+  if (subtotal > FREE_SHIPPING_THRESHOLD) return subtotal + tax;
+
+  return subtotal + (tax + deliveryEstimate);
 }

@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router";
 import Logo from "../Logo.tsx";
 import { Button } from "../../ui/button.tsx";
-import { Locate, Menu, User } from "lucide-react";
+import { Locate, Menu, ShoppingCart, User } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -16,6 +16,7 @@ import { AUTH_SIGN_IN, AUTH_SIGN_UP } from "@/constants.ts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { signOutUser } from "@/services/authServiceApi.ts";
 import { toast } from "sonner";
+import { useCartStore } from "@/store/useCartStore.ts";
 
 //? Setup unit and integration test.
 
@@ -33,6 +34,8 @@ const navItems: navItemType[] = [
 
 export default function PageHeader() {
   const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+
+  const cartProductCount = useCartStore((state) => state.cartProducts.length);
 
   const queryClient = useQueryClient();
 
@@ -159,6 +162,38 @@ export default function PageHeader() {
                 </Button>
               </div>
             )}
+            {/** For testing */}
+            <Button
+              data-testid="profile-button"
+              onClick={() => {
+                // console.log("profile");
+                navigate("/profile");
+              }}
+              variant="main"
+            >
+              <User />
+            </Button>
+            {/**
+             * This mock cart button is for development only
+             * This cart button should only show up when a user is logged in.
+             * Move this up.
+             */}
+            <Button
+              data-testid="cart-button"
+              variant="outline"
+              className="relative hover:text-golden-brown hover:border-golden-brown hover:bg-transparent transition-colors duration-500"
+              onClick={() => {
+                navigate("/cart");
+              }}
+            >
+              <ShoppingCart />
+              {cartProductCount > 0 && (
+                <span className="absolute flex justify-center items-center -top-2 -right-1 text-sm rounded-full w-7 h-5 bg-golden-brown text-milky-white">
+                  {cartProductCount}
+                </span>
+              )}
+            </Button>
+            {/** --------------------- */}
           </div>
 
           {/** Mobile view */}
