@@ -248,14 +248,6 @@ function CheckoutPage() {
         <div className="bg-milky-white/50 h-full px-10 xl:px-30 py-5 flex flex-col gap-5">
           <span className="text-2xl font-semibold">Cart Summary</span>
           {/** Products */}
-          {/* <div className="flex flex-col gap-1">
-            {cartProducts.map((cartProduct) => (
-              <CheckoutProductSummaryCard
-                key={`${cartProduct.product_id}-${cartProduct.product_size}`}
-                cartProduct={cartProduct}
-              />
-            ))}
-          </div> */}
           {cartProducts.length > 0 ? (
             <div className="flex flex-col gap-1">
               {cartProducts.map((cartProduct) => (
