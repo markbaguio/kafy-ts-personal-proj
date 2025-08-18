@@ -67,7 +67,7 @@ const shipping = [
 
 function CheckoutPage() {
   const cartProducts = useCartStore((state) => state.cartProducts);
-  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(true); //? state that handles the dialog state.
+  const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false); //? state that handles the dialog state.
   const navigate = useNavigate();
   const methods = useForm<ShippingInformationType>({
     resolver: zodResolver(ShippingInformationSchema),

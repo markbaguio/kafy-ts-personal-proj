@@ -37,7 +37,7 @@ export default function MenuProductDetailPage() {
   const parsedParams = MenuProductDetailPageParamsSchema.safeParse(params);
 
   const addProductToCart = useCartStore((state) => state.addProductToCart);
-  const clearCart = useCartStore((state) => state.clearCart);
+  // const clearCart = useCartStore((state) => state.clearCart);
 
   if (parsedParams.error) {
     return <PageNotFound />;
@@ -182,9 +182,9 @@ export default function MenuProductDetailPage() {
                   Add to cart
                 </Button>
                 {/** for testing */}
-                <Button variant="outline" onClick={clearCart}>
+                {/* <Button variant="outline" onClick={clearCart}>
                   clear cart
-                </Button>
+                </Button> */}
               </div>
             </div>
           </div>
