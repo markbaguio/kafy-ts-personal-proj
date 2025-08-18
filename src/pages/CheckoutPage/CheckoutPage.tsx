@@ -42,7 +42,7 @@ import { createPlaceOrderPayload } from "@/lib/createPlaceOrderPayload";
 import { ApiErrorResponse } from "@/models/ApiResponse";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import OrderSuccessDialog from "@/components/common/Dialog/orderSuccessDialog";
+import OrderSuccessDialog from "@/components/common/Dialog/OrderSuccessDialog";
 
 type ShippingFormFieldProps = {
   label: string;
