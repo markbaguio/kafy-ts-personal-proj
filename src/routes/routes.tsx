@@ -15,6 +15,7 @@ import ProfilePage from "@/pages/ProfilePage/ProfilePage";
 import CartPage from "@/pages/CartPage/CartPage";
 import CheckoutPage from "@/pages/CheckoutPage/CheckoutPage";
 import ProtectedRoute from "@/components/common/ProtectedRoute/ProtectedRoute";
+import OrdersPage from "@/pages/OrdersPage/OrdersPage";
 
 export const routes: RouteObject[] = [
   {
@@ -42,6 +43,7 @@ export const routes: RouteObject[] = [
           </ProtectedRoute>
         ),
       },
+      { path: "/orders", element: <OrdersPage /> },
     ],
   },
   {
