@@ -177,6 +177,7 @@ export const AUTH_SIGN_OUT = "/auth/signout";
 export const AUTH_ME = "/auth/me";
 export const MENU = "/api/menu";
 export const PLACE_ORDER = "/api/order";
+export const ORDERS_PAGE = "/api/orders";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {
