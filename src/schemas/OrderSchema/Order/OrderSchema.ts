@@ -2,9 +2,9 @@ import { z } from "zod";
 
 export const OrderStatusSchema = z.enum([
   "orderPlaced",
-  "shipped",
-  "delivered",
-  "cancelled",
+  "orderInProgress",
+  "completed",
+  "canceled",
   // add other statuses here exactly as they are in the DB enum
 ]);
 
