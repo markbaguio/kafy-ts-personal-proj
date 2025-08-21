@@ -1,3 +1,4 @@
+import { OrderItemWithImageSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { z } from "zod";
 
 export const OrderStatusSchema = z.enum([
@@ -9,11 +10,23 @@ export const OrderStatusSchema = z.enum([
 ]);
 
 export const OrderSchema = z.object({
-  id: z.number().int().positive(),
+  id: z.number(),
   total_amount: z.number(), // Will parse from numeric(10, 2) as number in JS
   status: OrderStatusSchema,
-  created_at: z.string().datetime(), // Postgres timestamp with timezone → string in JSON
-  profile_id: z.string().uuid(),
+  created_at: z.string(), // Postgres timestamp with timezone → string in JSON
+  profile_id: z.string(),
 });
 
 export const OrderIDOnlySchema = OrderSchema.pick({ id: true });
+
+export const OrdersWithOrderItemsWithImageSchema = OrderSchema.extend({
+  order_items: z.array(OrderItemWithImageSchema),
+});
+
+export const OrdersWithOrderItemsWithImageSchemaArray = z.array(
+  OrdersWithOrderItemsWithImageSchema
+);
+
+export type OrdersWithOrderItemsWithImageSchema = z.infer<
+  typeof OrdersWithOrderItemsWithImageSchemaArray
+>;
