@@ -26,7 +26,3 @@ export const OrdersWithOrderItemsWithImageSchema = OrderSchema.extend({
 export const OrdersWithOrderItemsWithImageSchemaArray = z.array(
   OrdersWithOrderItemsWithImageSchema
 );
-
-export type OrdersWithOrderItemsWithImageSchema = z.infer<
-  typeof OrdersWithOrderItemsWithImageSchemaArray
->;

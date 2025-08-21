@@ -9,7 +9,10 @@ import {
   CreateOrderItemsSchema,
 } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { CreateOrderSchema } from "@/schemas/OrderSchema/CreateOrderSchema/CreateOrderSchema";
-import { OrderSchema } from "@/schemas/OrderSchema/Order/OrderSchema";
+import {
+  OrderSchema,
+  OrdersWithOrderItemsWithImageSchemaArray,
+} from "@/schemas/OrderSchema/Order/OrderSchema";
 import { PlaceOrderPayloadSchema } from "@/schemas/PlaceOrderPayloadSchema/PlaceOrderPayloadSchema";
 import { ProfileSchema } from "@/schemas/profile/ProfileSchema";
 import { ShippingInformationSchema } from "@/schemas/ShippingInformationSchema/ShippingInformationSchema";
@@ -47,3 +50,7 @@ export type PlaceOrderPayloadType = z.infer<typeof PlaceOrderPayloadSchema>;
 export type ShippingInformationType = z.infer<typeof ShippingInformationSchema>;
 
 export type Order = z.infer<typeof OrderSchema>;
+
+export type OrdersWithOrderItemsWithImage = z.infer<
+  typeof OrdersWithOrderItemsWithImageSchemaArray
+>;
