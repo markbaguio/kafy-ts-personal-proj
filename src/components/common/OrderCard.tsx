@@ -2,7 +2,7 @@ import { formattedCurrency } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
 import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
-import { OrderWithOrderItemsWithImage } from "@/schemas/OrderSchema/Order/OrderSchema";
+import { OrderWithOrderItemsWithImage } from "@/models/types";
 
 type OrderCardProps = {
   order: OrderWithOrderItemsWithImage;
