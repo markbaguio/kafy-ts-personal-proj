@@ -97,10 +97,6 @@ export default function OrdersPage() {
     // });
   }
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
-
   return (
     <main className=" w-full h-full px-50 py-20 flex flex-col gap-3 bg-off-white-2/50">
       <section className="text-4xl font-bold">Order History</section>
