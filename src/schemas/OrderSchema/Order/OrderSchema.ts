@@ -1,6 +1,13 @@
 import { OrderItemWithImageSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { z } from "zod";
 
+export enum OrderStatusEnum {
+  "orderPlaced",
+  "orderInProgress",
+  "completed",
+  "canceled",
+}
+
 export const OrderStatusSchema = z.enum([
   "orderPlaced",
   "orderInProgress",
