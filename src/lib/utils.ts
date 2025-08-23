@@ -101,7 +101,7 @@ export function isValidProductSize(size: string): size is ProductSize {
   return ["S", "M", "L"].includes(size);
 }
 
-export function formattedCurrency(
+export function formatCurrency(
   amount: number,
   currency = "PHP",
   locale = "en-PH"

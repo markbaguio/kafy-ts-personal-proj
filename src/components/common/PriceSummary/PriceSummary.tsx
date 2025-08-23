@@ -1,4 +1,4 @@
-import { formattedCurrency } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import CustomHoverCardInfoIcon from "../CustomHoverCardInfoIcon";
 import {
   FREE_SHIPPING_THRESHOLD,
@@ -26,7 +26,7 @@ function PriceSummary({
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between">
           <span className="text-raisin-black-muted">Subtotal</span>
-          <span>{formattedCurrency(calculatedSubtotal)}</span>
+          <span>{formatCurrency(calculatedSubtotal)}</span>
         </div>
         <Separator />
         <div className="flex flex-row justify-between">
@@ -42,7 +42,7 @@ function PriceSummary({
               "line-through text-destructive"
             }`}
           >
-            {formattedCurrency(MockOrderSummaryValues.delivery)}
+            {formatCurrency(MockOrderSummaryValues.delivery)}
           </span>
         </div>
         <Separator />
@@ -51,7 +51,7 @@ function PriceSummary({
             <span className="text-raisin-black-muted">Tax</span>
             <CustomHoverCardInfoIcon message={OrderSummaryTextValues.tax} />
           </div>
-          <span>{formattedCurrency(MockOrderSummaryValues.tax)}</span>
+          <span>{formatCurrency(MockOrderSummaryValues.tax)}</span>
         </div>
         <Separator />
         <div className="flex flex-row justify-between">
@@ -60,8 +60,8 @@ function PriceSummary({
             {/* {PESOSIGN}
                   {(100).toFixed(2)} */}
             {calculatedSubtotal !== 0
-              ? formattedCurrency(calculatedOrderTotal)
-              : formattedCurrency(0)}
+              ? formatCurrency(calculatedOrderTotal)
+              : formatCurrency(0)}
           </span>
         </div>
       </div>

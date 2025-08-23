@@ -4,7 +4,7 @@ import {
   calculateOrderTotal,
   calculateSubtotal,
   capitalizeFirstLetter,
-  formattedCurrency,
+  formatCurrency,
 } from "@/lib/utils";
 import { useCartStore } from "@/store/useCartStore";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -422,7 +422,7 @@ export function CheckoutProductSummaryCard({
         {/** unit price */}
         <div className="w-1/2 flex justify-end">
           <span className="min-w-[2ch] text-lg font-semibold">
-            {formattedCurrency(cartProduct.unit_price)}
+            {formatCurrency(cartProduct.unit_price)}
           </span>
         </div>
       </div>
