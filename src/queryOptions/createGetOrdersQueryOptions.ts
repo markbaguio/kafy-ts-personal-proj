@@ -1,8 +1,5 @@
 import { ApiResponse } from "@/models/ApiResponse";
-import {
-  OrdersWithOrderItemsWithImage,
-  OrdersWithOrderItemsWithImageAndCategory,
-} from "@/models/types";
+import { OrdersWithOrderItemsWithImageAndCategory } from "@/models/types";
 import { getOrders } from "@/services/orderService";
 import { queryOptions, UseQueryOptions } from "@tanstack/react-query";
 
