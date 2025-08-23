@@ -3,16 +3,19 @@ import { Separator } from "@radix-ui/react-separator";
 import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { OrderWithOrderItemsWithImage } from "@/models/types";
+import { useNavigate } from "react-router";
 
 type OrderCardProps = {
   order: OrderWithOrderItemsWithImage;
 };
 
 export default function OrderCard({ ...props }: OrderCardProps) {
+  const navigate = useNavigate();
+
   return (
     <div
       key={props.order.id}
-      className="flex flex-col gap-8 bg-milky-white rounded-xl shadow-lg p-5"
+      className="flex flex-col gap-8 bg-milky-white border rounded-xl shadow-lg p-5"
     >
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-2">
@@ -34,8 +37,14 @@ export default function OrderCard({ ...props }: OrderCardProps) {
         </div>
         <ul className="flex flex-col gap-2 w-full">
           {props.order.order_items.map((orderItem) => (
-            <li key={orderItem.id}>
-              <Card className="p-0 overflow-hidden">
+            <li
+              key={orderItem.id}
+              className="hover:cursor-pointer hover:scale-101 transition-transform duration-500"
+            >
+              <Card
+                className="p-0 overflow-hidden"
+                onClick={() => navigate(`/menu/${orderItem.product_id}`)}
+              >
                 <CardContent className="p-0 flex flex-row gap-5">
                   <div className="relative w-fit">
                     <img
