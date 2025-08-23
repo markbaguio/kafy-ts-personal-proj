@@ -1,4 +1,7 @@
-import { OrderItemWithImageSchema } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
+import {
+  OrderItemWithImageAndCategorySchema,
+  OrderItemWithImageSchema,
+} from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { z } from "zod";
 
 export enum OrderStatusEnum {
@@ -32,4 +35,13 @@ export const OrdersWithOrderItemsWithImageSchema = OrderSchema.extend({
 
 export const OrdersWithOrderItemsWithImageSchemaArray = z.array(
   OrdersWithOrderItemsWithImageSchema
+);
+
+export const OrdersWithOrderItemsWithImageAndCategorySchema =
+  OrderSchema.extend({
+    order_items: z.array(OrderItemWithImageAndCategorySchema),
+  });
+
+export const OrdersWithOrderItemsWithImageAndCategorySchemaArray = z.array(
+  OrdersWithOrderItemsWithImageAndCategorySchema
 );
