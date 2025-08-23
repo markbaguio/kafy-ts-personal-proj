@@ -1,4 +1,4 @@
-import { formattedCurrency } from "@/lib/utils";
+import { capitalizeFirstLetter, formattedCurrency } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
 import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
@@ -80,11 +80,17 @@ export default function OrderCard({ ...props }: OrderCardProps) {
                         {formattedCurrency(orderItem.price_at_purchase)}
                       </span>
                     </div>
-                    <div>
+                    <div className="flex flex-col">
                       <span className="text-raisin-black-muted">
                         Size:{" "}
                         <span className="text-blackhole font-semibold">
                           {orderItem.product_size}
+                        </span>
+                      </span>
+                      <span className="text-raisin-black-muted">
+                        Category:{" "}
+                        <span className="text-blackhole font-semibold">
+                          {capitalizeFirstLetter(orderItem.category)}
                         </span>
                       </span>
                     </div>
