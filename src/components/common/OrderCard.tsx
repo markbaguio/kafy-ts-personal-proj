@@ -2,16 +2,32 @@ import { formattedCurrency } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
 import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
-import { OrderWithOrderItemsWithImage } from "@/models/types";
+import {
+  CartProduct,
+  OrdersWithOrderItemsWithImageAndCategory,
+  OrderWithOrderItemsWithImage,
+  OrderWithOrderItemsWithImageAndCategory,
+} from "@/models/types";
 import { useNavigate } from "react-router";
 import { Button } from "../ui/button";
+import { useCartStore } from "@/store/useCartStore";
 
 type OrderCardProps = {
-  order: OrderWithOrderItemsWithImage;
+  // order: OrderWithOrderItemsWithImage;
+  order: OrderWithOrderItemsWithImageAndCategory;
 };
 
 export default function OrderCard({ ...props }: OrderCardProps) {
   const navigate = useNavigate();
+  const addProductToCart = useCartStore((state) => state.addProductToCart);
+
+  function handleBuyAgain(items: CartProduct[]) {
+    items.forEach((item) => {
+      addProductToCart({
+        ...item,
+      });
+    });
+  }
 
   return (
     <div
@@ -84,7 +100,13 @@ export default function OrderCard({ ...props }: OrderCardProps) {
 
       <Separator />
       <div className="flex justify-between items-center gap-2">
-        <Button variant="secondary" className="w-fit">
+        <Button
+          variant="secondary"
+          className="w-fit"
+          onClick={() => {
+            console.log(props.order.order_items);
+          }}
+        >
           Buy again
         </Button>
         <span className="text-2xl text-raisin-black-muted">
