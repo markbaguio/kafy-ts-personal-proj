@@ -39,3 +39,8 @@ export const OrderItemSchema = z.object({
 export const OrderItemWithImageSchema = OrderItemSchema.extend({
   image_url: z.string(),
 });
+
+export const OrderItemWithImageAndCategorySchema = OrderItemSchema.extend({
+  image_url: z.string(),
+  category: z.enum(["hot", "cold"]),
+});
