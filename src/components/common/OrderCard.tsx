@@ -4,6 +4,7 @@ import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { OrderWithOrderItemsWithImage } from "@/models/types";
 import { useNavigate } from "react-router";
+import { Button } from "../ui/button";
 
 type OrderCardProps = {
   order: OrderWithOrderItemsWithImage;
@@ -82,8 +83,10 @@ export default function OrderCard({ ...props }: OrderCardProps) {
       </div>
 
       <Separator />
-      <div className="flex justify-end items-center gap-2">
-        {/* <Button className="w-fit">Order History</Button> */}
+      <div className="flex justify-between items-center gap-2">
+        <Button variant="secondary" className="w-fit">
+          Buy again
+        </Button>
         <span className="text-2xl text-raisin-black-muted">
           Order Total:{" "}
           <span className="bg-success-green/20 rounded-full p-2 text-2xl text-success-green-accent font-semibold min-w-[2ch]">
