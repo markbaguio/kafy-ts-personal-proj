@@ -12,6 +12,8 @@ import { CreateOrderSchema } from "@/schemas/OrderSchema/CreateOrderSchema/Creat
 import {
   OrderSchema,
   OrderStatusSchema,
+  OrdersWithOrderItemsWithImageAndCategorySchema,
+  OrdersWithOrderItemsWithImageAndCategorySchemaArray,
   OrdersWithOrderItemsWithImageSchema,
   OrdersWithOrderItemsWithImageSchemaArray,
 } from "@/schemas/OrderSchema/Order/OrderSchema";
@@ -57,8 +59,16 @@ export type OrdersWithOrderItemsWithImage = z.infer<
   typeof OrdersWithOrderItemsWithImageSchemaArray
 >;
 
+export type OrdersWithOrderItemsWithImageAndCategory = z.infer<
+  typeof OrdersWithOrderItemsWithImageAndCategorySchemaArray
+>;
+
 export type OrderWithOrderItemsWithImage = z.infer<
   typeof OrdersWithOrderItemsWithImageSchema
+>;
+
+export type OrderWithOrderItemsWithImageAndCategory = z.infer<
+  typeof OrdersWithOrderItemsWithImageAndCategorySchema
 >;
 
 export type OrderStatus = z.infer<typeof OrderStatusSchema>;
