@@ -16,7 +16,7 @@ const buttonVariants = cva(
         outline:
           "border border-raisin-black hover:bg-royal-brown/20 hover:text-accent-foreground rounded-full text-raisin-black",
         secondary:
-          "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+          "bg-golden-brown/90 text-off-white rounded-lg hover:bg-golden-brown",
         ghost:
           "font-semibold hover:text-golden-brown hover:underline hover:cursor-pointer",
         ghost2: "font-semibold hover:text-golden-brown hover:cursor-pointer",
