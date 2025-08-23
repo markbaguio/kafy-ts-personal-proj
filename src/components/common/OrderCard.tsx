@@ -4,8 +4,6 @@ import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import {
   CartProduct,
-  OrdersWithOrderItemsWithImageAndCategory,
-  OrderWithOrderItemsWithImage,
   OrderWithOrderItemsWithImageAndCategory,
 } from "@/models/types";
 import { useNavigate } from "react-router";
