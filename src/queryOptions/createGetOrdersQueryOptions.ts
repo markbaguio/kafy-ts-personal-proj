@@ -1,5 +1,8 @@
 import { ApiResponse } from "@/models/ApiResponse";
-import { OrdersWithOrderItemsWithImage } from "@/models/types";
+import {
+  OrdersWithOrderItemsWithImage,
+  OrdersWithOrderItemsWithImageAndCategory,
+} from "@/models/types";
 import { getOrders } from "@/services/orderService";
 import { queryOptions, UseQueryOptions } from "@tanstack/react-query";
 
@@ -10,7 +13,7 @@ type GetOrdersQueryOptionsParam = {
 export function createGetOrdersQueryOptions(
   params?: GetOrdersQueryOptionsParam,
   options?: Omit<
-    UseQueryOptions<ApiResponse<OrdersWithOrderItemsWithImage>>,
+    UseQueryOptions<ApiResponse<OrdersWithOrderItemsWithImageAndCategory>>,
     "queryFn" | "queryKey"
   >
 ) {
