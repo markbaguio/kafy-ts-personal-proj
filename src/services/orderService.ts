@@ -2,8 +2,8 @@ import { AxiosErrorCode, BASE_URL, ORDERS_PAGE } from "@/constants";
 import { axiosInstance } from "@/lib/axiosInterceptors/responseInterceptor";
 import { isApiErrorResponse } from "@/lib/utils";
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
-import { OrdersWithOrderItemsWithImage } from "@/models/types";
-import { OrdersWithOrderItemsWithImageSchemaArray } from "@/schemas/OrderSchema/Order/OrderSchema";
+import { OrdersWithOrderItemsWithImageAndCategory } from "@/models/types";
+import { OrdersWithOrderItemsWithImageAndCategorySchemaArray } from "@/schemas/OrderSchema/Order/OrderSchema";
 import { isAxiosError } from "axios";
 import { ZodError } from "zod";
 
@@ -13,21 +13,25 @@ type GetOrdersParams = {
 
 export async function getOrders({
   status = "orderPlaced",
-}: GetOrdersParams): Promise<ApiResponse<OrdersWithOrderItemsWithImage>> {
+}: GetOrdersParams): Promise<
+  ApiResponse<OrdersWithOrderItemsWithImageAndCategory>
+> {
   //? This Promise timeout simulates network latency to show edge case (loading state)
   //TODO: remove this delay. this might be the cause of the refresh auth token not working properly.
   //   await new Promise((resolve) => setTimeout(resolve, 1500));
   try {
     console.log("Fetching orders with status:", status);
     const response = await axiosInstance.get<
-      ApiResponse<OrdersWithOrderItemsWithImage>
+      ApiResponse<OrdersWithOrderItemsWithImageAndCategory>
     >(`${BASE_URL}${ORDERS_PAGE}`, {
       params: { status },
       withCredentials: true,
     });
 
     const parsedOrdersWithOrderItemsWithImage =
-      OrdersWithOrderItemsWithImageSchemaArray.safeParse(response.data.data);
+      OrdersWithOrderItemsWithImageAndCategorySchemaArray.safeParse(
+        response.data.data
+      );
 
     if (!parsedOrdersWithOrderItemsWithImage.success) {
       throw new ZodError(parsedOrdersWithOrderItemsWithImage.error.errors);
