@@ -57,7 +57,7 @@ export default function OrderCard({ ...props }: OrderCardProps) {
               className="hover:cursor-pointer hover:scale-101 transition-transform duration-500"
             >
               <Card
-                className="p-0 overflow-hidden"
+                className="p-0 overflow-hidden hover:bg-black-coffee/5"
                 onClick={() => navigate(`/menu/${orderItem.product_id}`)}
               >
                 <CardContent className="p-0 flex flex-row gap-5">
