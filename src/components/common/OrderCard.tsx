@@ -4,7 +4,6 @@ import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import {
   CartProduct,
-  OrderItem,
   OrderItemWithImageAndCategory,
   OrderWithOrderItemsWithImageAndCategory,
 } from "@/models/types";
@@ -124,15 +123,7 @@ export default function OrderCard({ ...props }: OrderCardProps) {
             console.log(props.order.order_items);
             console.log(Array.isArray(props.order.order_items));
 
-            //             type CartProduct = {
-            //     product_id: number;
-            //     product_name: string;
-            //     quantity: number;
-            //     product_size: "S" | "M" | "L";
-            //     product_category: string;
-            //     unit_price: number;
-            //     img_url: string;
-            // }
+            handleBuyAgain(props.order.order_items);
           }}
         >
           Buy again
