@@ -77,6 +77,20 @@ export function isAuthSessinoMissingErrorResponse(
   );
 }
 
+export function isCartProduct(data: unknown): data is CartProduct {
+  return (
+    typeof data === "object" &&
+    data !== null &&
+    "product_id" in data &&
+    "product_name" in data &&
+    "product_category" in data &&
+    "unit_price" in data &&
+    "quantity" in data &&
+    "product_size" in data &&
+    "img_url" in data
+  );
+}
+
 //? -----------------------------------------------------------------------------------
 
 export function handleZodApiFieldErrors<T extends FieldValues>(
