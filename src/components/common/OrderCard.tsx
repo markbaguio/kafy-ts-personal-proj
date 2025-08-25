@@ -4,6 +4,8 @@ import { ShoppingBag, Dot } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import {
   CartProduct,
+  OrderItem,
+  OrderItemWithImageAndCategory,
   OrderWithOrderItemsWithImageAndCategory,
 } from "@/models/types";
 import { useNavigate } from "react-router";
@@ -19,12 +21,23 @@ export default function OrderCard({ ...props }: OrderCardProps) {
   const navigate = useNavigate();
   const addProductToCart = useCartStore((state) => state.addProductToCart);
 
-  function handleBuyAgain(items: CartProduct[]) {
-    items.forEach((item) => {
-      addProductToCart({
-        ...item,
-      });
-    });
+  function handleBuyAgain(items: OrderItemWithImageAndCategory[]) {
+    //? Create an array of CartProduct (CartProduct[])
+    const buyAgainItems: CartProduct[] = items.map((item) => ({
+      img_url: item.image_url,
+      product_category: item.category,
+      product_id: item.product_id,
+      product_name: item.product_name,
+      product_size: item.product_size,
+      quantity: item.quantity,
+      unit_price: item.price_at_purchase,
+    }));
+    console.log("Buy Again Items: ", buyAgainItems);
+    // items.forEach((item) => {
+    //   addProductToCart({
+    //     ...item,
+    //   });
+    // });
   }
 
   return (
@@ -109,6 +122,17 @@ export default function OrderCard({ ...props }: OrderCardProps) {
           className="w-fit"
           onClick={() => {
             console.log(props.order.order_items);
+            console.log(Array.isArray(props.order.order_items));
+
+            //             type CartProduct = {
+            //     product_id: number;
+            //     product_name: string;
+            //     quantity: number;
+            //     product_size: "S" | "M" | "L";
+            //     product_category: string;
+            //     unit_price: number;
+            //     img_url: string;
+            // }
           }}
         >
           Buy again
