@@ -7,6 +7,7 @@ import {
   ZodErrorDetails,
 } from "@/models/ApiResponse";
 import { CartProduct } from "@/models/types";
+import { CartProductSchema } from "@/schemas/CartSchema/CartProductSchema";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
@@ -78,17 +79,18 @@ export function isAuthSessinoMissingErrorResponse(
 }
 
 export function isCartProduct(data: unknown): data is CartProduct {
-  return (
-    typeof data === "object" &&
-    data !== null &&
-    "product_id" in data &&
-    "product_name" in data &&
-    "product_category" in data &&
-    "unit_price" in data &&
-    "quantity" in data &&
-    "product_size" in data &&
-    "img_url" in data
-  );
+  // return (
+  //   typeof data === "object" &&
+  //   data !== null &&
+  //   "product_id" in data &&
+  //   "product_name" in data &&
+  //   "product_category" in data &&
+  //   "unit_price" in data &&
+  //   "quantity" in data &&
+  //   "product_size" in data &&
+  //   "img_url" in data
+  // );
+  return CartProductSchema.safeParse(data).success;
 }
 
 //? -----------------------------------------------------------------------------------
