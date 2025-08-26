@@ -10,6 +10,7 @@ import {
 import { useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { useCartStore } from "@/store/useCartStore";
+import { toast } from "sonner";
 
 type OrderCardProps = {
   // order: OrderWithOrderItemsWithImage;
@@ -32,11 +33,11 @@ export default function OrderCard({ ...props }: OrderCardProps) {
       unit_price: item.price_at_purchase,
     }));
     console.log("Buy Again Items: ", buyAgainItems);
-    // items.forEach((item) => {
-    //   addProductToCart({
-    //     ...item,
-    //   });
-    // });
+
+    buyAgainItems.forEach((buyAgainItem) => {
+      addProductToCart(buyAgainItem);
+    });
+    toast.success(`Items added to cart!`);
   }
 
   return (
