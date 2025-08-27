@@ -1,15 +1,27 @@
-import { AxiosErrorCode, BASE_URL, ORDERS_PAGE } from "@/constants";
+import {
+  AxiosErrorCode,
+  BASE_URL,
+  LATEST_ORDERS,
+  ORDERS_PAGE,
+} from "@/constants";
 import { axiosInstance } from "@/lib/axiosInterceptors/responseInterceptor";
 import { isApiErrorResponse } from "@/lib/utils";
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
 import { OrdersWithOrderItemsWithImageAndCategory } from "@/models/types";
-import { OrdersWithOrderItemsWithImageAndCategorySchemaArray } from "@/schemas/OrderSchema/Order/OrderSchema";
+import {
+  GetLatestOrdersQueryParametersSchema,
+  OrdersWithOrderItemsWithImageAndCategorySchemaArray,
+} from "@/schemas/OrderSchema/Order/OrderSchema";
 import { isAxiosError } from "axios";
-import { ZodError } from "zod";
+import { z, ZodError } from "zod";
 
 type GetOrdersParams = {
   status?: string;
 };
+
+type GetLatestOrdersParams = z.infer<
+  typeof GetLatestOrdersQueryParametersSchema
+>;
 
 export async function getOrders({
   status = "orderPlaced",
@@ -42,6 +54,59 @@ export async function getOrders({
     return {
       statusCode: response.status,
       data: parsedOrdersWithOrderItemsWithImage.data,
+    };
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          "Unable to reach server. Please check your internet connection."
+        );
+      }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
+    }
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export async function getLatestOrders({
+  limit,
+}: GetLatestOrdersParams): Promise<
+  ApiResponse<OrdersWithOrderItemsWithImageAndCategory>
+> {
+  try {
+    const response = await axiosInstance.get<
+      ApiResponse<OrdersWithOrderItemsWithImageAndCategory>
+    >(`${BASE_URL}${LATEST_ORDERS}`, {
+      withCredentials: true,
+      params: {
+        limit,
+      },
+    });
+
+    const parsedResponse =
+      OrdersWithOrderItemsWithImageAndCategorySchemaArray.safeParse(
+        response.data.data
+      );
+
+    if (!parsedResponse.success) {
+      throw new ZodError(parsedResponse.error.errors);
+    }
+
+    console.log("latest orders: ", parsedResponse.data);
+
+    return {
+      statusCode: response.status,
+      data: parsedResponse.data,
     };
   } catch (error) {
     if (isAxiosError(error)) {
