@@ -7,21 +7,17 @@ import {
 import { axiosInstance } from "@/lib/axiosInterceptors/responseInterceptor";
 import { isApiErrorResponse } from "@/lib/utils";
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
-import { OrdersWithOrderItemsWithImageAndCategory } from "@/models/types";
+import {
+  GetLatestOrdersParams,
+  GetOrdersParams,
+  OrdersWithOrderItemsWithImageAndCategory,
+} from "@/models/types";
 import {
   GetLatestOrdersQueryParametersSchema,
   OrdersWithOrderItemsWithImageAndCategorySchemaArray,
 } from "@/schemas/OrderSchema/Order/OrderSchema";
 import { isAxiosError } from "axios";
 import { z, ZodError } from "zod";
-
-type GetOrdersParams = {
-  status?: string;
-};
-
-type GetLatestOrdersParams = z.infer<
-  typeof GetLatestOrdersQueryParametersSchema
->;
 
 export async function getOrders({
   status = "orderPlaced",
