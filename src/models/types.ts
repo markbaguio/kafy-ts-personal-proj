@@ -11,6 +11,7 @@ import {
 } from "@/schemas/OrderItemSchema/CreateOrderItemSchema/CreateOrderItemSchema";
 import { CreateOrderSchema } from "@/schemas/OrderSchema/CreateOrderSchema/CreateOrderSchema";
 import {
+  GetLatestOrdersQueryParametersSchema,
   OrderSchema,
   OrderStatusSchema,
   OrdersWithOrderItemsWithImageAndCategorySchema,
@@ -76,4 +77,12 @@ export type OrderStatus = z.infer<typeof OrderStatusSchema>;
 
 export type OrderItemWithImageAndCategory = z.infer<
   typeof OrderItemWithImageAndCategorySchema
+>;
+
+export type GetOrdersParams = {
+  status?: string;
+};
+
+export type GetLatestOrdersParams = z.infer<
+  typeof GetLatestOrdersQueryParametersSchema
 >;
