@@ -45,3 +45,7 @@ export const OrdersWithOrderItemsWithImageAndCategorySchema =
 export const OrdersWithOrderItemsWithImageAndCategorySchemaArray = z.array(
   OrdersWithOrderItemsWithImageAndCategorySchema
 );
+
+export const GetLatestOrdersQueryParametersSchema = z.object({
+  limit: z.number().positive().min(1).default(1),
+});
