@@ -17,7 +17,7 @@ import {
   OrdersWithOrderItemsWithImageAndCategorySchemaArray,
 } from "@/schemas/OrderSchema/Order/OrderSchema";
 import { isAxiosError } from "axios";
-import { z, ZodError } from "zod";
+import { ZodError } from "zod";
 
 export async function getOrders({
   status = "orderPlaced",
@@ -102,7 +102,7 @@ export async function getLatestOrders({
 
     return {
       statusCode: response.status,
-      data: parsedResponse.data,
+      data: parsedResponse.data ?? [],
     };
   } catch (error) {
     if (isAxiosError(error)) {
