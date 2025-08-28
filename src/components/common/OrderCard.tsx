@@ -43,7 +43,7 @@ export default function OrderCard({ ...props }: OrderCardProps) {
   return (
     <div
       key={props.order.id}
-      className="flex flex-col gap-8 bg-milky-white border rounded-xl shadow-lg p-5"
+      className="flex flex-col gap-8 bg-milky-white border rounded-xl shadow-lg p-5 w-full"
     >
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-2">
