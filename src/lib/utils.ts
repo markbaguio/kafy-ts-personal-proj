@@ -11,6 +11,8 @@ import { CartProductSchema } from "@/schemas/CartSchema/CartProductSchema";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
+import { parseISO } from "date-fns";
+import { formatInTimeZone } from "date-fns-tz";
 import { FieldValues, Path, UseFormSetError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 
@@ -147,4 +149,24 @@ export function calculateOrderTotal({
   if (subtotal > FREE_SHIPPING_THRESHOLD) return subtotal + tax;
 
   return subtotal + (tax + deliveryEstimate);
+}
+
+export function formatLocalDate(
+  date: string,
+  dateFormat: string = "dd-MM-yyyy HH:mm"
+) {
+  const dateObject = parseISO(date);
+  return formatInTimeZone(
+    dateObject,
+    Intl.DateTimeFormat().resolvedOptions().timeZone,
+    dateFormat
+  );
+}
+
+export function formatUTCDate(
+  date: string,
+  dateFormat: string = "dd-MM-yyyy HH:mm"
+) {
+  const dateObject = parseISO(date);
+  return formatInTimeZone(dateObject, "UTC", dateFormat);
 }
