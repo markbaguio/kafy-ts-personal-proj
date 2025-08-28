@@ -5,9 +5,35 @@ import ShoppingBagSVG from "@/assets/ProfilePage/shopping-bag-svgrepo-com.svg";
 import { Button } from "@/components/ui/button";
 import StarSVG from "@/assets/ProfilePage/star-svgrepo-com.svg";
 import Logo from "@/components/common/Logo";
+import { createGetLatestOrdersQueryOptions } from "@/queryOptions/createGetLatestOrdersQueryOptions";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function ProfilePage() {
   const { data } = useQuery(createGetProfileQueryOptions());
+  const { data: latestOrder } = useQuery(
+    createGetLatestOrdersQueryOptions(
+      { limit: 1 },
+      {
+        select: (orders) => {
+          // Always return an ApiResponse object
+          return {
+            ...orders,
+            data: orders.data && orders.data.length > 0 ? [orders.data[0]] : [],
+          };
+        },
+      }
+    )
+  );
+
+  const firstName = useAuthStore((state) => state.profile?.first_name);
+  const lastName = useAuthStore((state) => state.profile?.last_name);
+  const email = useAuthStore((state) => state.profile?.email);
+  const joinDateString = useAuthStore((state) => state.profile?.created_at);
+  const joinDate = joinDateString
+    ? new Date(joinDateString).toLocaleDateString()
+    : undefined;
+
+  console.log("latest order: ", latestOrder);
 
   return (
     <section className="w-screen bg-off-white-2/50 grid grid-cols-1 lg:grid-flow-col lg:grid-cols-3 grid-rows-2 p-10 gap-5 min-h-[850px] max-h-lvh overflow-y-auto">
@@ -18,13 +44,15 @@ export default function ProfilePage() {
             <User className="w-[200px] h-[200px]" />
           </div>
           <div className="flex flex-col text-center">
-            <h1 className="text-5xl font-bold">
-              {data?.data?.first_name} {""}
-              {data?.data?.last_name}
-            </h1>
-            <h6 className="text-md font-light">{data?.data?.email}</h6>
+            <h2 className="text-5xl font-bold">
+              {firstName || lastName
+                ? `${firstName ?? ""} ${lastName ?? ""}`
+                : "Anonymous user".trim()}
+            </h2>
+            <h6 className="text-md font-light">{email ?? "N/A"}</h6>
+            {/** //TODO: Continue working on this date */}
             <h6 className="text-sm font-extralight">
-              Joined at {data?.data?.created_at.toLocaleDateString()}
+              Joined at <span>{joinDate ?? " N/A"}</span>
             </h6>
           </div>
         </div>
