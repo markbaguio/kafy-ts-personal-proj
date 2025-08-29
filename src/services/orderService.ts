@@ -45,7 +45,7 @@ export async function getOrders({
       throw new ZodError(parsedOrdersWithOrderItemsWithImage.error.errors);
     }
 
-    console.log("response", response);
+    // console.log("response", response);
 
     return {
       statusCode: response.status,
