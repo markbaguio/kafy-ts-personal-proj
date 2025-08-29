@@ -11,7 +11,7 @@ import { CartProductSchema } from "@/schemas/CartSchema/CartProductSchema";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
 import { AuthApiError } from "@supabase/supabase-js";
 import { clsx, type ClassValue } from "clsx";
-import { parseISO } from "date-fns";
+import { isValid, parseISO } from "date-fns";
 import { formatInTimeZone } from "date-fns-tz";
 import { FieldValues, Path, UseFormSetError } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
@@ -151,6 +151,8 @@ export function calculateOrderTotal({
   return subtotal + (tax + deliveryEstimate);
 }
 
+//TODO: implement a single date formatter which accepts timezone as parameter. default timezone should be based on local TZ.
+
 export function formatLocalDate(
   date: string,
   dateFormat: string = "dd-MM-yyyy HH:mm"
@@ -169,4 +171,78 @@ export function formatUTCDate(
 ) {
   const dateObject = parseISO(date);
   return formatInTimeZone(dateObject, "UTC", dateFormat);
+}
+
+type DateFormatOptions = {
+  dateFormat?: string;
+  timeZone?: string;
+  fallback?: string;
+};
+
+// type formatDateStringToReadableDateParams = {
+//   date: string | null | undefined;
+//   options?: DateFormatOptions;
+// };
+
+// export function formatDateStringToReadableDate1({
+//   date,
+//   options = {},
+// }: formatDateStringToReadableDateParams) {
+//   //? default options values
+//   const {
+//     dateFormat = "dd-MM-yyyy",
+//     timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+//     fallback = "N/A",
+//   } = options;
+
+//   //? handle edge cases
+//   if (!date) return fallback;
+
+//   const dateObject = parseISO(date);
+
+//   if (!isValid(dateObject)) return fallback;
+
+//   return formatInTimeZone(dateObject, timeZone, dateFormat);
+// }
+
+// export function formatDateStringToReadableDate2(
+//   date: string,
+//   // options: DateFormatOptions
+//   {
+//     dateFormat = "dd-MM-yyyy",
+//     timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+//     fallback = "N/A",
+//   }: DateFormatOptions = {}
+// ): string {
+//   //? default options values
+
+//   //? handle edge cases
+//   if (!date) return fallback;
+
+//   const dateObject = parseISO(date);
+
+//   if (!isValid(dateObject)) return fallback;
+
+//   return formatInTimeZone(dateObject, timeZone, dateFormat);
+// }
+
+export function formatDateStringToReadableDate(
+  date: string | undefined | null,
+  options: DateFormatOptions = {}
+): string {
+  //? default options values
+  const {
+    dateFormat = "dd-MM-yyyy",
+    timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone,
+    fallback = "N/A",
+  } = options;
+
+  //? handle edge cases
+  if (!date) return fallback;
+
+  const dateObject = parseISO(date);
+
+  if (!isValid(dateObject)) return fallback;
+
+  return formatInTimeZone(dateObject, timeZone, dateFormat);
 }
