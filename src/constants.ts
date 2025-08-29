@@ -1,6 +1,9 @@
 import { TestimonyCardProps } from "./components/common/TestimonialCarousel";
 import { MenuCategoryType } from "./hooks/useMenuPageSearchParams";
-import { Product } from "./models/types";
+import {
+  OrdersWithOrderItemsWithImageAndCategory,
+  Product,
+} from "./models/types";
 import { SplitScreenSectionType } from "./pages/Homepage";
 import { RewardPerksType, RewardsInfoType } from "./pages/Rewards";
 
@@ -446,5 +449,78 @@ export const MenuItemsMockData: Product[] = [
     price: 150,
     image_url:
       "https://images.unsplash.com/photo-1578899952107-9c390f1af1b7?w=900",
+  },
+];
+
+export const mockOrdersData: OrdersWithOrderItemsWithImageAndCategory = [
+  {
+    id: 38,
+    total_amount: 480,
+    status: "orderPlaced",
+    created_at: "2025-08-20T05:59:54.794606+00:00",
+    profile_id: "f6f2bde4-8276-4e86-8d90-7138ee7fd516",
+    order_items: [
+      {
+        id: 31,
+        created_at: "2025-08-20T05:59:54.869512+00:00",
+        product_id: 13,
+        product_name: "Black Tea",
+        price_at_purchase: 90,
+        order_id: 38,
+        quantity: 2,
+        product_size: "L",
+        image_url:
+          "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=60&w=800",
+        category: "hot",
+      },
+      {
+        id: 32,
+        created_at: "2025-08-20T05:59:54.869512+00:00",
+        product_id: 7,
+        product_name: "Macchiato",
+        price_at_purchase: 120,
+        order_id: 38,
+        quantity: 2,
+        product_size: "M",
+        image_url:
+          "https://images.unsplash.com/photo-1557772611-722dabe20327?auto=format&fit=crop&q=80&w=1887",
+        category: "hot",
+      },
+    ],
+  },
+  {
+    id: 37,
+    total_amount: 555,
+    status: "orderPlaced",
+    created_at: "2025-08-18T08:10:38.628674+00:00",
+    profile_id: "f6f2bde4-8276-4e86-8d90-7138ee7fd516",
+    order_items: [
+      {
+        id: 29,
+        created_at: "2025-08-18T08:10:38.719108+00:00",
+        product_id: 17,
+        product_name: "Frapino Mocha",
+        price_at_purchase: 190,
+        order_id: 37,
+        quantity: 2,
+        product_size: "M",
+        image_url:
+          "https://images.unsplash.com/photo-1530373239216-42518e6b4063?auto=format&fit=crop&q=60&w=800",
+        category: "cold",
+      },
+      {
+        id: 30,
+        created_at: "2025-08-18T08:10:38.719108+00:00",
+        product_id: 14,
+        product_name: "Iced Latte",
+        price_at_purchase: 160,
+        order_id: 37,
+        quantity: 1,
+        product_size: "M",
+        image_url:
+          "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&q=60&w=800",
+        category: "cold",
+      },
+    ],
   },
 ];
