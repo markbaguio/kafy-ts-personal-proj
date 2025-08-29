@@ -11,6 +11,7 @@ import OrderCard from "@/components/common/OrderCard";
 import Loading from "@/components/ui/loading";
 import { OrderWithOrderItemsWithImageAndCategory } from "@/models/types";
 import { Link } from "react-router";
+import { formatDateStringToReadableDate } from "@/lib/utils";
 
 const latestOrderMock: OrderWithOrderItemsWithImageAndCategory = {
   id: 38,
@@ -70,12 +71,7 @@ export default function ProfilePage() {
   const firstName = useAuthStore((state) => state.profile?.first_name);
   const lastName = useAuthStore((state) => state.profile?.last_name);
   const email = useAuthStore((state) => state.profile?.email);
-  const joinDateString = useAuthStore((state) => state.profile?.created_at);
-  const joinDate = joinDateString
-    ? new Date(joinDateString).toLocaleDateString()
-    : undefined;
-
-  console.log("latest order: ", latestOrder);
+  const joinDate = useAuthStore((state) => state.profile?.created_at);
 
   // return (
   //   <main className="bg-off-white-2/50 flex flex-col p-10 gap-5">
@@ -181,6 +177,7 @@ export default function ProfilePage() {
   //     </div>
   //   </main>
   // );
+  //TODO: Work on normalizing the date.
   return (
     <main className="bg-off-white-2/50 flex flex-col w-full h-full p-10 gap-5">
       <section className="gap-5 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2">
@@ -199,7 +196,10 @@ export default function ProfilePage() {
               <h6 className="text-md font-light">{email ?? "N/A"}</h6>
               {/** //TODO: Continue working on this date */}
               <h6 className="text-sm font-extralight">
-                Joined at <span>{joinDate ?? " N/A"}</span>
+                Joined at{" "}
+                <span>
+                  {formatDateStringToReadableDate(joinDate) ?? " N/A"}
+                </span>
               </h6>
             </div>
           </div>
@@ -222,7 +222,7 @@ export default function ProfilePage() {
 
               <div className="flex flex-col">
                 <h5 className="text-xl font-light">Order count</h5>
-                <p className="text-3xl">22</p>
+                <p className="text-3xl">{latestOrder?.data?.length ?? 0}</p>
               </div>
             </div>
             <div className="bg-milky-white rounded-[15px] flex flex-row gap-2 p-3">
