@@ -9,45 +9,8 @@ import { createGetLatestOrdersQueryOptions } from "@/queryOptions/createGetLates
 import { useAuthStore } from "@/store/useAuthStore";
 import OrderCard from "@/components/common/OrderCard";
 import Loading from "@/components/ui/loading";
-import { OrderWithOrderItemsWithImageAndCategory } from "@/models/types";
 import { Link } from "react-router";
 import { formatDateStringToReadableDate } from "@/lib/utils";
-
-const latestOrderMock: OrderWithOrderItemsWithImageAndCategory = {
-  id: 38,
-  total_amount: 480,
-  status: "orderPlaced",
-  created_at: "2025-08-20T05:59:54.794606+00:00",
-  profile_id: "f6f2bde4-8276-4e86-8d90-7138ee7fd516",
-  order_items: [
-    {
-      id: 31,
-      created_at: "2025-08-20T05:59:54.869512+00:00",
-      product_id: 13,
-      product_name: "Black Tea",
-      price_at_purchase: 90,
-      order_id: 38,
-      quantity: 2,
-      product_size: "L",
-      image_url:
-        "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=60&w=800",
-      category: "hot",
-    },
-    {
-      id: 32,
-      created_at: "2025-08-20T05:59:54.869512+00:00",
-      product_id: 7,
-      product_name: "Macchiato",
-      price_at_purchase: 120,
-      order_id: 38,
-      quantity: 2,
-      product_size: "M",
-      image_url:
-        "https://images.unsplash.com/photo-1557772611-722dabe20327?auto=format&fit=crop&q=80&w=1887",
-      category: "hot",
-    },
-  ],
-};
 
 export default function ProfilePage() {
   const { data } = useQuery(createGetProfileQueryOptions());
