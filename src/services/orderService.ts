@@ -12,10 +12,7 @@ import {
   GetOrdersParams,
   OrdersWithOrderItemsWithImageAndCategory,
 } from "@/models/types";
-import {
-  GetLatestOrdersQueryParametersSchema,
-  OrdersWithOrderItemsWithImageAndCategorySchemaArray,
-} from "@/schemas/OrderSchema/Order/OrderSchema";
+import { OrdersWithOrderItemsWithImageAndCategorySchemaArray } from "@/schemas/OrderSchema/Order/OrderSchema";
 import { isAxiosError } from "axios";
 import { ZodError } from "zod";
 
