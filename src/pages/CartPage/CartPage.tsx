@@ -10,7 +10,7 @@ import {
   calculateOrderTotal,
   calculateSubtotal,
   capitalizeFirstLetter,
-  formattedCurrency,
+  formatCurrency,
 } from "@/lib/utils";
 import { CartProduct } from "@/models/types";
 import { ProductSize } from "@/schemas/MenuProductDetailPage/MenuProductDetailParamsSchema";
@@ -180,8 +180,8 @@ function CartPage() {
           {/** Free shippig notification strip */}
           {showFreeShippingNotificationStrip && (
             <div className="animate-vibrate bg-golden-brown/80 text-milky-white h-fit w-full p-2 rounded-lg flex flex-col justify-center items-center text-center text-sm lg:text-lg">
-              Spend at least {formattedCurrency(FREE_SHIPPING_THRESHOLD)} to
-              unlock free shipping!
+              Spend at least {formatCurrency(FREE_SHIPPING_THRESHOLD)} to unlock
+              free shipping!
             </div>
           )}
         </section>
@@ -251,7 +251,7 @@ function CartProductCard({
           </h2>
           <span className="text-blackhole font-semibold text-lg md:text-2xl lg:text-3xl w-fit text-end">
             {/* {PESOSIGN} */}
-            {formattedCurrency(cartProduct.unit_price * cartProduct.quantity)}
+            {formatCurrency(cartProduct.unit_price * cartProduct.quantity)}
           </span>
         </div>
         {/** product size and category */}
