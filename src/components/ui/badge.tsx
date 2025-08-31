@@ -26,7 +26,7 @@ const badgeVariants = cva(
         completed:
           "border-none bg-success-green/20 rounded-full px-3 py-2 text-success-green-accent",
         canceled:
-          "boreder-none bg-destructive/20 rounded-full px-3 py-2 text-destructive/50",
+          "boreder-none bg-destructive/20 rounded-full px-3 py-2 text-destructive",
       },
     },
     defaultVariants: {
