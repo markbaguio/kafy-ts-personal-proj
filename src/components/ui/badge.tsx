@@ -20,7 +20,13 @@ const badgeVariants = cva(
         secondaryBestSeller:
           "border-none bg-black-coffee/10 text-phthalo [a&]:hover:bg-secondary/90",
         orderInProgress:
-          "border-none bg-success-green/20 rounded-full px-3 py-2",
+          "border-none bg-success-green/20 rounded-full px-3 py-2 text-success-green-accent",
+        orderPlaced:
+          "border-none bg-success-green/20 rounded-full px-3 py-2 text-success-green-accent",
+        completed:
+          "border-none bg-success-green/20 rounded-full px-3 py-2 text-success-green-accent",
+        canceled:
+          "boreder-none bg-destructive/20 rounded-full px-3 py-2 text-destructive/50",
       },
     },
     defaultVariants: {
