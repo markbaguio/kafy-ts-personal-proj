@@ -1,6 +1,6 @@
 import { createGetProfileQueryOptions } from "@/queryOptions/createGetProfileQueryOptions";
 import { useQuery } from "@tanstack/react-query";
-import { CalendarCheck2Icon, User } from "lucide-react";
+import { CalendarCheck2Icon } from "lucide-react";
 import ShoppingBagSVG from "@/assets/ProfilePage/shopping-bag-svgrepo-com.svg";
 import { Button } from "@/components/ui/button";
 import StarSVG from "@/assets/ProfilePage/star-svgrepo-com.svg";
@@ -11,6 +11,7 @@ import OrderCard from "@/components/common/OrderCard";
 import Loading from "@/components/ui/loading";
 import { Link } from "react-router";
 import { formatDateStringToReadableDate } from "@/lib/utils";
+import Avatar from "react-avatar";
 
 export default function ProfilePage() {
   const { data } = useQuery(createGetProfileQueryOptions());
@@ -148,7 +149,16 @@ export default function ProfilePage() {
         <div className="overflow-hidden bg-milky-white rounded-[30px] shadow-xl row-span-2 col-span-2 lg:col-span-1 flex flex-col gap-10 items-center p-5">
           <div className="flex flex-col items-center gap-10 p-15 w-full">
             <div className="overflow-hidden  bg-royal-brown/50 rounded-full">
-              <User className="w-[200px] h-[200px]" />
+              {/* <User className="w-[200px] h-[200px]" /> */}
+              <Avatar
+                className="text-4xl"
+                size="200px"
+                name={
+                  firstName || lastName
+                    ? `${firstName ?? ""} ${lastName ?? ""}`
+                    : "Anonymous user".trim()
+                }
+              />
             </div>
             <div className="flex flex-col text-center">
               <h2 className="text-5xl font-bold">
