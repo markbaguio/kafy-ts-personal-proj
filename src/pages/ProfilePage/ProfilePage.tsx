@@ -12,6 +12,12 @@ import Loading from "@/components/ui/loading";
 import { Link } from "react-router";
 import { formatDateStringToReadableDate } from "@/lib/utils";
 import Avatar from "react-avatar";
+import { OrderWithOrderItemsWithImageAndCategory } from "@/models/types";
+
+type AnalyticsBentoGridProps = Pick<
+  OrderWithOrderItemsWithImageAndCategory,
+  "created_at"
+>;
 
 export default function ProfilePage() {
   const { data } = useQuery(createGetProfileQueryOptions());
@@ -239,7 +245,15 @@ export default function ProfilePage() {
           </div>
         </div>
         {/** More simple Analytics */}
-        <AnalyticsBentoGrid />
+        <AnalyticsBentoGrid
+          created_at={
+            latestOrder?.data
+              ? formatDateStringToReadableDate(latestOrder.data[0].created_at, {
+                  dateFormat: "MMMM dd, yyyy",
+                })
+              : "N/A"
+          }
+        />
       </section>
       <section className="h-full">
         {/* <OrderHistory /> */}
@@ -260,7 +274,7 @@ export default function ProfilePage() {
   );
 }
 
-function AnalyticsBentoGrid() {
+function AnalyticsBentoGrid({ created_at }: AnalyticsBentoGridProps) {
   return (
     <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-2 grid grid-cols-1 lg:grid-cols-6 lg:grid-rows-2 grid-flow-dense gap-2 p-5">
       <div className="bg-cappuccino/80 rounded-[15px] col-span-1 flex flex-col justify-center items-center">
@@ -298,7 +312,7 @@ function AnalyticsBentoGrid() {
         <CalendarCheck2Icon className="stroke-1 text-milky-white w-[150px] h-[150px]" />
         <div className="w-full">
           <h5 className="font-light text-3xl">Last order</h5>
-          <p className="text-4xl font-bold">June 15, 2025</p>
+          <p className="text-4xl font-bold">{created_at}</p>
         </div>
       </div>
     </div>
