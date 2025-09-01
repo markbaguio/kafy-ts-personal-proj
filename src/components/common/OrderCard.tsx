@@ -15,44 +15,11 @@ import { useCartStore } from "@/store/useCartStore";
 import { toast } from "sonner";
 import { ReactNode } from "react";
 import { VariantProps } from "class-variance-authority";
+import StatusBadge from "./StatusBadge/StatusBadge";
 
 type OrderCardProps = {
   // order: OrderWithOrderItemsWithImage;
   order: OrderWithOrderItemsWithImageAndCategory;
-};
-
-const statusConfig: Record<
-  OrderStatus,
-  {
-    label: string;
-    badgeVariant: VariantProps<typeof badgeVariants>;
-    icon: ReactNode;
-  }
-> = {
-  orderInProgress: {
-    badgeVariant: { variant: "orderInProgress" },
-    icon: <Dot />,
-    label: "Order being prepared",
-  },
-  orderPlaced: {
-    badgeVariant: { variant: "orderPlaced" },
-    icon: <Dot />,
-    label: "Order being prepared",
-  },
-  completed: {
-    badgeVariant: { variant: "completed" },
-    icon: <Check />,
-    label: "Order completed",
-  },
-  canceled: {
-    badgeVariant: { variant: "canceled" },
-    icon: <CircleOff />,
-    label: "Order canceled",
-  },
-};
-
-type StatusBadgeProps = {
-  orderStatus: OrderStatus;
 };
 
 export default function OrderCard({ ...props }: OrderCardProps) {
@@ -170,15 +137,5 @@ export default function OrderCard({ ...props }: OrderCardProps) {
         </span>
       </div>
     </div>
-  );
-}
-
-function StatusBadge({ orderStatus }: StatusBadgeProps) {
-  const { badgeVariant, icon, label } = statusConfig[orderStatus];
-  return (
-    <Badge {...badgeVariant} className="flex flex-row-reverse">
-      <span>{label}</span>
-      {icon}
-    </Badge>
   );
 }
