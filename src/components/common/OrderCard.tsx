@@ -1,20 +1,16 @@
 import { capitalizeFirstLetter, formatCurrency } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
-import { ShoppingBag, Dot, Check, CircleOff } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
-import { Badge, badgeVariants } from "@/components/ui/badge";
 import {
   CartProduct,
   OrderItemWithImageAndCategory,
-  OrderStatus,
   OrderWithOrderItemsWithImageAndCategory,
 } from "@/models/types";
 import { useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { useCartStore } from "@/store/useCartStore";
 import { toast } from "sonner";
-import { ReactNode } from "react";
-import { VariantProps } from "class-variance-authority";
 import StatusBadge from "./StatusBadge/StatusBadge";
 
 type OrderCardProps = {
