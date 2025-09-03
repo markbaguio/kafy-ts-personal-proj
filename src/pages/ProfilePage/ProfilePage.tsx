@@ -276,12 +276,18 @@ export default function ProfilePage() {
 
 function AnalyticsBentoGrid({ created_at }: AnalyticsBentoGridProps) {
   return (
-    <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-2 grid grid-cols-1 lg:grid-cols-6 lg:grid-rows-2 grid-flow-dense gap-2 p-5">
-      <div className="bg-cappuccino/80 rounded-[15px] col-span-1 flex flex-col justify-center items-center">
-        <Logo classname="" />
+    <div className="bg-milky-white rounded-[30px] shadow-xl col-span-2 row-span-2 grid grid-cols-1 lg:grid-cols-6 lg:grid-rows-2 grid-flow-dense gap-2 p-5 ">
+      <div className="w-full bg-cappuccino/80 rounded-[15px] col-span-3 lg:col-span-1 flex flex-col justify-center items-center">
+        <Link to={"/"}>
+          <Logo
+            classname="py-3 lg:flex-col lg:gap-8"
+            classNames={{ textLogo: "lg:rotate-90" }}
+          />
+        </Link>
+        {/* <span className="">KAFY</span> */}
         {/* <img src={KafyLogo} className="h-[100px] w-[100px]" /> */}
       </div>
-      <div className="bg-black-coffee/85 rounded-[15px] col-span-3 flex flex-row justify-center items-center gap-4 p-3 lg:p-0">
+      <div className="bg-black-coffee/85 rounded-[15px] col-span-3 flex flex-col justify-center items-center gap-4 p-3 lg:p-0">
         <p className="text-milky-white font-light text-3xl">
           Average rating given
         </p>
@@ -308,11 +314,13 @@ function AnalyticsBentoGrid({ created_at }: AnalyticsBentoGridProps) {
           Check out
         </Button>
       </div>
-      <div className="bg-royal-brown/90 rounded-[15px] col-span-3 text-milky-white flex flex-row justify-items-start items-center gap-2 p-2">
-        <CalendarCheck2Icon className="stroke-1 text-milky-white w-[150px] h-[150px]" />
-        <div className="w-full">
-          <h5 className="font-light text-3xl">Last order</h5>
-          <p className="text-4xl font-bold">{created_at}</p>
+      <div className="bg-royal-brown/90 rounded-[15px] col-span-3 text-milky-white flex flex-row justify-center items-center gap-2 p-2">
+        <div className="flex flex-row items-center">
+          <CalendarCheck2Icon className="stroke-1 text-milky-white w-[150px] h-[150px]" />
+          <div className="w-full">
+            <h5 className="font-light text-3xl">Last order</h5>
+            <p className="text-4xl font-bold">{created_at}</p>
+          </div>
         </div>
       </div>
     </div>
