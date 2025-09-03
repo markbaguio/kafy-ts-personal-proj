@@ -42,7 +42,7 @@ export default function StatusBadge({ orderStatus }: StatusBadgeProps) {
   const { badgeVariant, icon, label } = statusConfig[orderStatus];
   return (
     <Badge {...badgeVariant} className="flex flex-row-reverse">
-      <span>{label}</span>
+      <span className="text-xs">{label}</span>
       {icon}
     </Badge>
   );
