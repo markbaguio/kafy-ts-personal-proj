@@ -42,6 +42,9 @@ export default function ProfilePage() {
   const lastName = useAuthStore((state) => state.profile?.last_name);
   const email = useAuthStore((state) => state.profile?.email);
   const joinDate = useAuthStore((state) => state.profile?.created_at);
+  const profile_img = useAuthStore(
+    (state) => state.profile?.avatar_url ?? undefined
+  );
 
   // return (
   //   <main className="bg-off-white-2/50 flex flex-col p-10 gap-5">
@@ -157,13 +160,15 @@ export default function ProfilePage() {
             <div className="overflow-hidden  bg-royal-brown/50 rounded-full">
               {/* <User className="w-[200px] h-[200px]" /> */}
               <Avatar
-                className="text-4xl"
-                size="200px"
+                className="text-4xl object-cover"
+                size="300px"
                 name={
                   firstName || lastName
                     ? `${firstName ?? ""} ${lastName ?? ""}`
                     : "Anonymous user".trim()
                 }
+                src={profile_img}
+                alt="Profile Picture"
               />
             </div>
             <div className="flex flex-col text-center">
