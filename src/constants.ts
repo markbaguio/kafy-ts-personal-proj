@@ -457,7 +457,7 @@ export const mockOrdersData: OrdersWithOrderItemsWithImageAndCategory = [
   {
     id: 38,
     total_amount: 480,
-    status: "orderPlaced",
+    status: "completed",
     created_at: "2025-08-20T05:59:54.794606+00:00",
     profile_id: "f6f2bde4-8276-4e86-8d90-7138ee7fd516",
     order_items: [

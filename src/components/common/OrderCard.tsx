@@ -1,6 +1,6 @@
 import { capitalizeFirstLetter, formatCurrency } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-separator";
-import { ShoppingBag, Dot } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import {
   CartProduct,
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router";
 import { Button } from "../ui/button";
 import { useCartStore } from "@/store/useCartStore";
 import { toast } from "sonner";
+import StatusBadge from "./StatusBadge/StatusBadge";
 
 type OrderCardProps = {
   // order: OrderWithOrderItemsWithImage;
@@ -47,15 +48,10 @@ export default function OrderCard({ ...props }: OrderCardProps) {
     >
       <div className="flex flex-row items-center justify-between">
         <div className="flex flex-row items-center gap-2">
-          <ShoppingBag strokeWidth={1} className="size-15" />
-          <span className="text-3xl">{props.order.id}</span>
+          <ShoppingBag strokeWidth={1} className="size-10 md:size-15" />
+          <span className="text-2xl md:text-3xl">{props.order.id}</span>
         </div>
-        <div className="flex flex-row items-center bg-success-green/20 rounded-full px-3 py-2">
-          <Dot className="text-success-green-accent" />
-          <span className="text-xs text-success-green-accent ">
-            Order being prepared
-          </span>
-        </div>
+        <StatusBadge orderStatus={props.order.status} />
       </div>
       <div className="flex flex-row gap-5">
         {/* Left bar */}
@@ -76,7 +72,7 @@ export default function OrderCard({ ...props }: OrderCardProps) {
                 <CardContent className="p-0 flex flex-row gap-5">
                   <div className="relative w-fit">
                     <img
-                      className="size-40 object-cover left:rounded-lg"
+                      className="size-30 md:size-40 object-cover left:rounded-lg"
                       src={orderItem.image_url}
                       alt={orderItem.product_name}
                     />
@@ -86,23 +82,23 @@ export default function OrderCard({ ...props }: OrderCardProps) {
                   </div>
                   <div className="w-full flex flex-col justify-center p-2">
                     <div className="flex flex-row justify-between">
-                      <span className="text-2xl font-semibold">
+                      <span className="text-lg md:text-2xl font-semibold">
                         {orderItem.product_name}
                       </span>
-                      <span className="min-w-[2ch] text-2xl font-semibold px-5">
+                      <span className="min-w-[2ch] text-lg md:text-2xl font-semibold px-5">
                         {formatCurrency(orderItem.price_at_purchase)}
                       </span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-raisin-black-muted">
+                      <span className="text-raisin-black-muted text-sm md:text-lg">
                         Size:{" "}
-                        <span className="text-blackhole font-semibold">
+                        <span className="text-blackhole font-semibold text-sm md:text-lg">
                           {orderItem.product_size}
                         </span>
                       </span>
-                      <span className="text-raisin-black-muted">
+                      <span className="text-raisin-black-muted text-sm md:text-lg">
                         Category:{" "}
-                        <span className="text-blackhole font-semibold">
+                        <span className="text-blackhole font-semibold text-sm md:text-lg">
                           {capitalizeFirstLetter(orderItem.category)}
                         </span>
                       </span>
@@ -119,7 +115,7 @@ export default function OrderCard({ ...props }: OrderCardProps) {
       <div className="flex justify-between items-center gap-2">
         <Button
           variant="secondary"
-          className="w-fit"
+          className="w-fit text-sm md:text-lg"
           onClick={() => {
             console.log(props.order.order_items);
             console.log(Array.isArray(props.order.order_items));
@@ -129,9 +125,9 @@ export default function OrderCard({ ...props }: OrderCardProps) {
         >
           Buy again
         </Button>
-        <span className="text-2xl text-raisin-black-muted">
+        <span className="text-lg md:text-2xl text-raisin-black-muted">
           Order Total:{" "}
-          <span className="bg-success-green/20 rounded-full p-2 text-2xl text-success-green-accent font-semibold min-w-[2ch]">
+          <span className="bg-success-green/20 rounded-full p-2 text-lg md:text-2xl text-success-green-accent font-semibold min-w-[2ch]">
             {formatCurrency(props.order.total_amount)}
           </span>
         </span>
