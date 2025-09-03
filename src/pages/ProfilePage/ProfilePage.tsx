@@ -167,14 +167,16 @@ export default function ProfilePage() {
               />
             </div>
             <div className="flex flex-col text-center">
-              <h2 className="text-5xl font-bold">
+              <h2 className="text-3xl md:text-5xl font-bold">
                 {firstName || lastName
                   ? `${firstName ?? ""} ${lastName ?? ""}`
                   : "Anonymous user".trim()}
               </h2>
-              <h6 className="text-md font-light">{email ?? "N/A"}</h6>
+              <h6 className="text-sm md:text-md font-light">
+                {email ?? "N/A"}
+              </h6>
               {/** //TODO: Continue working on this date */}
-              <h6 className="text-sm font-extralight">
+              <h6 className="text-xs md:text-sm font-extralight">
                 Joined at{" "}
                 <span>
                   {formatDateStringToReadableDate(joinDate) ?? " N/A"}
@@ -184,10 +186,10 @@ export default function ProfilePage() {
           </div>
           {/** Analytics 1 */}
           <div className="bg-off-white-2 border-1 w-full grid grid-rows-2 grid-cols-2 grid-flow-row gap-2 p-5 rounded-[15px]">
-            <div className="bg-milky-white rounded-[15px] flex flex-row gap-2 p-3">
+            <div className="bg-milky-white rounded-[15px] flex flex-col md:flex-row justify-center items-center gap-2 p-3">
               {data?.data?.avatar_url === null ? (
                 <img
-                  className="w-[60px] h-[60px]"
+                  className="w-[50px] h-[50px] md:w-[60px] md:h-[60px]"
                   src={ShoppingBagSVG}
                   alt="Shopping bag"
                 />
@@ -199,42 +201,44 @@ export default function ProfilePage() {
                 />
               )}
 
-              <div className="flex flex-col">
-                <h5 className="text-xl font-light">Order count</h5>
-                <p className="text-3xl">{latestOrder?.data?.length ?? 0}</p>
+              <div className="flex flex-col justify-center items-center">
+                <h5 className="text-sm md:text-xl font-light">Order count</h5>
+                <p className="text-lg md:text-3xl">
+                  {latestOrder?.data?.length ?? 0}
+                </p>
               </div>
             </div>
-            <div className="bg-milky-white rounded-[15px] flex flex-row gap-2 p-3">
+            <div className="bg-milky-white rounded-[15px] flex flex-col md:flex-row justify-center items-center gap-2 p-3">
               <img
-                className="w-[60px] h-[60px]"
+                className="w-[50px] h-[50px] md:w-[60px] md:h-[60px]"
                 src={ShoppingBagSVG}
                 alt="Shopping bag"
               />
-              <div className="flex flex-col">
-                <h5 className="text-xl font-light">Favorites</h5>
-                <p className="text-3xl">21</p>
+              <div className="flex flex-col justify-center items-center">
+                <h5 className="text-sm md:text-xl font-light">Favorites</h5>
+                <p className="text-lg md:text-3xl">21</p>
               </div>
             </div>
-            <div className="bg-milky-white rounded-[15px] flex flex-row gap-2 p-3">
+            <div className="bg-milky-white rounded-[15px] flex flex-col md:flex-row justify-center items-center gap-2 p-3">
               <img
-                className="w-[60px] h-[60px]"
+                className="w-[50px] h-[50px] md:w-[60px] md:h-[60px]"
                 src={ShoppingBagSVG}
                 alt="Shopping bag"
               />
-              <div className="flex flex-col">
-                <h5 className="text-xl font-light">Kafy points</h5>
-                <p className="text-3xl">50</p>
+              <div className="flex flex-col justify-center items-center">
+                <h5 className="text-sm md:text-xl font-light">Kafy points</h5>
+                <p className="text-lg md:text-3xl">50</p>
               </div>
             </div>
-            <div className="bg-milky-white rounded-[15px] flex flex-row gap-2 p-3">
+            <div className="bg-milky-white rounded-[15px] flex flex-col md:flex-row justify-center items-center gap-2 p-3">
               <img
-                className="w-[60px] h-[60px]"
+                className="w-[50px] h-[50px] md:w-[60px] md:h-[60px]"
                 src={ShoppingBagSVG}
                 alt="Shopping bag"
               />
-              <div className="flex flex-col">
-                <h5 className="text-xl font-light">Top pick</h5>
-                <p className="text-3xl underline decoration-burnt-sienna">
+              <div className="flex flex-col justify-center items-center">
+                <h5 className="text-sm md:text-xl font-light">Top pick</h5>
+                <p className="text-lg md:text-3xl underline decoration-burnt-sienna">
                   Espresso
                 </p>
               </div>
@@ -288,23 +292,27 @@ function AnalyticsBentoGrid({ created_at }: AnalyticsBentoGridProps) {
         {/* <img src={KafyLogo} className="h-[100px] w-[100px]" /> */}
       </div>
       <div className="bg-black-coffee/85 rounded-[15px] col-span-3 flex flex-col justify-center items-center gap-4 p-3 lg:p-0">
-        <p className="text-milky-white font-light text-3xl">
+        <p className="text-milky-white font-light text-2xl md:text-3xl text-center">
           Average rating given
         </p>
         <div className="h-[150px] w-[150px] rounded-full border-3 flex flex-col justify-center items-center">
-          <span className="text-5xl font-bold text-milky-white">4.4</span>
+          <span className="text-3xl md:text-5xl font-bold text-milky-white">
+            4.4
+          </span>
           <img src={StarSVG} alt="Star svg" className="h-[50px] w-[50px]" />
         </div>
       </div>
 
       <div className="bg-light-caramel rounded-[15px] col-span-3 lg:col-span-2 row-span-1 flex flex-col justify-center items-center p-5 gap-2">
-        <p className="text-3xl text-raisin-black text-center">
+        <p className="text-2xl md:text-3xl text-raisin-black text-center">
           Average items per order
         </p>
-        <span className="text-4xl font-bold text-raisin-black">2.3 items</span>
+        <span className="text-3xl md:text-4xl font-bold text-raisin-black">
+          2.3 items
+        </span>
       </div>
       <div className="bg-golden-brown/70 rounded-[15px] col-span-3 flex flex-col justify-center items-center text-center gap-5 p-3 lg:p-0">
-        <span className="text-3xl text-milky-white font-bold">
+        <span className="text-2xl md:text-3xl text-milky-white font-bold">
           Check out what's brewing!
         </span>
         <Button
@@ -318,8 +326,8 @@ function AnalyticsBentoGrid({ created_at }: AnalyticsBentoGridProps) {
         <div className="flex flex-row items-center">
           <CalendarCheck2Icon className="stroke-1 text-milky-white w-[150px] h-[150px]" />
           <div className="w-full">
-            <h5 className="font-light text-3xl">Last order</h5>
-            <p className="text-4xl font-bold">{created_at}</p>
+            <h5 className="font-light text-xl md:text-3xl">Last order</h5>
+            <p className="text-2xl md:text-4xl font-bold">{created_at}</p>
           </div>
         </div>
       </div>
