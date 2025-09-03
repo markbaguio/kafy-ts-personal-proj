@@ -145,7 +145,7 @@ export default function PageHeader() {
                 <Button
                   data-testid="profile-button"
                   onClick={() => {
-                    console.log("profile");
+                    navigate("/profile");
                   }}
                   variant="main"
                 >
@@ -163,7 +163,7 @@ export default function PageHeader() {
               </div>
             )}
             {/** For testing */}
-            <Button
+            {/* <Button
               data-testid="profile-button"
               onClick={() => {
                 // console.log("profile");
@@ -172,7 +172,7 @@ export default function PageHeader() {
               variant="main"
             >
               <User />
-            </Button>
+            </Button> */}
             {/**
              * This mock cart button is for development only
              * This cart button should only show up when a user is logged in.
