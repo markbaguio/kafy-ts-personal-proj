@@ -46,7 +46,6 @@ export default function ProfilePage() {
     (state) => state.profile?.avatar_url ?? undefined
   );
 
-  //TODO: Work on normalizing the date.
   return (
     <main className="bg-off-white-2/50 flex flex-col w-full h-full p-10 gap-5">
       <section className="gap-5 grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2">
