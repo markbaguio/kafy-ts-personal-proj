@@ -26,3 +26,5 @@ export const PaginatedProductsSchema = z.object({
   pagination: PaginationSchema,
   products: z.array(ProductSchema),
 });
+
+export const ProductIDSchema = ProductSchema.pick({ id: true });
