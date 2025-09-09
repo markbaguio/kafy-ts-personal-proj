@@ -2,6 +2,7 @@ import { CartProductSchema } from "@/schemas/CartSchema/CartProductSchema";
 import { OrderItemSchema } from "@/schemas/CartSchema/OrderItemSchema";
 import {
   PaginatedProductsSchema,
+  ProductIDSchema,
   ProductSchema,
 } from "@/schemas/Menu/ProductSchema";
 import {
@@ -86,3 +87,5 @@ export type GetOrdersParams = {
 export type GetLatestOrdersParams = z.infer<
   typeof GetLatestOrdersQueryParametersSchema
 >;
+
+export type AddToFavoritePayload = z.infer<typeof ProductIDSchema>;
