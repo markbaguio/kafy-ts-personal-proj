@@ -1,11 +1,15 @@
-import { AxiosErrorCode, BASE_URL, MENU } from "@/constants";
+import { ADD_TO_FAVORITE, AxiosErrorCode, BASE_URL, MENU } from "@/constants";
+import { axiosInstance } from "@/lib/axiosInterceptors/responseInterceptor";
 import { isApiErrorResponse } from "@/lib/utils";
 import { ApiErrorResponse, ApiResponse } from "@/models/ApiResponse";
 import {
+  AddToFavoritePayload,
+  AddToFavoriteResponse,
   MockProductCategoryEnum,
   PaginatedProducts,
   Product,
 } from "@/models/types";
+import { AddToFavoriteResponseSchema } from "@/schemas/Favorite/FavoriteSchema";
 import {
   PaginatedProductsSchema,
   ProductSchema,
@@ -117,6 +121,52 @@ export async function getProductDetail(
       }
     }
     //? for unknown errors
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export async function addToFavorite(
+  payload: AddToFavoritePayload
+): Promise<ApiResponse<AddToFavoriteResponse>> {
+  try {
+    const response = await axiosInstance.post<
+      ApiResponse<AddToFavoriteResponse>
+    >(`${BASE_URL}${ADD_TO_FAVORITE}`, payload, {
+      withCredentials: true,
+    });
+
+    const parsedResponse = AddToFavoriteResponseSchema.safeParse(
+      response.data.data
+    );
+
+    if (!parsedResponse.success) {
+      throw new ZodError(parsedResponse.error.errors);
+    }
+
+    return {
+      statusCode: response.status,
+      data: parsedResponse.data,
+    };
+  } catch (error) {
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          "Unable to reach server. Please check your internet connection."
+        );
+      }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
+    }
+
     throw new Error("An unexpected error occurred");
   }
 }
