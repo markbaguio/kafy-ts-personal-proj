@@ -11,3 +11,7 @@ export const AddToFavoriteResponseSchema = FavoriteSchema.pick({
   user_id: true,
   product_id: true,
 });
+
+export const UserFavoriteProductsSchema = z.array(
+  FavoriteSchema.pick({ id: true })
+);
