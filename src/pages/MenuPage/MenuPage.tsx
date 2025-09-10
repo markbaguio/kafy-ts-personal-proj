@@ -26,7 +26,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Loading from "@/components/ui/loading";
 import { createGetProductMenuQueryOptions } from "@/queryOptions/createGetProductMenuQueryOptions";
 import {
@@ -40,7 +40,8 @@ import {
   MenuCategoryType,
   useMenuPageSearchParams,
 } from "@/hooks/useMenuPageSearchParams";
-import { Product } from "@/models/types";
+import { AddToFavoritePayload, Product } from "@/models/types";
+import { addToFavorite } from "@/services/productService";
 
 export default function MenuPage() {
   const { page, category, setSearchParams } = useMenuPageSearchParams();
@@ -59,11 +60,16 @@ export default function MenuPage() {
     )
   );
 
+  const { mutate: addToFavoritesMutate } = useMutation({
+    mutationFn: (id: AddToFavoritePayload) => addToFavorite(id),
+  });
+
   const currentPage = data?.data?.pagination.currentPage ?? 1;
   const hasNextPage = data?.data?.pagination.hasNextPage ?? false;
 
   function handleToggleFavorite(product_id: number) {
-    console.log(product_id);
+    // console.log(product_id);
+    addToFavoritesMutate({ id: product_id });
   }
 
   function handleCategoryChange(category: MenuCategoryType) {
@@ -259,7 +265,7 @@ function FavoriteButton({
   handleToggle,
   ...props
 }: FavoriteButtonProps & React.ComponentProps<"button">) {
-  const isFavorited = price >= 90 && price <= 140;
+  // const isFavorited = price >= 90 && price <= 140;
   return (
     <button
       type="button"
@@ -273,8 +279,8 @@ function FavoriteButton({
       {...props}
     >
       <Heart
-        fill={isFavorited ? "red" : "none"}
-        color={isFavorited ? "red" : "black"}
+      // fill={isFavorited ? "red" : "none"}
+      // color={isFavorited ? "red" : "black"}
       />
     </button>
   );
