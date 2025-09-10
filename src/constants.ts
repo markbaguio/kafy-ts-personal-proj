@@ -183,6 +183,7 @@ export const MENU = "/api/menu";
 export const PLACE_ORDER = "/api/order";
 export const ORDERS_PAGE = "/api/orders";
 export const LATEST_ORDERS = "/api/orders/latest";
+export const ADD_TO_FAVORITE = "/api/favorites";
 
 // AXIOS ERROR CODE: for axios errors not
 export enum AxiosErrorCode {
