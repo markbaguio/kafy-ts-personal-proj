@@ -1,5 +1,6 @@
 import { CartProductSchema } from "@/schemas/CartSchema/CartProductSchema";
 import { OrderItemSchema } from "@/schemas/CartSchema/OrderItemSchema";
+import { AddToFavoriteResponseSchema } from "@/schemas/Favorite/FavoriteSchema";
 import {
   PaginatedProductsSchema,
   ProductIDSchema,
@@ -89,3 +90,5 @@ export type GetLatestOrdersParams = z.infer<
 >;
 
 export type AddToFavoritePayload = z.infer<typeof ProductIDSchema>;
+
+export type AddToFavoriteResponse = z.infer<typeof AddToFavoriteResponseSchema>;
