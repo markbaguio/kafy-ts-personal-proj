@@ -1,9 +1,9 @@
 import { ApiResponse } from "@/models/ApiResponse";
 import { UserFavoriteProducts } from "@/models/types";
-import { getUserFavoriteProducts } from "@/services/productService";
+import { getUserFavorites } from "@/services/productService";
 import { queryOptions, UseQueryOptions } from "@tanstack/react-query";
 
-export function createGetUserFavoriteProductsQueryOptions(
+export function createGetUserFavoritesQueryOptions(
   options?: Omit<
     UseQueryOptions<ApiResponse<UserFavoriteProducts>>,
     "queryKey" | "queryFn"
@@ -12,6 +12,6 @@ export function createGetUserFavoriteProductsQueryOptions(
   return queryOptions({
     ...options,
     queryKey: ["favorites"],
-    queryFn: getUserFavoriteProducts,
+    queryFn: getUserFavorites,
   });
 }
