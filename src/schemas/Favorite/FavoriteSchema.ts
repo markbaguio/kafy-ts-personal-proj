@@ -13,5 +13,8 @@ export const AddToFavoriteResponseSchema = FavoriteSchema.pick({
 });
 
 export const UserFavoriteProductsSchema = z.array(
-  FavoriteSchema.pick({ id: true })
+  z.object({
+    // FavoriteSchema.pick({ id: true })
+    product_id: z.number().nonnegative(),
+  })
 );
