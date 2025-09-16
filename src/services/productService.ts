@@ -175,7 +175,7 @@ export async function addToFavorite(
   }
 }
 
-export async function getUserFavoriteProducts(): Promise<
+export async function getUserFavorites(): Promise<
   ApiResponse<UserFavoriteProducts>
 > {
   try {
