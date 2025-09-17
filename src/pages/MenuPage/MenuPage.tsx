@@ -42,6 +42,7 @@ import {
 } from "@/hooks/useMenuPageSearchParams";
 import { AddToFavoritePayload, Product } from "@/models/types";
 import { addToFavorite } from "@/services/productService";
+import { createGetUserFavoritesQueryOptions } from "@/queryOptions/createGetUserFavoritesQueryOptions";
 
 export default function MenuPage() {
   const { page, category, setSearchParams } = useMenuPageSearchParams();
@@ -60,6 +61,22 @@ export default function MenuPage() {
     )
   );
 
+  const { data: favoriteProductsData, error: favoriteProductsError } = useQuery(
+    createGetUserFavoritesQueryOptions({
+      refetchOnWindowFocus: true,
+      retry: 1,
+    })
+  );
+
+  const favoritesArray =
+    favoriteProductsData?.data?.map((favorite) => favorite.product_id) ?? [];
+
+  //TODO: Continue working on the favorites feature.
+  //TODO: render favorite products correctly. If product is favorite = favorite button is enabled/filled.
+  //TODO: Add constraint to the favorites table for duplicated values. Add unique on the product id and user_id
+
+  console.log("favorite products: ", favoriteProductsData?.data);
+
   const { mutate: addToFavoritesMutate } = useMutation({
     mutationFn: (id: AddToFavoritePayload) => addToFavorite(id),
   });
@@ -69,7 +86,7 @@ export default function MenuPage() {
 
   function handleToggleFavorite(product_id: number) {
     // console.log(product_id);
-    addToFavoritesMutate({ id: product_id });
+    // addToFavoritesMutate({ id: product_id }); //? comment out for dev
   }
 
   function handleCategoryChange(category: MenuCategoryType) {
@@ -176,13 +193,19 @@ export default function MenuPage() {
           <MenuLoading />
         ) : (
           <div className="grid grid-cols-3 gap-6 p-5">
-            {data?.data?.products.map((product) => (
-              <MenuCardItem
-                key={product.id}
-                product={product}
-                handleToggleFavorite={handleToggleFavorite}
-              />
-            ))}
+            {data?.data?.products.map((product) => {
+              const isFavorited = favoritesArray.includes(product.id);
+
+              console.log("product_id: ", product.id, isFavorited);
+              return (
+                <MenuCardItem
+                  key={product.id}
+                  product={product}
+                  handleToggleFavorite={handleToggleFavorite}
+                  isFavorited={isFavorited}
+                />
+              );
+            })}
           </div>
         )}
         <div className="w-full flex justify-center py-5">
@@ -209,11 +232,13 @@ function MenuLoading() {
 type MenuCardItemProps = {
   product: Product;
   handleToggleFavorite: (product_id: number) => void;
+  isFavorited: boolean;
 };
 
 export function MenuCardItem({
   product,
   handleToggleFavorite: toggleFavorite,
+  isFavorited,
 }: MenuCardItemProps) {
   return (
     <Card key={product.id} className="relative overflow-hidden h-fit pt-0">
@@ -230,6 +255,7 @@ export function MenuCardItem({
           <FavoriteButton
             handleToggle={() => toggleFavorite(product.id)}
             price={product.price}
+            isFavorited={isFavorited}
           />
         </div>
       </CardHeader>
@@ -258,11 +284,13 @@ export function MenuCardItem({
 type FavoriteButtonProps = {
   price: number;
   handleToggle: () => void;
+  isFavorited: boolean;
 };
 
 function FavoriteButton({
   price,
   handleToggle,
+  isFavorited,
   ...props
 }: FavoriteButtonProps & React.ComponentProps<"button">) {
   // const isFavorited = price >= 90 && price <= 140;
@@ -279,8 +307,8 @@ function FavoriteButton({
       {...props}
     >
       <Heart
-      // fill={isFavorited ? "red" : "none"}
-      // color={isFavorited ? "red" : "black"}
+        fill={isFavorited ? "red" : "none"}
+        color={isFavorited ? "red" : "black"}
       />
     </button>
   );
