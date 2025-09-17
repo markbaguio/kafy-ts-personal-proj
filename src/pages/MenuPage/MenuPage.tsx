@@ -87,6 +87,12 @@ export default function MenuPage() {
   function handleToggleFavorite(product_id: number) {
     // console.log(product_id);
     // addToFavoritesMutate({ id: product_id }); //? comment out for dev
+
+    if (favoritesArray.includes(product_id)) {
+      console.log("Unfavorite process...");
+      return;
+    }
+    console.log("Add product to favorite...");
   }
 
   function handleCategoryChange(category: MenuCategoryType) {
@@ -195,8 +201,6 @@ export default function MenuPage() {
           <div className="grid grid-cols-3 gap-6 p-5">
             {data?.data?.products.map((product) => {
               const isFavorited = favoritesArray.includes(product.id);
-
-              console.log("product_id: ", product.id, isFavorited);
               return (
                 <MenuCardItem
                   key={product.id}
