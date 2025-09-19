@@ -100,3 +100,5 @@ export type AddToFavoriteResponse = z.infer<typeof AddToFavoriteResponseSchema>;
 export type UserFavoriteProducts = z.infer<typeof UserFavoriteProductsSchema>;
 
 export type Favorite = z.infer<typeof FavoriteSchema>;
+
+export type RemoveFavoritePayload = AddToFavoritePayload;
