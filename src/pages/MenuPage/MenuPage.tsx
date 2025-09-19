@@ -26,7 +26,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "@/components/ui/loading";
 import { createGetProductMenuQueryOptions } from "@/queryOptions/createGetProductMenuQueryOptions";
 import {
@@ -40,12 +40,18 @@ import {
   MenuCategoryType,
   useMenuPageSearchParams,
 } from "@/hooks/useMenuPageSearchParams";
-import { AddToFavoritePayload, Product } from "@/models/types";
-import { addToFavorite } from "@/services/productService";
+import {
+  AddToFavoritePayload,
+  Product,
+  RemoveFavoritePayload,
+} from "@/models/types";
+import { addToFavorite, removeFavorite } from "@/services/productService";
 import { createGetUserFavoritesQueryOptions } from "@/queryOptions/createGetUserFavoritesQueryOptions";
 import { useAuthStore } from "@/store/useAuthStore";
 
 export default function MenuPage() {
+  const queryClient = useQueryClient();
+
   const { page, category, setSearchParams } = useMenuPageSearchParams();
   const isSignedIn = useAuthStore((state) => state.isSignedIn);
 
@@ -76,12 +82,18 @@ export default function MenuPage() {
 
   //TODO: Continue working on the favorites feature.
   //TODO: render favorite products correctly. If product is favorite = favorite button is enabled/filled.
-  //TODO: Add constraint to the favorites table for duplicated values. Add unique on the product id and user_id
 
   console.log("favorite products: ", favoriteProductsData?.data);
 
   const { mutate: addToFavoritesMutate } = useMutation({
     mutationFn: (id: AddToFavoritePayload) => addToFavorite(id),
+  });
+
+  const { mutate: removeFavoriteMutate } = useMutation({
+    mutationFn: (id: RemoveFavoritePayload) => removeFavorite(id),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    },
   });
 
   const currentPage = data?.data?.pagination.currentPage ?? 1;
@@ -93,6 +105,7 @@ export default function MenuPage() {
 
     if (favoritesArray.includes(product_id)) {
       console.log("Unfavorite process...");
+      removeFavoriteMutate({ id: product_id });
       return;
     }
     console.log("Add product to favorite...");
