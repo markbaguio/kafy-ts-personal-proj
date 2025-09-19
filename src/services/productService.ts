@@ -8,10 +8,12 @@ import {
   MockProductCategoryEnum,
   PaginatedProducts,
   Product,
+  RemoveFavoritePayload,
   UserFavoriteProducts,
 } from "@/models/types";
 import {
   AddToFavoriteResponseSchema,
+  FavoriteSchema,
   UserFavoriteProductsSchema,
 } from "@/schemas/Favorite/FavoriteSchema";
 import {
@@ -199,6 +201,51 @@ export async function getUserFavorites(): Promise<
       data: parsedResponse.data,
     };
   } catch (error) {
+    if (isAxiosError(error)) {
+      const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
+      if (error.code === AxiosErrorCode.NetworkError) {
+        throw new ApiErrorResponse(
+          503,
+          "ERR_NETWORK",
+          "Unable to reach server. Please check your internet connection."
+        );
+      }
+      if (responseErrorData && isApiErrorResponse(responseErrorData)) {
+        throw new ApiErrorResponse(
+          responseErrorData.statusCode,
+          responseErrorData.errorName,
+          responseErrorData.message,
+          responseErrorData.errorDetails
+        );
+      }
+    }
+
+    throw new Error("An unexpected error occurred");
+  }
+}
+
+export async function removeFavorite(
+  payload: RemoveFavoritePayload
+): Promise<ApiResponse<RemoveFavoritePayload>> {
+  try {
+    const response = await axiosInstance.delete<
+      ApiResponse<RemoveFavoritePayload>
+    >(`${BASE_URL}${FAVORITE}/${payload.id}`, {
+      withCredentials: true,
+    });
+
+    const parsedResponse = FavoriteSchema.safeParse(response.data.data);
+
+    if (!parsedResponse.success) {
+      throw new ZodError(parsedResponse.error.errors);
+    }
+
+    return {
+      statusCode: response.status,
+      data: response.data.data,
+    };
+  } catch (error) {
+    //! handle the zod error thrown above (condition !parsedResponse.success)
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
       if (error.code === AxiosErrorCode.NetworkError) {
