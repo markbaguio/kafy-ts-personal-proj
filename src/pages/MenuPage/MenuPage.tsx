@@ -43,9 +43,11 @@ import {
 import { AddToFavoritePayload, Product } from "@/models/types";
 import { addToFavorite } from "@/services/productService";
 import { createGetUserFavoritesQueryOptions } from "@/queryOptions/createGetUserFavoritesQueryOptions";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function MenuPage() {
   const { page, category, setSearchParams } = useMenuPageSearchParams();
+  const isSignedIn = useAuthStore((state) => state.isSignedIn);
 
   const { data, isLoading } = useQuery(
     createGetProductMenuQueryOptions(
@@ -65,6 +67,7 @@ export default function MenuPage() {
     createGetUserFavoritesQueryOptions({
       refetchOnWindowFocus: true,
       retry: 1,
+      enabled: isSignedIn,
     })
   );
 
