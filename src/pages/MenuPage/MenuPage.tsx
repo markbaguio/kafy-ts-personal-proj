@@ -82,11 +82,22 @@ export default function MenuPage() {
 
   //TODO: Continue working on the favorites feature.
   //TODO: render favorite products correctly. If product is favorite = favorite button is enabled/filled.
+  //TODO: Implement optimistic update on favorite/unfavorite.
+  //TODO: FINISH TODOS
 
   console.log("favorite products: ", favoriteProductsData?.data);
 
   const { mutate: addToFavoritesMutate } = useMutation({
     mutationFn: (id: AddToFavoritePayload) => addToFavorite(id),
+
+    onMutate: async () => {
+      //? cancel any outgoing fetch
+      //? so they don't overwrite the optimistic update.
+      await queryClient.cancelQueries({ queryKey: ["favorites"] });
+
+      //? get the previous state.
+      const previousFavorites = queryClient.getQueryData(["favorites"]);
+    },
   });
 
   const { mutate: removeFavoriteMutate } = useMutation({
