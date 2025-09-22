@@ -177,9 +177,9 @@ export async function addToFavorite(
   }
 }
 
-export async function getUserFavorites(): Promise<
-  ApiResponse<UserFavoriteProducts>
-> {
+//? change the return type to be only the array of user favorite products.
+//? the rray of user favorite products will be saved into the cache.
+export async function getUserFavorites(): Promise<UserFavoriteProducts> {
   try {
     const response = await axiosInstance.get<ApiResponse<UserFavoriteProducts>>(
       `${BASE_URL}${FAVORITE}`,
@@ -196,10 +196,11 @@ export async function getUserFavorites(): Promise<
       throw new ZodError(parsedResponse.error.errors);
     }
 
-    return {
-      statusCode: response.status,
-      data: parsedResponse.data,
-    };
+    // return {
+    //   statusCode: response.status,
+    //   data: parsedResponse.data,
+    // };
+    return parsedResponse.data;
   } catch (error) {
     if (isAxiosError(error)) {
       const responseErrorData: ApiErrorResponse = error.response?.data; //? Check if there are specific error response.
