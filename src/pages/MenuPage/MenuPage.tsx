@@ -42,8 +42,10 @@ import {
 } from "@/hooks/useMenuPageSearchParams";
 import {
   AddToFavoritePayload,
+  Favorite,
   Product,
   RemoveFavoritePayload,
+  UserFavoriteProducts,
 } from "@/models/types";
 import { addToFavorite, removeFavorite } from "@/services/productService";
 import { createGetUserFavoritesQueryOptions } from "@/queryOptions/createGetUserFavoritesQueryOptions";
@@ -69,7 +71,11 @@ export default function MenuPage() {
     )
   );
 
-  const { data: favoriteProductsData, error: favoriteProductsError } = useQuery(
+  const {
+    data: favoriteProductsData,
+    error: favoriteProductsError,
+    isLoading: isFavoriteLoading,
+  } = useQuery(
     createGetUserFavoritesQueryOptions({
       refetchOnWindowFocus: true,
       retry: 1,
@@ -77,27 +83,89 @@ export default function MenuPage() {
     })
   );
 
+  // const favoritesArray =
+  //   favoriteProductsData?.data?.map((favorite) => favorite.product_id) ?? [];
   const favoritesArray =
-    favoriteProductsData?.data?.map((favorite) => favorite.product_id) ?? [];
+    favoriteProductsData?.map((favorite) => favorite.product_id) ?? [];
 
   //TODO: Continue working on the favorites feature.
-  //TODO: render favorite products correctly. If product is favorite = favorite button is enabled/filled.
   //TODO: Implement optimistic update on favorite/unfavorite.
-  //TODO: FINISH TODOS
+  //TODO: FINISH TODOS!
 
-  console.log("favorite products: ", favoriteProductsData?.data);
+  //? Changed the data to be saved in the ["favorites"] cache to the UserFavoriteProducts which is the array of product id of the user's favorite products.'
 
   const { mutate: addToFavoritesMutate } = useMutation({
-    mutationFn: (id: AddToFavoritePayload) => addToFavorite(id),
+    mutationFn: (newFavoriteID: AddToFavoritePayload) =>
+      addToFavorite(newFavoriteID),
+    onMutate: async (newFavoriteID) => {
+      console.log("favorites query: ", favoriteProductsData);
 
-    onMutate: async () => {
       //? cancel any outgoing fetch
       //? so they don't overwrite the optimistic update.
-      await queryClient.cancelQueries({ queryKey: ["favorites"] });
+      queryClient.cancelQueries({ queryKey: ["favorites"] });
 
-      //? get the previous state.
+      //? get previous favorites
       const previousFavorites = queryClient.getQueryData(["favorites"]);
+      console.log("previousFavoritest: ", previousFavorites);
+
+      //? optimistic update
+      queryClient.setQueryData<UserFavoriteProducts>(
+        ["favorites"],
+        (oldData) => {
+          const OldDataSnapshot = oldData ?? [];
+          return [...OldDataSnapshot, { product_id: newFavoriteID.id }];
+        }
+      );
+
+      return {
+        previousFavorites,
+        newFavoriteID,
+      };
     },
+    onSettled: (mutationResult, error, newFavoriteID, context) => {
+      queryClient.invalidateQueries({ queryKey: ["favorites"] });
+      console.info("onSettled favorites query: ", favoriteProductsData);
+    },
+    onError: (error, newFavoriteID, context) => {
+      queryClient.setQueryData(["favorites"], context?.previousFavorites);
+    },
+    // onSettled: () => {
+    //   console.log("query key favorites: ", favoritesArray);
+
+    //   queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    // },
+    // onMutate: async (newFavoriteID) => {
+    //   console.log("query key favorites onMutate: ", favoriteProductsData);
+
+    //   //? cancel any outgoing fetch
+    //   //? so they don't overwrite the optimistic update.
+    //   await queryClient.cancelQueries({ queryKey: ["favorites"] });
+
+    //   //? get the previous state/snapshot.
+    //   const previousFavorites = queryClient.getQueryData<{ id: number }>([
+    //     "favorites",
+    //   ]);
+    //   console.log("previousFavorites: ", previousFavorites);
+
+    //   //? update the "favorites" optimistically.
+    //   // queryClient.setQueryData(["favorites"], newFavoriteID);
+    //   queryClient.setQueryData(["favorites"], newFavoriteID);
+
+    //   return {
+    //     previousFavorites,
+    //     newFavoriteID,
+    //   };
+    // },
+    // //? if the mutations fails, use the context returned on the onMutate.
+    // //? rollback
+    // onError: (error, newFavoriteID, context) => {
+    //   console.log("may error: ", error);
+    //   queryClient.setQueryData(["favorites"], context?.previousFavorites);
+    // },
+    // //? always invalidate query/always refetch after error or success.
+    // onSettled: () => {
+    //   queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    // },
   });
 
   const { mutate: removeFavoriteMutate } = useMutation({
@@ -111,15 +179,13 @@ export default function MenuPage() {
   const hasNextPage = data?.data?.pagination.hasNextPage ?? false;
 
   function handleToggleFavorite(product_id: number) {
-    // console.log(product_id);
-    // addToFavoritesMutate({ id: product_id }); //? comment out for dev
-
     if (favoritesArray.includes(product_id)) {
       console.log("Unfavorite process...");
       removeFavoriteMutate({ id: product_id });
       return;
     }
-    console.log("Add product to favorite...");
+    console.log("Add product to favorite... ", product_id);
+    addToFavoritesMutate({ id: product_id }); //? comment out for dev
   }
 
   function handleCategoryChange(category: MenuCategoryType) {
