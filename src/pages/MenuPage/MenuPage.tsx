@@ -103,7 +103,7 @@ export default function MenuPage() {
     onMutate: async (newFavoriteID) => {
       //? cancel any outgoing fetch
       //? so they don't overwrite the optimistic update.
-      queryClient.cancelQueries({ queryKey: ["favorites"] });
+      await queryClient.cancelQueries({ queryKey: ["favorites"] });
 
       //? get previous favorites
       const previousFavorites = queryClient.getQueryData(["favorites"]);
@@ -134,8 +134,36 @@ export default function MenuPage() {
 
   const { mutate: removeFavoriteMutate } = useMutation({
     mutationFn: (id: RemoveFavoritePayload) => removeFavorite(id),
+
+    onMutate: async (favoriteID) => {
+      //? cancel any outgoing remove from favorite mutations
+      await queryClient.cancelQueries({ queryKey: ["favorites"] });
+
+      //? get previous snapshot
+      const previousFavorites = queryClient.getQueryData<UserFavoriteProducts>([
+        "favorites",
+      ]);
+      console.log("remove favorite previous favorites: ", previousFavorites);
+
+      //? apply optimistic update.
+      //! This is not finished. Filter out the product to be remove from favorites.
+      queryClient.setQueryData<UserFavoriteProducts>(
+        ["favorites"],
+        (oldData) => {
+          const OldDataSnapshot = oldData ?? [];
+          return [...OldDataSnapshot];
+        }
+      );
+
+      return {
+        previousFavorites,
+      };
+    },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["favorites"] });
+    },
+    onError: (error, favoriteId, context) => {
+      queryClient.setQueryData(["favorites"], context?.previousFavorites);
     },
   });
 
