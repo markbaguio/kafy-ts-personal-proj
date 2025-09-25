@@ -90,16 +90,17 @@ export default function MenuPage() {
 
   //TODO: Continue working on the favorites feature.
   //TODO: Implement optimistic update on favorite/unfavorite.
+  //TODO: Finalize optimistic update on favorite/unfavorite.
   //TODO: FINISH TODOS!
 
   //? Changed the data to be saved in the ["favorites"] cache to the UserFavoriteProducts which is the array of product id of the user's favorite products.'
+
+  console.log("favorites query: ", favoriteProductsData);
 
   const { mutate: addToFavoritesMutate } = useMutation({
     mutationFn: (newFavoriteID: AddToFavoritePayload) =>
       addToFavorite(newFavoriteID),
     onMutate: async (newFavoriteID) => {
-      console.log("favorites query: ", favoriteProductsData);
-
       //? cancel any outgoing fetch
       //? so they don't overwrite the optimistic update.
       queryClient.cancelQueries({ queryKey: ["favorites"] });
@@ -129,43 +130,6 @@ export default function MenuPage() {
     onError: (error, newFavoriteID, context) => {
       queryClient.setQueryData(["favorites"], context?.previousFavorites);
     },
-    // onSettled: () => {
-    //   console.log("query key favorites: ", favoritesArray);
-
-    //   queryClient.invalidateQueries({ queryKey: ["favorites"] });
-    // },
-    // onMutate: async (newFavoriteID) => {
-    //   console.log("query key favorites onMutate: ", favoriteProductsData);
-
-    //   //? cancel any outgoing fetch
-    //   //? so they don't overwrite the optimistic update.
-    //   await queryClient.cancelQueries({ queryKey: ["favorites"] });
-
-    //   //? get the previous state/snapshot.
-    //   const previousFavorites = queryClient.getQueryData<{ id: number }>([
-    //     "favorites",
-    //   ]);
-    //   console.log("previousFavorites: ", previousFavorites);
-
-    //   //? update the "favorites" optimistically.
-    //   // queryClient.setQueryData(["favorites"], newFavoriteID);
-    //   queryClient.setQueryData(["favorites"], newFavoriteID);
-
-    //   return {
-    //     previousFavorites,
-    //     newFavoriteID,
-    //   };
-    // },
-    // //? if the mutations fails, use the context returned on the onMutate.
-    // //? rollback
-    // onError: (error, newFavoriteID, context) => {
-    //   console.log("may error: ", error);
-    //   queryClient.setQueryData(["favorites"], context?.previousFavorites);
-    // },
-    // //? always invalidate query/always refetch after error or success.
-    // onSettled: () => {
-    //   queryClient.invalidateQueries({ queryKey: ["favorites"] });
-    // },
   });
 
   const { mutate: removeFavoriteMutate } = useMutation({
