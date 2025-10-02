@@ -150,8 +150,12 @@ export default function MenuPage() {
       queryClient.setQueryData<UserFavoriteProducts>(
         ["favorites"],
         (oldData) => {
+          // const OldDataSnapshot = oldData ?? [];
+          // return [...OldDataSnapshot];
           const OldDataSnapshot = oldData ?? [];
-          return [...OldDataSnapshot];
+          return OldDataSnapshot.filter(
+            (fav) => fav.product_id !== favoriteID.id
+          );
         }
       );
 
